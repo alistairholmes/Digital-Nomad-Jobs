@@ -5,9 +5,16 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.ViewGroup;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import okhttp3.Call;
@@ -18,9 +25,10 @@ import okhttp3.Response;
 
 public class JobActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
+    public RecyclerView.Adapter mAdapter;
+    public RecyclerView mainRecyclerView;
     public String url = "https://remoteok.io/remote-jobs.json";
 
     private static final String LOG_TAG = JobActivity.class.getName();
@@ -30,25 +38,7 @@ public class JobActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /*// Create a fake list of earthquakes.
-        List<Job> jobs = new ArrayList<>();
-        jobs.add(new Job("Front-End Dev", "San Francisco", "Feb 2, 2016"));
-        jobs.add(new Job("Back-End Dev", "London", "July 20, 2015"));
-        jobs.add(new Job("ios Dev", "Tokyo", "Nov 10, 2014"));
-        jobs.add(new Job("android dev", "Mexico City", "May 3, 2014"));
-        jobs.add(new Job("nodejs dev", "Moscow", "Jan 31, 2013"));
-        jobs.add(new Job("rails dev", "Rio de Janeiro", "Aug 19, 2012"));
-        jobs.add(new Job("block-chain dev", "Paris", "Oct 30, 2011"));
-        jobs.add(new Job("Front-End Dev", "San Francisco", "Feb 2, 2016"));
-        jobs.add(new Job("Back-End Dev", "London", "July 20, 2015"));
-        jobs.add(new Job("ios Dev", "Tokyo", "Nov 10, 2014"));
-        jobs.add(new Job("android dev", "Mexico City", "May 3, 2014"));
-        jobs.add(new Job("nodejs dev", "Moscow", "Jan 31, 2013"));
-        jobs.add(new Job("rails dev", "Rio de Janeiro", "Aug 19, 2012"));
-        jobs.add(new Job("block-chain dev", "Paris", "Oct 30, 2011"));*/
-
-
-        RecyclerView mainRecyclerView = (RecyclerView) findViewById(R.id.recyclerView_main);
+        mainRecyclerView = (RecyclerView) findViewById(R.id.recyclerView_main);
 
         // use a linear layout manager
         layoutManager = new LinearLayoutManager(this);
@@ -61,7 +51,7 @@ public class JobActivity extends AppCompatActivity {
 
         // Set the adapter on the {@link ListView}
         // so the list can be populated in the user interface
-        mainRecyclerView.setAdapter(mAdapter);
+        //mainRecyclerView.setAdapter(mAdapter);
 
         try {
             run();
@@ -87,7 +77,26 @@ public class JobActivity extends AppCompatActivity {
 
                 final String jsonResponse = response.body().string();
 
-                Log.d(LOG_TAG, jsonResponse);
+                JobActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                            String ISO_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
+                            GsonBuilder gsonBuilder = new GsonBuilder();
+                            gsonBuilder.setDateFormat(ISO_FORMAT);
+
+                            Gson gson = new GsonBuilder().create();
+                            List<Job> jobs = new ArrayList<Job>();
+                            jobs = Arrays.asList(gson.fromJson(jsonResponse, Job[].class));
+
+                            /*Job job = gson.fromJson(jsonResponse, Job.class);*/
+                            mAdapter = new JobAdapter(jobs);
+
+                            mainRecyclerView.setAdapter(mAdapter);
+                    }
+                });
+
+
+                Log.d(LOG_TAG, String.valueOf(mAdapter));
             }
         });
 

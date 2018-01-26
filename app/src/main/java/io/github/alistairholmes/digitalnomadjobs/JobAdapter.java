@@ -9,7 +9,7 @@ import android.widget.TextView;
 import java.util.List;
 
 public class JobAdapter extends RecyclerView.Adapter<JobAdapter.ViewHolder> {
-    private List<Job> values;
+    private List<Job> jobs;
 
     // Provide a reference to the views for each data item
     // Provide access to all the views for a data item in a view holder
@@ -30,8 +30,8 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.ViewHolder> {
     }
 
     // Pass in a the Job constructor
-    public JobAdapter(List<Job> jobs) {
-        values = jobs;
+    public JobAdapter(List<Job> job) {
+        jobs = job;
     }
 
     // Create new views (invoked by the layout manager)
@@ -51,7 +51,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
         // Get element from the dataset at this position
         // Replace the contents of the view with that element
-        Job currentJob = values.get(position);
+        Job currentJob = jobs.get(position);
 
         String mJobTitle = currentJob.getJobTitle();
         holder.jobTitle.setText(mJobTitle);
@@ -65,6 +65,6 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return values.size();
+        return jobs.size();
     }
 }
