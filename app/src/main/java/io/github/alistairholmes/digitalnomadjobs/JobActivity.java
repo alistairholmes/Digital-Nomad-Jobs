@@ -1,5 +1,7 @@
 package io.github.alistairholmes.digitalnomadjobs;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,6 +32,9 @@ public class JobActivity extends AppCompatActivity {
     public RecyclerView.Adapter mAdapter;
     public RecyclerView mainRecyclerView;
     public String url = "https://remoteok.io/remote-jobs.json";
+    public static final String LOGO_URL = "logoUrl";
+
+    public List<Job> jobs;
 
     private static final String LOG_TAG = JobActivity.class.getName();
 
@@ -46,8 +51,11 @@ public class JobActivity extends AppCompatActivity {
 
         mainRecyclerView.setHasFixedSize(true);
 
+        //jobs = new ArrayList<Job>();
         // Create a new adapter that takes the list of jobs as input
         //mAdapter = new JobAdapter(jobs);
+
+
 
         // Set the adapter on the {@link ListView}
         // so the list can be populated in the user interface
@@ -89,7 +97,18 @@ public class JobActivity extends AppCompatActivity {
                             jobs = Arrays.asList(gson.fromJson(jsonResponse, Job[].class));
 
                             /*Job job = gson.fromJson(jsonResponse, Job.class);*/
-                            mAdapter = new JobAdapter(jobs);
+                        final List<Job> finalJobs = jobs;
+                        mAdapter = new JobAdapter(jobs, new JobAdapter.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(int position) {
+                                    Job clickedItem = finalJobs.get(position);
+                                    Uri jobURL = Uri.parse(clickedItem.getUrl());
+                                    Intent intent =  new Intent(Intent.ACTION_VIEW);
+                                    intent.setData(jobURL);
+
+                                    startActivity(intent);
+                                }
+                            });
 
                             mainRecyclerView.setAdapter(mAdapter);
                     }
@@ -102,5 +121,3 @@ public class JobActivity extends AppCompatActivity {
 
     }
 }
-
-
