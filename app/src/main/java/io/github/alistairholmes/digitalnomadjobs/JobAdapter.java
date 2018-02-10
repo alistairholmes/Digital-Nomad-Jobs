@@ -1,15 +1,29 @@
 package io.github.alistairholmes.digitalnomadjobs;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class JobAdapter extends RecyclerView.Adapter<JobAdapter.ViewHolder> {
+
+    private OnItemClickListener mListener;
     private List<Job> jobs;
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = listener;
+    }
 
     // Provide a reference to the views for each data item
     // Provide access to all the views for a data item in a view holder
@@ -19,6 +33,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.ViewHolder> {
         public TextView companyName;
         public TextView datePosted;
         public View layout;
+        public ImageView companyLogo;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -26,12 +41,26 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.ViewHolder> {
             jobTitle = (TextView) layout.findViewById(R.id.textView_job_title);
             companyName = (TextView) layout.findViewById(R.id.textView_company_name);
             datePosted = (TextView) layout.findViewById(R.id.textView_date);
+            companyLogo = (ImageView) layout.findViewById(R.id.imageView);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (mListener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            mListener.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 
     // Pass in a the Job constructor
-    public JobAdapter(List<Job> job) {
+    public JobAdapter(List<Job> job, OnItemClickListener listener) {
         jobs = job;
+        this.mListener = listener;
     }
 
     // Create new views (invoked by the layout manager)
@@ -61,6 +90,14 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.ViewHolder> {
 
         String mDatePosted = currentJob.getDatePosted();
         holder.datePosted.setText(mDatePosted);
+
+        if (!currentJob.getLogo().isEmpty()) {
+            Picasso.with(holder.itemView.getContext())
+                    .load(currentJob.getLogo())
+                    .fit()
+                    .into(holder.companyLogo);
+        }
+
     }
 
     @Override
