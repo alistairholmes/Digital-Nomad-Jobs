@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -26,6 +28,8 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class JobActivity extends AppCompatActivity {
+    private ProgressBar mProgressBar;
+
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
 
@@ -42,6 +46,8 @@ public class JobActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mProgressBar = (ProgressBar) findViewById(R.id.progress_bar_loader);
 
         mainRecyclerView = (RecyclerView) findViewById(R.id.recyclerView_main);
 
@@ -70,6 +76,8 @@ public class JobActivity extends AppCompatActivity {
 
     void run() throws IOException {
 
+        mProgressBar.setVisibility(View.VISIBLE);
+
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder().url(url).build();
@@ -88,6 +96,8 @@ public class JobActivity extends AppCompatActivity {
                 JobActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        mProgressBar.setVisibility(View.INVISIBLE);
+
                             String ISO_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
                             GsonBuilder gsonBuilder = new GsonBuilder();
                             gsonBuilder.setDateFormat(ISO_FORMAT);
@@ -96,7 +106,6 @@ public class JobActivity extends AppCompatActivity {
                             List<Job> jobs = new ArrayList<Job>();
                             jobs = Arrays.asList(gson.fromJson(jsonResponse, Job[].class));
 
-                            /*Job job = gson.fromJson(jsonResponse, Job.class);*/
                         final List<Job> finalJobs = jobs;
                         mAdapter = new JobAdapter(jobs, new JobAdapter.OnItemClickListener() {
                                 @Override
