@@ -9,7 +9,9 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -29,6 +31,8 @@ import okhttp3.Response;
 
 public class JobActivity extends AppCompatActivity {
     private ProgressBar mProgressBar;
+    private TextView mNoInternetConnectionTv;
+    private ImageView mNoWifiConnectionIv;
 
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
@@ -48,7 +52,8 @@ public class JobActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mProgressBar = (ProgressBar) findViewById(R.id.progress_bar_loader);
-
+        mNoInternetConnectionTv = findViewById(R.id.no_internet_connection_tv);
+        mNoWifiConnectionIv = findViewById(R.id.no_wifi_connection_imageview);
         mainRecyclerView = (RecyclerView) findViewById(R.id.recyclerView_main);
 
         // use a linear layout manager
@@ -56,16 +61,6 @@ public class JobActivity extends AppCompatActivity {
         mainRecyclerView.setLayoutManager(layoutManager);
 
         mainRecyclerView.setHasFixedSize(true);
-
-        //jobs = new ArrayList<Job>();
-        // Create a new adapter that takes the list of jobs as input
-        //mAdapter = new JobAdapter(jobs);
-
-
-
-        // Set the adapter on the {@link ListView}
-        // so the list can be populated in the user interface
-        //mainRecyclerView.setAdapter(mAdapter);
 
         try {
             run();
@@ -86,6 +81,9 @@ public class JobActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call call, IOException e) {
                 call.cancel();
+                mProgressBar.setVisibility(View.INVISIBLE);
+                mNoInternetConnectionTv.setText(R.string.no_internet_connection);
+                mNoWifiConnectionIv.setVisibility(View.VISIBLE);
             }
 
             @Override
