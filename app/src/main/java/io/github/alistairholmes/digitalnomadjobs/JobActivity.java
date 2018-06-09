@@ -2,21 +2,18 @@ package io.github.alistairholmes.digitalnomadjobs;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
-import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -61,12 +58,15 @@ public class JobActivity extends AppCompatActivity {
         mainRecyclerView.setLayoutManager(layoutManager);
 
         mainRecyclerView.setHasFixedSize(true);
+        mainRecyclerView.setAdapter(mAdapter);
+
 
         try {
             run();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     void run() throws IOException {
@@ -90,6 +90,7 @@ public class JobActivity extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
 
                 final String jsonResponse = response.body().string();
+                Log.d(LOG_TAG, String.valueOf(jsonResponse));
 
                 JobActivity.this.runOnUiThread(new Runnable() {
                     @Override
@@ -118,6 +119,8 @@ public class JobActivity extends AppCompatActivity {
                             });
 
                             mainRecyclerView.setAdapter(mAdapter);
+                        Log.d(LOG_TAG, String.valueOf(mAdapter));
+
                     }
                 });
 
