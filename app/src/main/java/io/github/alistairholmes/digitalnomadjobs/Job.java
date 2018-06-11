@@ -1,5 +1,7 @@
 package io.github.alistairholmes.digitalnomadjobs;
 
+import java.util.Date;
+
 // A Job object contains information related to a single job.
 public class Job {
 
@@ -10,7 +12,7 @@ public class Job {
     private String company;
 
     // Date that the job was posted
-    private String date;
+    private Date date;
 
     // Website where the job was posted
     private String url;
@@ -22,14 +24,12 @@ public class Job {
      * @param jobTitle is the title or role of the job
      * @param companyName is the name of the company
      * @param postDate is the date that the job was posted
-     *  //applyUrl is the website URL to find more details about the job
      */
 
-    public Job(String jobTitle, String companyName, String postDate) {
+    public Job(String jobTitle, String companyName, Date postDate) {
         position = jobTitle;
         company = companyName;
-        date = date;
-        //url = applyUrl;
+        date = postDate;
 
     }
 
@@ -44,7 +44,7 @@ public class Job {
     }
 
     // Returns the date that the job was posted
-    public String getDatePosted() {
+    public Date getDatePosted() {
         return date;
     }
 
