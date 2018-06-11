@@ -1,21 +1,30 @@
 package io.github.alistairholmes.digitalnomadjobs;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
-
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class JobAdapter extends RecyclerView.Adapter<JobAdapter.ViewHolder> {
 
     private OnItemClickListener mListener;
     private List<Job> jobs;
+
+    private static final String LOG_TAG = JobAdapter.class.getName();
+
+
 
     public interface OnItemClickListener {
         void onItemClick(int position);
@@ -33,7 +42,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.ViewHolder> {
         public TextView companyName;
         public TextView datePosted;
         public View layout;
-        public ImageView companyLogo;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -41,7 +50,6 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.ViewHolder> {
             jobTitle = (TextView) layout.findViewById(R.id.textView_job_title);
             companyName = (TextView) layout.findViewById(R.id.textView_company_name);
             datePosted = (TextView) layout.findViewById(R.id.textView_date);
-            companyLogo = (ImageView) layout.findViewById(R.id.imageView);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -88,18 +96,25 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.ViewHolder> {
         String mCompanyName = currentJob.getCompanyName();
         holder.companyName.setText(mCompanyName);
 
-        String mDatePosted = currentJob.getDatePosted();
-        holder.datePosted.setText(mDatePosted);
+        Context context = holder.datePosted.getContext();
 
-        if (!currentJob.getLogo().isEmpty()) {
-            Picasso.with(holder.itemView.getContext())
-                    .load(currentJob.getLogo())
-                    .fit()
-                    .into(holder.companyLogo);
-        }
-
+        Date mDatePosted = currentJob.getDatePosted();
+        String dateFormat = formatDayMonth(context, mDatePosted);
+        holder.datePosted.getContext();
+        holder.datePosted.setText(dateFormat);
     }
 
+    @Nullable
+    public static String formatDayMonth(@NonNull Context context, @Nullable Date date) {
+        if (date == null) {
+            return null;
+        }
+
+        SimpleDateFormat sdf = new SimpleDateFormat(
+                context.getString(R.string.format_date),
+                Locale.US);
+        return sdf.format(date);
+    }
     @Override
     public int getItemCount() {
         return jobs.size();
