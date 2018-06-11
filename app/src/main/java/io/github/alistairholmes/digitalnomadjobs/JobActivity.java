@@ -97,10 +97,6 @@ public class JobActivity extends AppCompatActivity {
                     public void run() {
                         mProgressBar.setVisibility(View.INVISIBLE);
 
-                            String ISO_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
-                            GsonBuilder gsonBuilder = new GsonBuilder();
-                            gsonBuilder.setDateFormat(ISO_FORMAT);
-
                             Gson gson = new GsonBuilder().create();
                             List<Job> jobs = new ArrayList<Job>();
                             jobs = Arrays.asList(gson.fromJson(jsonResponse, Job[].class));
@@ -120,12 +116,8 @@ public class JobActivity extends AppCompatActivity {
 
                             mainRecyclerView.setAdapter(mAdapter);
                         Log.d(LOG_TAG, String.valueOf(mAdapter));
-
                     }
                 });
-
-
-                Log.d(LOG_TAG, String.valueOf(mAdapter));
             }
         });
 
