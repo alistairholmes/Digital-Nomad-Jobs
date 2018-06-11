@@ -12,31 +12,32 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:fontFamily="@font/alegreya_sans_bold"
-        tools:text="Front-end Dev"
-        android:textSize="16sp"
+        android:fontFamily="@font/inconsolata"
+        android:textSize="17sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Front-end Dev" />
 
     <TextView
         android:id="@+id/textView_company_name"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/alegreya_sans"
-        tools:text="SquareSpace"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="@+id/textView_job_title"
-        app:layout_constraintTop_toBottomOf="@+id/textView_job_title" />
+        android:layout_height="21dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/montserrat"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_job_title"
+        tools:text="SquareSpace" />
 
     <TextView
         android:id="@+id/textView_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/alegreya_sans_light"
-        tools:text="16 June"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/source_code_pro"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_job_title" />
+        app:layout_constraintTop_toTopOf="@+id/textView_company_name"
+        tools:text="16 June" />
 </android.support.constraint.ConstraintLayout>

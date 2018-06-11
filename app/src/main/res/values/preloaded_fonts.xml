@@ -4,5 +4,8 @@
         <item>@font/alegreya_sans</item>
         <item>@font/alegreya_sans_bold</item>
         <item>@font/alegreya_sans_light</item>
+        <item>@font/inconsolata</item>
+        <item>@font/montserrat</item>
+        <item>@font/source_code_pro</item>
     </array>
 </resources>
