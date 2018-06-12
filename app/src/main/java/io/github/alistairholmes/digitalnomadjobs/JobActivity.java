@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -25,6 +26,8 @@ import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+
+import static android.support.v7.widget.DividerItemDecoration.HORIZONTAL;
 
 public class JobActivity extends AppCompatActivity {
     private ProgressBar mProgressBar;
@@ -56,6 +59,9 @@ public class JobActivity extends AppCompatActivity {
         // use a linear layout manager
         layoutManager = new LinearLayoutManager(this);
         mainRecyclerView.setLayoutManager(layoutManager);
+
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        mainRecyclerView.addItemDecoration(itemDecoration);
 
         mainRecyclerView.setHasFixedSize(true);
         mainRecyclerView.setAdapter(mAdapter);
