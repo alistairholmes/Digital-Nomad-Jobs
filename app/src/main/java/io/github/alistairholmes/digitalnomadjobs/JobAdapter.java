@@ -115,7 +115,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.ViewHolder> {
                 Locale.US);
         return sdf.format(date);
     }
-    @Override
+
     public int getItemCount() {
         return jobs.size();
     }
