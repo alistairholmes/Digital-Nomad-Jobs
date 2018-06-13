@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -26,8 +27,6 @@ import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-
-import static android.support.v7.widget.DividerItemDecoration.HORIZONTAL;
 
 public class JobActivity extends AppCompatActivity {
     private ProgressBar mProgressBar;
@@ -112,11 +111,15 @@ public class JobActivity extends AppCompatActivity {
                                 @Override
                                 public void onItemClick(int position) {
                                     Job clickedItem = finalJobs.get(position);
+                                    if (clickedItem.getUrl() != null) {
                                     Uri jobURL = Uri.parse(clickedItem.getUrl());
-                                    Intent intent =  new Intent(Intent.ACTION_VIEW);
-                                    intent.setData(jobURL);
-
-                                    startActivity(intent);
+                                        Intent intent =  new Intent(Intent.ACTION_VIEW);
+                                        intent.setData(jobURL);
+                                        startActivity(intent);
+                                    } else {
+                                        Toast.makeText(JobActivity.this, "Sorry no URL is available for this job at the moment. Please try again later",
+                                                Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             });
 
