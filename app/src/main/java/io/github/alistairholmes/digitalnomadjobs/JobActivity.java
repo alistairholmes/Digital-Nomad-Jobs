@@ -3,6 +3,7 @@ package io.github.alistairholmes.digitalnomadjobs;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -33,6 +34,8 @@ public class JobActivity extends AppCompatActivity {
     private TextView mNoInternetConnectionTv;
     private ImageView mNoWifiConnectionIv;
 
+    private SwipeRefreshLayout swipeContainer;
+
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
 
@@ -55,7 +58,10 @@ public class JobActivity extends AppCompatActivity {
         mNoWifiConnectionIv = findViewById(R.id.no_wifi_connection_imageview);
         mainRecyclerView = (RecyclerView) findViewById(R.id.recyclerView_main);
 
-        // use a linear layout manager
+        // Lookup the swipe container view
+        swipeContainer = findViewById(R.id.swipeContainer);
+
+            // use a linear layout manager
         layoutManager = new LinearLayoutManager(this);
         mainRecyclerView.setLayoutManager(layoutManager);
 
@@ -65,18 +71,47 @@ public class JobActivity extends AppCompatActivity {
         mainRecyclerView.setHasFixedSize(true);
         mainRecyclerView.setAdapter(mAdapter);
 
+        // Refresh the data
+        swipeContainer.post(new Runnable() {
+            @Override
+            public void run() {
+                swipeContainer.setRefreshing(true);
+                // Fetching data from server
+                try {
+                    loadJobData();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+            @Override
+            public void onRefresh() {
+                // Code to refresh the list here.
+                try {
+                    loadJobData();
+                    mProgressBar.setVisibility(View.INVISIBLE);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(R.color.colorAccent);
+
 
         try {
-            run();
+            loadJobData();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
 
-    void run() throws IOException {
-
-        mProgressBar.setVisibility(View.VISIBLE);
+    void loadJobData() throws IOException {
 
         OkHttpClient client = new OkHttpClient();
 
@@ -89,6 +124,9 @@ public class JobActivity extends AppCompatActivity {
                 mProgressBar.setVisibility(View.INVISIBLE);
                 mNoInternetConnectionTv.setText(R.string.no_internet_connection);
                 mNoWifiConnectionIv.setVisibility(View.VISIBLE);
+
+                // Stopping swipe refresh
+                swipeContainer.setRefreshing(false);
             }
 
             @Override
@@ -125,6 +163,9 @@ public class JobActivity extends AppCompatActivity {
 
                             mainRecyclerView.setAdapter(mAdapter);
                         Log.d(LOG_TAG, String.valueOf(mAdapter));
+
+                        // Stopping swipe refresh
+                        swipeContainer.setRefreshing(false);
                     }
                 });
             }
