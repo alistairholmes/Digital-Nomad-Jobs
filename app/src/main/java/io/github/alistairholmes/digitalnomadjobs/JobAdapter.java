@@ -16,18 +16,18 @@ import java.util.Locale;
 
 public class JobAdapter extends RecyclerView.Adapter<JobAdapter.ViewHolder> {
 
-    private OnItemClickListener mListener;
+    private OnJobClickListener mListener;
     private List<Job> jobs;
 
     private static final String LOG_TAG = JobAdapter.class.getName();
 
 
 
-    public interface OnItemClickListener {
-        void onItemClick(int position);
+    public interface OnJobClickListener {
+        void onJobClick(Job job);
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
+    public void setOnItemClickListener(OnJobClickListener listener) {
         mListener = listener;
     }
 
@@ -54,16 +54,18 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.ViewHolder> {
                     if (mListener != null) {
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
-                            mListener.onItemClick(position);
+                            Job currentJob = jobs.get(position);
+                            mListener.onJobClick(currentJob);
                         }
                     }
                 }
             });
+                }
         }
-    }
 
-    // Pass in a the Job constructor
-    public JobAdapter(List<Job> job, OnItemClickListener listener) {
+
+    // Job constructor
+    public JobAdapter(List<Job> job, OnJobClickListener listener) {
         jobs=job.subList(1, job.size());
         this.mListener = listener;
     }
@@ -114,6 +116,6 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.ViewHolder> {
     }
 
     public int getItemCount() {
-        return jobs.size();
+        return (jobs != null) ? jobs.size() : 0;
     }
 }
