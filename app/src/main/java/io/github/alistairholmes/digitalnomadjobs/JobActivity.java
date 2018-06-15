@@ -144,22 +144,20 @@ public class JobActivity extends AppCompatActivity {
                             List<Job> jobs = new ArrayList<Job>();
                             jobs = Arrays.asList(gson.fromJson(jsonResponse, Job[].class));
 
-                        final List<Job> finalJobs = jobs;
-                        mAdapter = new JobAdapter(jobs, new JobAdapter.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(int position) {
-                                    Job clickedItem = finalJobs.get(position);
-                                    if (clickedItem.getUrl() != null) {
-                                    Uri jobURL = Uri.parse(clickedItem.getUrl());
-                                        Intent intent =  new Intent(Intent.ACTION_VIEW);
-                                        intent.setData(jobURL);
-                                        startActivity(intent);
-                                    } else {
-                                        Toast.makeText(JobActivity.this, "Sorry no URL is available for this job at the moment. Please try again later",
-                                                Toast.LENGTH_SHORT).show();
-                                    }
+                        mAdapter = new JobAdapter(jobs, new JobAdapter.OnJobClickListener() {
+                            @Override
+                            public void onJobClick(Job job) {
+                                if (job.getUrl() != null) {
+                                    Uri jobURL = Uri.parse(job.getUrl());
+                                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                                    intent.setData(jobURL);
+                                    startActivity(intent);
+                                } else {
+                                    Toast.makeText(JobActivity.this, "Sorry no URL is available for this job at the moment. Please try again later",
+                                            Toast.LENGTH_SHORT).show();
                                 }
-                            });
+                            }
+                        });
 
                             mainRecyclerView.setAdapter(mAdapter);
                         Log.d(LOG_TAG, String.valueOf(mAdapter));
