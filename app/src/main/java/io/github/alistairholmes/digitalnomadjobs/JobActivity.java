@@ -15,8 +15,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.instabug.library.Instabug;
+import com.instabug.library.invocation.InstabugInvocationEvent;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -51,7 +54,7 @@ public class JobActivity extends AppCompatActivity {
 
         mNoInternetConnectionTv = findViewById(R.id.no_internet_connection_tv);
         mNoWifiConnectionIv = findViewById(R.id.no_wifi_connection_imageview);
-        mainRecyclerView = (RecyclerView) findViewById(R.id.recyclerView_main);
+        mainRecyclerView =  findViewById(R.id.recyclerView_main);
 
         // Lookup the swipe container view
         swipeContainer = findViewById(R.id.swipeContainer);
@@ -97,8 +100,8 @@ public class JobActivity extends AppCompatActivity {
         swipeContainer.setColorSchemeResources(R.color.colorAccent);
 
 
-        try {
-            loadJobData();
+           try {
+                loadJobData();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -147,6 +150,7 @@ public class JobActivity extends AppCompatActivity {
                                     CustomTabsIntent customTabsIntent = builder.build();
                                     // and launch the desired Url with CustomTabsIntent.launchUrl()
                                     customTabsIntent.launchUrl(JobActivity.this, Uri.parse(job.getUrl()));
+
                                 } else {
                                     Toast.makeText(JobActivity.this, "Sorry no URL is available for this job at the moment. Please try again later",
                                             Toast.LENGTH_SHORT).show();
