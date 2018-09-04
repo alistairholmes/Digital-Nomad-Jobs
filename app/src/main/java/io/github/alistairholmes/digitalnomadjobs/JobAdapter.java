@@ -1,13 +1,23 @@
 package io.github.alistairholmes.digitalnomadjobs;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -38,6 +48,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.ViewHolder> {
         public TextView jobTitle;
         public TextView companyName;
         public TextView datePosted;
+        public ImageView companyLogo;
         public View layout;
 
 
@@ -47,6 +58,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.ViewHolder> {
             jobTitle = (TextView) layout.findViewById(R.id.textView_job_title);
             companyName = (TextView) layout.findViewById(R.id.textView_company_name);
             datePosted = (TextView) layout.findViewById(R.id.textView_date);
+            companyLogo = layout.findViewById(R.id.imageViewLogo);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -101,6 +113,15 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.ViewHolder> {
         String dateFormat = formatDayMonth(context, mDatePosted);
         holder.datePosted.getContext();
         holder.datePosted.setText(dateFormat);
+
+        String mCompanyLogo = currentJob.getCompanyLogo();
+        RequestOptions requestOptions = new RequestOptions()
+                .placeholder(R.drawable.ic_launcher_foreground)
+                .circleCrop();
+        Glide.with(context)
+                .load(mCompanyLogo)
+                .apply(requestOptions)
+                .into(holder.companyLogo);
     }
 
     @Nullable
