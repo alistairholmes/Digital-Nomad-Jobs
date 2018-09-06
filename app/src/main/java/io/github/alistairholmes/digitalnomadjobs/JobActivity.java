@@ -1,15 +1,25 @@
 package io.github.alistairholmes.digitalnomadjobs;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.customtabs.CustomTabsIntent;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,6 +35,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+import io.reactivex.annotations.NonNull;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -32,6 +43,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class JobActivity extends AppCompatActivity {
+
     private TextView mNoInternetConnectionTv;
     private ImageView mNoWifiConnectionIv;
 
@@ -42,8 +54,6 @@ public class JobActivity extends AppCompatActivity {
     public RecyclerView.Adapter mAdapter;
     public RecyclerView mainRecyclerView;
     public String url = "https://remoteok.io/remote-jobs.json";
-
-
 
     private static final String LOG_TAG = JobActivity.class.getName();
 
@@ -168,5 +178,43 @@ public class JobActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    /**
+     * This is where we inflate and set up the menu for this Activity.
+     * @param menu The options menu in which you place your items.
+     * @return You must return true for the menu to be displayed;
+     *         if you return false it will not be shown.
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        /* Use AppCompatActivity's method getMenuInflater to get a handle on the menu inflater */
+        MenuInflater inflater = getMenuInflater();
+        /* Use the inflater's inflate method to inflate our menu layout to this menu */
+        inflater.inflate(R.menu.drawer_view, menu);
+        /* Return true so that the menu is displayed in the Toolbar */
+        return true;
+    }
+
+    /**
+     * Callback invoked when a menu item was selected from this Activity's menu.
+     * @param item The menu item that was selected by the user
+     * @return true if you handle the menu click here, false otherwise
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        if (id == R.id.nav_about) {
+            Toast.makeText(this, "About Page is opened.", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        if (id == R.id.nav_support_development) {
+            Toast.makeText(this, "Support Dev Page is opened.", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
