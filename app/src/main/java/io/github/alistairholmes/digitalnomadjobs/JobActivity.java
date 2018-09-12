@@ -207,11 +207,13 @@ public class JobActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.nav_about) {
-            Toast.makeText(this, "About Page is opened.", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(JobActivity.this, AboutActivity.class);
+            startActivity(intent);
             return true;
         }
         if (id == R.id.nav_support_development) {
-            Toast.makeText(this, "Support Dev Page is opened.", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(JobActivity.this, SupportDevActivity.class);
+            startActivity(intent);
             return true;
         }
 
