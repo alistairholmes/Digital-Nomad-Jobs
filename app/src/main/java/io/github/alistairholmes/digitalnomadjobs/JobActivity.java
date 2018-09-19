@@ -47,7 +47,7 @@ public class JobActivity extends AppCompatActivity {
     private TextView mNoInternetConnectionTv;
     private ImageView mNoWifiConnectionIv;
 
-    private SwipeRefreshLayout swipeContainer;
+    //private SwipeRefreshLayout swipeContainer;
 
     private RecyclerView.LayoutManager layoutManager;
 
@@ -67,7 +67,7 @@ public class JobActivity extends AppCompatActivity {
         mainRecyclerView =  findViewById(R.id.recyclerView_main);
 
         // Lookup the swipe container view
-        swipeContainer = findViewById(R.id.swipeContainer);
+        //swipeContainer = findViewById(R.id.swipeContainer);
 
             // use a linear layout manager
         layoutManager = new LinearLayoutManager(this);
@@ -80,7 +80,7 @@ public class JobActivity extends AppCompatActivity {
         mainRecyclerView.setAdapter(mAdapter);
 
         // Refresh the data
-        swipeContainer.post(new Runnable() {
+        /*swipeContainer.post(new Runnable() {
             @Override
             public void run() {
                 swipeContainer.setRefreshing(true);
@@ -114,6 +114,12 @@ public class JobActivity extends AppCompatActivity {
                 loadJobData();
         } catch (IOException e) {
             e.printStackTrace();
+        }*/
+
+        try {
+            loadJobData();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
     }
@@ -132,7 +138,7 @@ public class JobActivity extends AppCompatActivity {
                 mNoWifiConnectionIv.setVisibility(View.VISIBLE);
 
                 // Stopping swipe refresh
-                swipeContainer.setRefreshing(false);
+                //swipeContainer.setRefreshing(false);
             }
 
             @Override
@@ -172,7 +178,7 @@ public class JobActivity extends AppCompatActivity {
                         Log.d(LOG_TAG, String.valueOf(mAdapter));
 
                         // Stopping swipe refresh
-                        swipeContainer.setRefreshing(false);
+                        //swipeContainer.setRefreshing(false);
                     }
                 });
             }
