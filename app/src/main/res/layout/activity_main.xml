@@ -75,7 +75,7 @@
                 tools:layout_editor_absoluteX="16dp" />
 
             <mehdi.sakout.fancybuttons.FancyButton
-                android:id="@+id/btn_spot"
+                android:id="@+id/btn_frontend"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -94,7 +94,7 @@
                 tools:layout_editor_absoluteX="16dp" />
 
             <mehdi.sakout.fancybuttons.FancyButton
-                android:id="@+id/btn_spoti"
+                android:id="@+id/btn_ios"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -113,7 +113,7 @@
                 tools:layout_editor_absoluteX="16dp" />
 
             <mehdi.sakout.fancybuttons.FancyButton
-                android:id="@+id/btn_spotif"
+                android:id="@+id/btn_backend"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -127,12 +127,12 @@
                 fancy:fb_defaultColor="#ffc04a"
                 fancy:fb_focusColor="#9bd823"
                 fancy:fb_radius="30dp"
-                fancy:fb_text="Design"
+                fancy:fb_text="Back-End"
                 fancy:fb_textColor="#FFFFFF"
                 tools:layout_editor_absoluteX="16dp" />
 
             <mehdi.sakout.fancybuttons.FancyButton
-                android:id="@+id/btn_nodejs"
+                android:id="@+id/btn_javascript"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -146,12 +146,12 @@
                 fancy:fb_defaultColor="#ffc04a"
                 fancy:fb_focusColor="#9bd823"
                 fancy:fb_radius="30dp"
-                fancy:fb_text="nodejs"
+                fancy:fb_text="JavaScript"
                 fancy:fb_textColor="#FFFFFF"
                 tools:layout_editor_absoluteX="16dp" />
 
             <mehdi.sakout.fancybuttons.FancyButton
-                android:id="@+id/btn_python"
+                android:id="@+id/btn_devops"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -165,7 +165,7 @@
                 fancy:fb_defaultColor="#ffc04a"
                 fancy:fb_focusColor="#9bd823"
                 fancy:fb_radius="30dp"
-                fancy:fb_text="Python"
+                fancy:fb_text="DevOps"
                 fancy:fb_textColor="#FFFFFF"
                 tools:layout_editor_absoluteX="16dp" />
 

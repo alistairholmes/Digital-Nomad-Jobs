@@ -21,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,9 +36,11 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+import butterknife.OnClick;
 import io.reactivex.annotations.NonNull;
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -53,7 +56,7 @@ public class JobActivity extends AppCompatActivity {
 
     public RecyclerView.Adapter mAdapter;
     public RecyclerView mainRecyclerView;
-    public String url = "https://remoteok.io/remote-jobs.json";
+    public String remoteJobUrl = "https://remoteok.io/api";
 
     private static final String LOG_TAG = JobActivity.class.getName();
 
@@ -122,13 +125,15 @@ public class JobActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        categoryButtonPressed();
+
     }
 
     void loadJobData() throws IOException {
 
         OkHttpClient client = new OkHttpClient();
 
-        Request request = new Request.Builder().url(url).build();
+        Request request = new Request.Builder().url(remoteJobUrl).build();
 
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -185,6 +190,78 @@ public class JobActivity extends AppCompatActivity {
         });
 
     }
+
+    // Click listener for the Category buttons.
+    @OnClick({R.id.btn_android})
+    void categoryButtonPressed() {
+
+        Toast.makeText(JobActivity.this, "Sorry no URL is available for this job at the moment. Please try again later",
+                Toast.LENGTH_SHORT).show();
+
+        OkHttpClient client = new OkHttpClient();
+
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(remoteJobUrl).newBuilder();
+        urlBuilder.addQueryParameter("tags", "android");
+        String categoryUrl = urlBuilder.build().toString();
+
+
+        Request request = new Request.Builder().url(categoryUrl).build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                call.cancel();
+                mNoInternetConnectionTv.setText(R.string.no_internet_connection);
+                mNoWifiConnectionIv.setVisibility(View.VISIBLE);
+
+                // Stopping swipe refresh
+                //swipeContainer.setRefreshing(false);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+                final String jsonResponse = response.body().string();
+                Log.d(LOG_TAG, String.valueOf(jsonResponse));
+
+                JobActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        Gson gson = new GsonBuilder().create();
+                        List<Job> jobs = Arrays.asList(gson.fromJson(jsonResponse, Job[].class));
+
+                        mAdapter = new JobAdapter(jobs, new JobAdapter.OnJobClickListener() {
+                            @Override
+                            public void onJobClick(Job job) {
+                                if (job.getUrl() != null) {
+                                    // Use a CustomTabsIntent.Builder to configure CustomTabsIntent.
+                                    CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+                                    // set toolbar color and set custom actions before invoking build()
+                                    builder.setToolbarColor(ContextCompat.getColor(JobActivity.this, R.color.colorAccent));
+                                    // Once ready, call CustomTabsIntent.Builder.build() to create a CustomTabsIntent
+                                    CustomTabsIntent customTabsIntent = builder.build();
+                                    // and launch the desired Url with CustomTabsIntent.launchUrl()
+                                    customTabsIntent.launchUrl(JobActivity.this, Uri.parse(job.getUrl()));
+
+                                } else {
+                                    Toast.makeText(JobActivity.this, "Sorry no URL is available for this job at the moment. Please try again later",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+
+                        mainRecyclerView.setAdapter(mAdapter);
+                        Log.d(LOG_TAG, String.valueOf(mAdapter));
+
+                        // Stopping swipe refresh
+                        //swipeContainer.setRefreshing(false);
+                    }
+                });
+            }
+        });
+    }
+
 
     /**
      * This is where we inflate and set up the menu for this Activity.
