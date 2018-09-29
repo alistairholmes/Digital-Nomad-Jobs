@@ -15,10 +15,13 @@ public class Job {
     private Date date;
 
     // Website where the job was posted
-    private String url;
+   // private String url;
 
     // Logo of company
     private String logo;
+
+    // Description of Job
+    private String description;
 
 
     /**
@@ -27,7 +30,7 @@ public class Job {
      * @param jobTitle is the title or role of the job
      * @param companyName is the name of the company
      * @param postDate is the date that the job was posted
-     * @param logo is the company logo
+     * @param companyLogo is the company logo
      */
 
     public Job(String jobTitle, String companyName, Date postDate, String companyLogo) {
@@ -53,13 +56,17 @@ public class Job {
     }
 
     // Returns the website URL to find more information about the job
-    public String getUrl() {
+    /*public String getUrl() {
         return url;
-    }
+    }*/
 
     // Returns the logo of the company
     public String getCompanyLogo() {
         return logo;
     }
 
+    // Returns the description of the job
+    public String getDescription() {
+        return description;
+    }
 }
