@@ -55,9 +55,9 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.ViewHolder> {
         public ViewHolder(View itemView) {
             super(itemView);
             layout = itemView;
-            jobTitle = (TextView) layout.findViewById(R.id.textView_job_title);
-            companyName = (TextView) layout.findViewById(R.id.textView_company_name);
-            datePosted = (TextView) layout.findViewById(R.id.textView_date);
+            jobTitle = layout.findViewById(R.id.textView_job_title);
+            companyName = layout.findViewById(R.id.textView_company_name);
+            datePosted = layout.findViewById(R.id.textView_date);
             companyLogo = layout.findViewById(R.id.imageViewLogo);
 
             itemView.setOnClickListener(new View.OnClickListener() {

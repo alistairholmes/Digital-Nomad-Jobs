@@ -1,6 +1,7 @@
 package io.github.alistairholmes.digitalnomadjobs;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +40,7 @@ import java.util.List;
 import io.reactivex.annotations.NonNull;
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -53,7 +56,7 @@ public class JobActivity extends AppCompatActivity {
 
     public RecyclerView.Adapter mAdapter;
     public RecyclerView mainRecyclerView;
-    public String url = "https://remoteok.io/remote-jobs.json";
+    public String remoteJobUrl = "https://remoteok.io/api";
 
     private static final String LOG_TAG = JobActivity.class.getName();
 
@@ -128,7 +131,12 @@ public class JobActivity extends AppCompatActivity {
 
         OkHttpClient client = new OkHttpClient();
 
-        Request request = new Request.Builder().url(url).build();
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(remoteJobUrl).newBuilder();
+        urlBuilder.addQueryParameter("tags", "devops");
+        String categoryUrl = urlBuilder.build().toString();
+
+
+        Request request = new Request.Builder().url(categoryUrl).build();
 
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -157,24 +165,29 @@ public class JobActivity extends AppCompatActivity {
                         mAdapter = new JobAdapter(jobs, new JobAdapter.OnJobClickListener() {
                             @Override
                             public void onJobClick(Job job) {
-                                if (job.getUrl() != null) {
-                                    // Use a CustomTabsIntent.Builder to configure CustomTabsIntent.
-                                    CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
-                                    // set toolbar color and set custom actions before invoking build()
-                                    builder.setToolbarColor(ContextCompat.getColor(JobActivity.this, R.color.colorAccent));
-                                    // Once ready, call CustomTabsIntent.Builder.build() to create a CustomTabsIntent
-                                    CustomTabsIntent customTabsIntent = builder.build();
-                                    // and launch the desired Url with CustomTabsIntent.launchUrl()
-                                    customTabsIntent.launchUrl(JobActivity.this, Uri.parse(job.getUrl()));
 
-                                } else {
-                                    Toast.makeText(JobActivity.this, "Sorry no URL is available for this job at the moment. Please try again later",
-                                            Toast.LENGTH_SHORT).show();
-                                }
+                                //create a Bundle object
+                                Bundle extras = new Bundle();
+
+                                //Adding key value pairs to this bundle
+                                extras.putString("JOB_TITLE", job.getJobTitle());
+                                extras.putString("COMPANY_NAME", job.getCompanyName());
+                                extras.putString("COMPANY_LOGO", job.getCompanyLogo());
+                                extras.putString("JOB_DESCRIPTION", job.getDescription());
+                                extras.putInt("JOB_ID", job.getId());
+                                //create and initialize an intent
+                                Intent intent = new Intent(JobActivity.this, DetailActivity.class);
+
+                                //attach the bundle to the Intent object
+                                intent.putExtras(extras);
+
+                                //finally start the activity
+                                startActivity(intent);
+
                             }
                         });
 
-                            mainRecyclerView.setAdapter(mAdapter);
+                        mainRecyclerView.setAdapter(mAdapter);
                         Log.d(LOG_TAG, String.valueOf(mAdapter));
 
                         // Stopping swipe refresh
@@ -182,9 +195,9 @@ public class JobActivity extends AppCompatActivity {
                     }
                 });
             }
-        });
+});
+}
 
-    }
 
     /**
      * This is where we inflate and set up the menu for this Activity.
