@@ -14,14 +14,14 @@ public class Job {
     // Date that the job was posted
     private Date date;
 
-    // Website where the job was posted
-   // private String url;
-
     // Logo of company
     private String logo;
 
     // Description of Job
     private String description;
+
+    // id of job that links to site where the job was posted
+    private int id;
 
 
     /**
@@ -55,11 +55,6 @@ public class Job {
         return date;
     }
 
-    // Returns the website URL to find more information about the job
-    /*public String getUrl() {
-        return url;
-    }*/
-
     // Returns the logo of the company
     public String getCompanyLogo() {
         return logo;
@@ -68,5 +63,10 @@ public class Job {
     // Returns the description of the job
     public String getDescription() {
         return description;
+    }
+
+    // Returns the id of the job link
+    public int getId() {
+        return id;
     }
 }
