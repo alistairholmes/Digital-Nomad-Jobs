@@ -37,7 +37,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import butterknife.OnClick;
 import io.reactivex.annotations.NonNull;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -140,63 +139,64 @@ public class JobActivity extends AppCompatActivity {
         Request request = new Request.Builder().url(categoryUrl).build();
 
         client.newCall(request).enqueue(new Callback() {
-                                            @Override
-                                            public void onFailure(Call call, IOException e) {
-                                                call.cancel();
-                                                mNoInternetConnectionTv.setText(R.string.no_internet_connection);
-                                                mNoWifiConnectionIv.setVisibility(View.VISIBLE);
+            @Override
+            public void onFailure(Call call, IOException e) {
+                call.cancel();
+                mNoInternetConnectionTv.setText(R.string.no_internet_connection);
+                mNoWifiConnectionIv.setVisibility(View.VISIBLE);
 
-                                                // Stopping swipe refresh
-                                                //swipeContainer.setRefreshing(false);
-                                            }
+                // Stopping swipe refresh
+                //swipeContainer.setRefreshing(false);
+            }
 
-                                            @Override
-                                            public void onResponse(Call call, Response response) throws IOException {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
 
-                                                final String jsonResponse = response.body().string();
-                                                Log.d(LOG_TAG, String.valueOf(jsonResponse));
+                final String jsonResponse = response.body().string();
+                Log.d(LOG_TAG, String.valueOf(jsonResponse));
 
-                                                JobActivity.this.runOnUiThread(new Runnable() {
-                                                    @Override
-                                                    public void run() {
+                JobActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
 
-                                                        Gson gson = new GsonBuilder().create();
-                                                        List<Job> jobs = Arrays.asList(gson.fromJson(jsonResponse, Job[].class));
+                        Gson gson = new GsonBuilder().create();
+                        List<Job> jobs = Arrays.asList(gson.fromJson(jsonResponse, Job[].class));
 
-                                                        mAdapter = new JobAdapter(jobs, new JobAdapter.OnJobClickListener() {
-                                                            @Override
-                                                            public void onJobClick(Job job) {
+                        mAdapter = new JobAdapter(jobs, new JobAdapter.OnJobClickListener() {
+                            @Override
+                            public void onJobClick(Job job) {
 
-                                                                //create a Bundle object
-                                                                Bundle extras = new Bundle();
+                                //create a Bundle object
+                                Bundle extras = new Bundle();
 
-                                                                //Adding key value pairs to this bundle
-                                                                extras.putString("JOB_TITLE", job.getJobTitle());
-                                                                extras.putString("COMPANY_NAME", job.getCompanyName());
-                                                                extras.putString("COMPANY_LOGO", job.getCompanyLogo());
+                                //Adding key value pairs to this bundle
+                                extras.putString("JOB_TITLE", job.getJobTitle());
+                                extras.putString("COMPANY_NAME", job.getCompanyName());
+                                extras.putString("COMPANY_LOGO", job.getCompanyLogo());
+                                extras.putString("JOB_DESCRIPTION", job.getDescription());
+                                extras.putInt("JOB_ID", job.getId());
+                                //create and initialize an intent
+                                Intent intent = new Intent(JobActivity.this, DetailActivity.class);
 
-                                                                //create and initialize an intent
-                                                                Intent intent = new Intent(JobActivity.this, DetailActivity.class);
+                                //attach the bundle to the Intent object
+                                intent.putExtras(extras);
 
-                                                                //attach the bundle to the Intent object
-                                                                intent.putExtras(extras);
+                                //finally start the activity
+                                startActivity(intent);
 
-                                                                //finally start the activity
-                                                                startActivity(intent);
+                            }
+                        });
 
-                                                            }
-                                                        });
+                        mainRecyclerView.setAdapter(mAdapter);
+                        Log.d(LOG_TAG, String.valueOf(mAdapter));
 
-                                                        mainRecyclerView.setAdapter(mAdapter);
-                                                        Log.d(LOG_TAG, String.valueOf(mAdapter));
-
-                                                        // Stopping swipe refresh
-                                                        //swipeContainer.setRefreshing(false);
-                                                    }
-                                                });
-                                            }
-            });
-    }
+                        // Stopping swipe refresh
+                        //swipeContainer.setRefreshing(false);
+                    }
+                });
+            }
+});
+}
 
 
     /**
