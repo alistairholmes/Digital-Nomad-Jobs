@@ -1,5 +1,0 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<testsuite name="" tests="1" failures="0" errors="0" skipped="0" time="0.006" timestamp="2018-09-27T11:52:05" hostname="localhost">
-  <properties />
-  <testcase name="useAppContext" classname="io.github.alistairholmes.digitalnomadjobs.ExampleInstrumentedTest" time="0.0" />
-</testsuite>
