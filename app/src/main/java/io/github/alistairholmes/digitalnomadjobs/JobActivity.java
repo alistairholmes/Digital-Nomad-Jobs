@@ -1,6 +1,7 @@
 package io.github.alistairholmes.digitalnomadjobs;
 
 import android.app.Activity;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -16,12 +17,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,7 +37,9 @@ import com.instabug.library.Instabug;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 import io.reactivex.annotations.NonNull;
@@ -49,12 +54,14 @@ public class JobActivity extends AppCompatActivity {
 
     private TextView mNoInternetConnectionTv;
     private ImageView mNoWifiConnectionIv;
+    private SearchView searchView;
 
-    //private SwipeRefreshLayout swipeContainer;
+    private SwipeRefreshLayout swipeContainer;
+
+    OkHttpClient client = new OkHttpClient();
 
     private RecyclerView.LayoutManager layoutManager;
-
-    public RecyclerView.Adapter mAdapter;
+    public JobAdapter mAdapter;
     public RecyclerView mainRecyclerView;
     public String remoteJobUrl = "https://remoteok.io/api";
 
@@ -70,9 +77,9 @@ public class JobActivity extends AppCompatActivity {
         mainRecyclerView =  findViewById(R.id.recyclerView_main);
 
         // Lookup the swipe container view
-        //swipeContainer = findViewById(R.id.swipeContainer);
+        swipeContainer = findViewById(R.id.swipeRefreshLayout);
 
-            // use a linear layout manager
+        // use a linear layout manager
         layoutManager = new LinearLayoutManager(this);
         mainRecyclerView.setLayoutManager(layoutManager);
 
@@ -83,13 +90,13 @@ public class JobActivity extends AppCompatActivity {
         mainRecyclerView.setAdapter(mAdapter);
 
         // Refresh the data
-        /*swipeContainer.post(new Runnable() {
+        swipeContainer.post(new Runnable() {
             @Override
             public void run() {
                 swipeContainer.setRefreshing(true);
                 // Fetching data from server
                 try {
-                    loadJobData();
+                    loadJobData(remoteJobUrl);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -102,7 +109,7 @@ public class JobActivity extends AppCompatActivity {
             public void onRefresh() {
                 // Code to refresh the list here.
                 try {
-                    loadJobData();
+                    loadJobData(remoteJobUrl);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -112,31 +119,17 @@ public class JobActivity extends AppCompatActivity {
         // Configure the refreshing colors
         swipeContainer.setColorSchemeResources(R.color.colorAccent);
 
-
-           try {
-                loadJobData();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-
         try {
-            loadJobData();
+            loadJobData(remoteJobUrl);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
 
-    void loadJobData() throws IOException {
+    void loadJobData(String url) throws IOException {
 
-        OkHttpClient client = new OkHttpClient();
-
-        HttpUrl.Builder urlBuilder = HttpUrl.parse(remoteJobUrl).newBuilder();
-        urlBuilder.addQueryParameter("tags", "devops");
-        String categoryUrl = urlBuilder.build().toString();
-
-
-        Request request = new Request.Builder().url(categoryUrl).build();
+        Request request = new Request.Builder().url(url).build();
 
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -146,7 +139,7 @@ public class JobActivity extends AppCompatActivity {
                 mNoWifiConnectionIv.setVisibility(View.VISIBLE);
 
                 // Stopping swipe refresh
-                //swipeContainer.setRefreshing(false);
+                swipeContainer.setRefreshing(false);
             }
 
             @Override
@@ -160,7 +153,7 @@ public class JobActivity extends AppCompatActivity {
                     public void run() {
 
                         Gson gson = new GsonBuilder().create();
-                        List<Job> jobs = Arrays.asList(gson.fromJson(jsonResponse, Job[].class));
+                        List<Job> jobs = new ArrayList<Job>(Arrays.asList(gson.fromJson(jsonResponse, Job[].class)));
 
                         mAdapter = new JobAdapter(jobs, new JobAdapter.OnJobClickListener() {
                             @Override
@@ -191,7 +184,7 @@ public class JobActivity extends AppCompatActivity {
                         Log.d(LOG_TAG, String.valueOf(mAdapter));
 
                         // Stopping swipe refresh
-                        //swipeContainer.setRefreshing(false);
+                        swipeContainer.setRefreshing(false);
                     }
                 });
             }
@@ -211,31 +204,29 @@ public class JobActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         /* Use the inflater's inflate method to inflate our menu layout to this menu */
         inflater.inflate(R.menu.drawer_view, menu);
+
+        // Associate searchable configuration with the SearchView
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
+        // listening to search query text change
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                // filter recycler view when text is changed
+                mAdapter.getFilter().filter(query);
+                return false;
+            }
+        });
+
         /* Return true so that the menu is displayed in the Toolbar */
         return true;
-    }
-
-    /**
-     * Callback invoked when a menu item was selected from this Activity's menu.
-     * @param item The menu item that was selected by the user
-     * @return true if you handle the menu click here, false otherwise
-     */
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        int id = item.getItemId();
-
-        if (id == R.id.nav_about) {
-            Intent intent = new Intent(JobActivity.this, AboutActivity.class);
-            startActivity(intent);
-            return true;
-        }
-        if (id == R.id.nav_support_development) {
-            Intent intent = new Intent(JobActivity.this, SupportDevActivity.class);
-            startActivity(intent);
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }

@@ -5,12 +5,11 @@
     tools:context=".JobActivity">
 
     <item
-        android:id="@+id/nav_about"
-        android:title="About"
-        app:showAsAction="never"/>
-    <item
-        android:id="@+id/nav_support_development"
-        android:title="Support Development"
-        app:showAsAction="never"/>
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_search"
+        android:orderInCategory="100"
+        android:title="Search"
+        app:showAsAction="ifRoom|collapseActionView"
+        app:actionViewClass="android.support.v7.widget.SearchView" />
 
 </menu>

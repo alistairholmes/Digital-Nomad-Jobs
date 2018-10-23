@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,17 +22,19 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
-public class JobAdapter extends RecyclerView.Adapter<JobAdapter.ViewHolder> {
+public class JobAdapter extends RecyclerView.Adapter<JobAdapter.ViewHolder> implements Filterable {
 
     private OnJobClickListener mListener;
     private List<Job> jobs;
+    private List<Job> jobsListFiltered;
 
     private static final String LOG_TAG = JobAdapter.class.getName();
-
 
 
     public interface OnJobClickListener {
@@ -72,14 +76,15 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.ViewHolder> {
                     }
                 }
             });
-                }
         }
+    }
 
 
     // Job constructor
     public JobAdapter(List<Job> job, OnJobClickListener listener) {
-        jobs=job.subList(1, job.size());
+        jobs = new ArrayList<>(job.subList(1, job.size()));
         this.mListener = listener;
+        jobsListFiltered = new LinkedList<>(job);
     }
 
     // Create new views (invoked by the layout manager)
@@ -87,7 +92,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.ViewHolder> {
     public JobAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View v = inflater.inflate(R.layout.job_item_row, parent,false);
+        View v = inflater.inflate(R.layout.job_item_row, parent, false);
 
         // set the view's size, margins, paddings and layout parameters
         ViewHolder vh = new ViewHolder(v);
@@ -124,19 +129,56 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.ViewHolder> {
                 .into(holder.companyLogo);
     }
 
-    @Nullable
-    public static String formatDayMonth(@NonNull Context context, @Nullable Date date) {
-        if (date == null) {
-            return null;
+        @Nullable
+        public static String formatDayMonth (@NonNull Context context, @Nullable Date date){
+            if (date == null) {
+                return null;
+            }
+
+            SimpleDateFormat sdf = new SimpleDateFormat(
+                    context.getString(R.string.format_date),
+                    Locale.US);
+            return sdf.format(date);
         }
 
-        SimpleDateFormat sdf = new SimpleDateFormat(
-                context.getString(R.string.format_date),
-                Locale.US);
-        return sdf.format(date);
+        public int getItemCount () {
+            return (jobs != null) ? jobs.size() : 0;
+        }
+
+    @Override
+    public Filter getFilter() {
+        return jobFilter;
     }
 
-    public int getItemCount() {
-        return (jobs != null) ? jobs.size() : 0;
-    }
+    private Filter jobFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Job> filteredList = new ArrayList<>();
+
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(jobsListFiltered);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for (Job job : jobsListFiltered) {
+                    if (job.getJobTitle().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(job);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            jobs.clear();
+            jobs.addAll((ArrayList)results.values);
+            notifyDataSetChanged();
+        }
+    };
+
 }
