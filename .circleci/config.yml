@@ -28,12 +28,3 @@ jobs:
           destination: reports
       - store_test_results:
 path: app/build/test-result
-
-workflows:
-  version: 2
-  workflow:
-    jobs:
-      - test_unit
-      - test_instrumentation:
-          requires:
-            - test_unit
