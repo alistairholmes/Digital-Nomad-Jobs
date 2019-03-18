@@ -8,7 +8,7 @@ references:
   android_config: &android_config
     working_directory: *workspace
     docker:
-      - image: circleci/android:api-27-alpha
+      - image: circleci/android:api-28-alpha
     environment:
       TERM: dumb
       _JAVA_OPTIONS: "-Xmx2048m -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
@@ -53,54 +53,28 @@ references:
       name: Download Android Dependencies
       command: ./gradlew androidDependencies
 
-jobs:
-  ## Run unit tests
-  test_unit:
-    <<: *android_config
-    steps:
-      - checkout
-      - *restore_gradle_cache
-      - *restore_gems_cache
-      - *ruby_dependencies
-      - *android_dependencies
-      - *save_gradle_cache
-      - *save_gems_cache
-      - run:
-          name: Run unit tests
-          command: bundle exec fastlane unit_tests
-      - store_artifacts:
-          path: app/build/reports/
-          destination: /reports/
-      - store_test_results:
-          path: app/build/test-results/
-          destination: /test-results/
-
-  ## Run instrumentation tests
-  test_instrumentation:
-    <<: *android_config
-    steps:
-      - checkout
-      - *restore_gradle_cache
-      - *restore_gems_cache
-      - *ruby_dependencies
-      - *android_dependencies
-      - *save_gradle_cache
-      - *save_gems_cache
-      # Since we will download a video, we require integrity checking with CRC32c
-      # But the crcmod installation in the docker image isn't using the module's C extension
-      # So, uninstall it and install again with the C extension
-      - run:
-          name: Uninstall crcmod
-          command: echo "y" | sudo pip uninstall crcmod
-      - run:
-          name: Install crcmod
-          command: sudo pip install -U crcmod
-      - run:
-          name: Run instrumentation tests in Firebase testlab
-          command: bundle exec fastlane instrumentation_tests_testlab
-      - store_artifacts:
-          path: firebase/
-          destination: /firebase/
+steps:
+  - checkout
+  - restore_cache:
+      key: *gradle_key
+  - run:
+      name: Chmod permissions
+      command: sudo chmod +x ./gradlew
+  - run:
+      name: Download Dependencies
+      command: ./gradlew androidDependencies
+  - save_cache:
+      paths:
+        - ~/.gradle
+      key: *gradle_key
+  - run:
+      name: Build Debug
+      command: ./gradlew assembleDebug
+  - store_artifacts:
+      path: app/build/reports
+      destination: reports
+  - store_test_results:
+path: app/build/test-result
 
 workflows:
   version: 2
