@@ -4,7 +4,6 @@ references:
   workspace: &workspace
     ~/src
 
-jobs:
   build:
   ## Docker image configurations
   android_config: &android_config
@@ -55,7 +54,8 @@ jobs:
       name: Download Android Dependencies
       command: ./gradlew androidDependencies
 
-steps:
+jobs:
+  steps:
   - checkout
   - restore_cache:
       key: *gradle_key
