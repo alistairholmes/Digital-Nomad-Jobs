@@ -38,6 +38,7 @@ dependencies {
     // Image Loading...
     implementation 'com.github.bumptech.glide:glide:4.8.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
+    annotationProcessor 'androidx.annotation:annotation:1.0.2'
     implementation 'jp.wasabeef:glide-transformations:3.3.0'
     // Fancy Buttons
     implementation 'com.github.medyo:fancybuttons:1.8.4'
