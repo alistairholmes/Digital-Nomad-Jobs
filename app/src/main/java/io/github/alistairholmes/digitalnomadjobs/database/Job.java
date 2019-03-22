@@ -30,45 +30,47 @@ public class Job {
     /**
      * Constructs a new Job object.
      *
-     * @param jobTitle is the title or role of the job
-     * @param companyName is the name of the company
-     * @param postDate is the date that the job was posted
-     * @param companyLogo is the company logo
+     * @param position is the title or role of the job
+     * @param company is the name of the company
+     * @param date is the date that the job was posted
+     * @param logo is the company logo
      */
 
     @Ignore
-    public Job(String jobTitle, String companyName, Date postDate, String companyLogo) {
-        position = jobTitle;
-        company = companyName;
-        date = postDate;
-        logo = companyLogo;
+    public Job(String position, String company, Date date, String logo, String description) {
+        this.position = position;
+        this.company = company;
+        this.date = date;
+        this.logo = logo;
+        this.description = description;
     }
 
-    public Job(int id, String jobTitle, String companyName, Date postDate, String companyLogo) {
+    public Job(int id, String position, String company, Date date, String logo, String description) {
         this.id = id;
-        this.position = jobTitle;
-        this.company = companyName;
-        this.date = postDate;
-        this.logo = companyLogo;
+        this.position = position;
+        this.company = company;
+        this.date = date;
+        this.logo = logo;
+        this.description = description;
     }
 
     // Returns the title of the job
-    public String getJobTitle() {
+    public String getPosition() {
         return position;
     }
 
     // Returns the name of the company
-    public String getCompanyName() {
+    public String getCompany() {
         return company;
     }
 
     // Returns the date that the job was posted
-    public Date getDatePosted() {
+    public Date getDate() {
         return date;
     }
 
     // Returns the logo of the company
-    public String getCompanyLogo() {
+    public String getLogo() {
         return logo;
     }
 

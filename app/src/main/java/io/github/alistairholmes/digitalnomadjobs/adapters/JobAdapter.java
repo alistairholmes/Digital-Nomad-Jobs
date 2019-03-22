@@ -105,20 +105,20 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.ViewHolder> impl
         // Replace the contents of the view with that element
         Job currentJob = jobs.get(position);
 
-        String mJobTitle = currentJob.getJobTitle();
+        String mJobTitle = currentJob.getPosition();
         holder.jobTitle.setText(mJobTitle);
 
-        String mCompanyName = currentJob.getCompanyName();
+        String mCompanyName = currentJob.getCompany();
         holder.companyName.setText(mCompanyName);
 
         Context context = holder.datePosted.getContext();
 
-        Date mDatePosted = currentJob.getDatePosted();
+        Date mDatePosted = currentJob.getDate();
         String dateFormat = formatDayMonth(context, mDatePosted);
         holder.datePosted.getContext();
         holder.datePosted.setText(dateFormat);
 
-        String mCompanyLogo = currentJob.getCompanyLogo();
+        String mCompanyLogo = currentJob.getLogo();
         RequestOptions requestOptions = new RequestOptions()
                 .placeholder(R.drawable.ic_launcher_foreground)
                 .circleCrop();
@@ -160,7 +160,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.ViewHolder> impl
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
                 for (Job job : jobsListFiltered) {
-                    if (job.getJobTitle().toLowerCase().contains(filterPattern)) {
+                    if (job.getPosition().toLowerCase().contains(filterPattern)) {
                         filteredList.add(job);
                     }
                 }

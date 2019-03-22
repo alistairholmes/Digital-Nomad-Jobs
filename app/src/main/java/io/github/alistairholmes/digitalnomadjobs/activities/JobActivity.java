@@ -151,9 +151,9 @@ public class JobActivity extends AppCompatActivity {
                                 Bundle extras = new Bundle();
 
                                 //Adding key value pairs to this bundle
-                                extras.putString("JOB_TITLE", job.getJobTitle());
-                                extras.putString("COMPANY_NAME", job.getCompanyName());
-                                extras.putString("COMPANY_LOGO", job.getCompanyLogo());
+                                extras.putString("JOB_TITLE", job.getPosition());
+                                extras.putString("COMPANY_NAME", job.getCompany());
+                                extras.putString("COMPANY_LOGO", job.getLogo());
                                 extras.putString("JOB_DESCRIPTION", job.getDescription());
                                 extras.putInt("JOB_ID", job.getId());
                                 //create and initialize an intent
