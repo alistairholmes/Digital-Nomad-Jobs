@@ -32,6 +32,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.ViewHolder> impl
     private OnJobClickListener mListener;
     private List<Job> jobs;
     private List<Job> jobsListFiltered;
+    private Context context;
 
     private static final String LOG_TAG = JobAdapter.class.getName();
 
@@ -80,9 +81,10 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.ViewHolder> impl
 
 
     // Job constructor
-    public JobAdapter(List<Job> job, OnJobClickListener listener) {
+    public JobAdapter(Context context, List<Job> job, OnJobClickListener listener) {
         jobs = new ArrayList<>(job.subList(1, job.size()));
         this.mListener = listener;
+        this.context = context;
         jobsListFiltered = new LinkedList<>(job);
     }
 

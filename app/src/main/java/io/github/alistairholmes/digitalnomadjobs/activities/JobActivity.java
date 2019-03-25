@@ -2,16 +2,14 @@ package io.github.alistairholmes.digitalnomadjobs.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.browser.customtabs.CustomTabsIntent;
-import androidx.core.content.ContextCompat;
+
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,23 +18,18 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import io.github.alistairholmes.digitalnomadjobs.R;
 import io.github.alistairholmes.digitalnomadjobs.adapters.JobAdapter;
 import io.github.alistairholmes.digitalnomadjobs.database.Job;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import io.github.alistairholmes.digitalnomadjobs.network.ApiClient;
+import io.github.alistairholmes.digitalnomadjobs.network.GetDataService;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class JobActivity extends AppCompatActivity {
 
@@ -46,12 +39,12 @@ public class JobActivity extends AppCompatActivity {
 
     private SwipeRefreshLayout swipeContainer;
 
-    OkHttpClient client = new OkHttpClient();
+    //OkHttpClient client = new OkHttpClient();
 
     private RecyclerView.LayoutManager layoutManager;
     public JobAdapter mAdapter;
     public RecyclerView mainRecyclerView;
-    public String remoteJobUrl = "https://remoteok.io/api";
+    //public String remoteJobUrl = "https://remoteok.io/api";
 
     private static final String LOG_TAG = JobActivity.class.getName();
 
@@ -77,107 +70,53 @@ public class JobActivity extends AppCompatActivity {
         mainRecyclerView.setHasFixedSize(true);
         mainRecyclerView.setAdapter(mAdapter);
 
-        // Refresh the data
-        swipeContainer.post(new Runnable() {
+        /*Create handle for the RetrofitInstance interface*/
+        GetDataService service = ApiClient.getRetrofitInstance().create(GetDataService.class);
+        Call<List<Job>> call = service.getAllJobs();
+        call.enqueue(new Callback<List<Job>>() {
             @Override
-            public void run() {
-                swipeContainer.setRefreshing(true);
-                // Fetching data from server
-                try {
-                    loadJobData(remoteJobUrl);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            public void onResponse(Call<List<Job>> call, Response<List<Job>> response) {
+                    generateDataList(response.body());
             }
-        });
-
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 
             @Override
-            public void onRefresh() {
-                // Code to refresh the list here.
-                try {
-                    loadJobData(remoteJobUrl);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            public void onFailure(Call<List<Job>> call, Throwable t) {
+                Toast.makeText(JobActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
-
-        // Configure the refreshing colors
-        swipeContainer.setColorSchemeResources(R.color.colorAccent);
-
-        try {
-            loadJobData(remoteJobUrl);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
     }
 
-    void loadJobData(String url) throws IOException {
-
-        Request request = new Request.Builder().url(url).build();
-
-        client.newCall(request).enqueue(new Callback() {
+    /*Method to generate List of data using RecyclerView with custom adapter*/
+    private void generateDataList(List<Job> jobList) {
+        mainRecyclerView = findViewById(R.id.recyclerView_main);
+        mAdapter = new JobAdapter(this, jobList, new JobAdapter.OnJobClickListener() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                call.cancel();
-                mNoInternetConnectionTv.setText(R.string.no_internet_connection);
-                mNoWifiConnectionIv.setVisibility(View.VISIBLE);
+            public void onJobClick(Job job) {
+                //create a Bundle object
+                Bundle extras = new Bundle();
 
-                // Stopping swipe refresh
-                swipeContainer.setRefreshing(false);
+                //Adding key value pairs to this bundle
+                extras.putString("JOB_TITLE", job.getPosition());
+                extras.putString("COMPANY_NAME", job.getCompany());
+                extras.putString("COMPANY_LOGO", job.getLogo());
+                extras.putString("JOB_DESCRIPTION", job.getDescription());
+                extras.putInt("JOB_ID", job.getId());
+                //create and initialize an intent
+                Intent intent = new Intent(JobActivity.this, DetailActivity.class);
+
+                //attach the bundle to the Intent object
+                intent.putExtras(extras);
+
+                //finally start the activity
+                startActivity(intent);
             }
+        });
 
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-
-                final String jsonResponse = response.body().string();
-                Log.d(LOG_TAG, String.valueOf(jsonResponse));
-
-                JobActivity.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        Gson gson = new GsonBuilder().create();
-                        List<Job> jobs = new ArrayList<Job>(Arrays.asList(gson.fromJson(jsonResponse, Job[].class)));
-
-                        mAdapter = new JobAdapter(jobs, new JobAdapter.OnJobClickListener() {
-                            @Override
-                            public void onJobClick(Job job) {
-
-                                //create a Bundle object
-                                Bundle extras = new Bundle();
-
-                                //Adding key value pairs to this bundle
-                                extras.putString("JOB_TITLE", job.getPosition());
-                                extras.putString("COMPANY_NAME", job.getCompany());
-                                extras.putString("COMPANY_LOGO", job.getLogo());
-                                extras.putString("JOB_DESCRIPTION", job.getDescription());
-                                extras.putInt("JOB_ID", job.getId());
-                                //create and initialize an intent
-                                Intent intent = new Intent(JobActivity.this, DetailActivity.class);
-
-                                //attach the bundle to the Intent object
-                                intent.putExtras(extras);
-
-                                //finally start the activity
-                                startActivity(intent);
-
-                            }
-                        });
-
-                        mainRecyclerView.setAdapter(mAdapter);
-                        Log.d(LOG_TAG, String.valueOf(mAdapter));
-
-                        // Stopping swipe refresh
-                        swipeContainer.setRefreshing(false);
-                    }
-                });
-            }
-});
-}
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(JobActivity.this);
+        mainRecyclerView.setLayoutManager(layoutManager);
+        mainRecyclerView.setAdapter(mAdapter);
+    }
 
 
     /**
