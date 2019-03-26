@@ -1,4 +1,4 @@
-package io.github.alistairholmes.digitalnomadjobs;
+package io.github.alistairholmes.digitalnomadjobs.adapters;
 
 import android.content.Context;
 
@@ -24,11 +24,15 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
+import io.github.alistairholmes.digitalnomadjobs.R;
+import io.github.alistairholmes.digitalnomadjobs.database.Job;
+
 public class JobAdapter extends RecyclerView.Adapter<JobAdapter.ViewHolder> implements Filterable {
 
     private OnJobClickListener mListener;
     private List<Job> jobs;
     private List<Job> jobsListFiltered;
+    private Context context;
 
     private static final String LOG_TAG = JobAdapter.class.getName();
 
@@ -77,9 +81,10 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.ViewHolder> impl
 
 
     // Job constructor
-    public JobAdapter(List<Job> job, OnJobClickListener listener) {
+    public JobAdapter(Context context, List<Job> job, OnJobClickListener listener) {
         jobs = new ArrayList<>(job.subList(1, job.size()));
         this.mListener = listener;
+        this.context = context;
         jobsListFiltered = new LinkedList<>(job);
     }
 
@@ -102,20 +107,20 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.ViewHolder> impl
         // Replace the contents of the view with that element
         Job currentJob = jobs.get(position);
 
-        String mJobTitle = currentJob.getJobTitle();
+        String mJobTitle = currentJob.getPosition();
         holder.jobTitle.setText(mJobTitle);
 
-        String mCompanyName = currentJob.getCompanyName();
+        String mCompanyName = currentJob.getCompany();
         holder.companyName.setText(mCompanyName);
 
         Context context = holder.datePosted.getContext();
 
-        Date mDatePosted = currentJob.getDatePosted();
+        Date mDatePosted = currentJob.getDate();
         String dateFormat = formatDayMonth(context, mDatePosted);
         holder.datePosted.getContext();
         holder.datePosted.setText(dateFormat);
 
-        String mCompanyLogo = currentJob.getCompanyLogo();
+        String mCompanyLogo = currentJob.getLogo();
         RequestOptions requestOptions = new RequestOptions()
                 .placeholder(R.drawable.ic_launcher_foreground)
                 .circleCrop();
@@ -157,7 +162,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.ViewHolder> impl
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
                 for (Job job : jobsListFiltered) {
-                    if (job.getJobTitle().toLowerCase().contains(filterPattern)) {
+                    if (job.getPosition().toLowerCase().contains(filterPattern)) {
                         filteredList.add(job);
                     }
                 }

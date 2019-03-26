@@ -1,4 +1,4 @@
-package io.github.alistairholmes.digitalnomadjobs;
+package io.github.alistairholmes.digitalnomadjobs.activities;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+
+import io.github.alistairholmes.digitalnomadjobs.R;
 
 public class DetailActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package io.github.alistairholmes.digitalnomadjobs;
+package io.github.alistairholmes.digitalnomadjobs.utils;
 
 import com.bumptech.glide.annotation.GlideModule;
 import com.bumptech.glide.module.AppGlideModule;

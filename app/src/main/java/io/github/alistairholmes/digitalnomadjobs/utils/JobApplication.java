@@ -1,4 +1,4 @@
-package io.github.alistairholmes.digitalnomadjobs;
+package io.github.alistairholmes.digitalnomadjobs.utils;
 
 import android.app.Application;
 
