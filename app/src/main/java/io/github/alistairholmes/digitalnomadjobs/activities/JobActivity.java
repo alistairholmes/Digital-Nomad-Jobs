@@ -71,12 +71,12 @@ public class JobActivity extends AppCompatActivity {
         mainRecyclerView.setAdapter(mAdapter);
 
         /*Create handle for the RetrofitInstance interface*/
-        GetDataService service = ApiClient.getRetrofitInstance().create(GetDataService.class);
+        final GetDataService service = ApiClient.getRetrofitInstance().create(GetDataService.class);
         Call<List<Job>> call = service.getAllJobs();
         call.enqueue(new Callback<List<Job>>() {
             @Override
             public void onResponse(Call<List<Job>> call, Response<List<Job>> response) {
-                    generateDataList(response.body());
+                generateDataList(response.body());
             }
 
             @Override
@@ -84,6 +84,43 @@ public class JobActivity extends AppCompatActivity {
                 Toast.makeText(JobActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
+
+        findViewById(R.id.btn_android).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Call<List<Job>> call = service.getAndroidJobs();
+                call.enqueue(new Callback<List<Job>>() {
+                    @Override
+                    public void onResponse(Call<List<Job>> call, Response<List<Job>> response) {
+                        generateDataList(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Job>> call, Throwable t) {
+                        Toast.makeText(JobActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
+        findViewById(R.id.btn_frontend).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Call<List<Job>> call = service.getFrontEndJobs();
+                call.enqueue(new Callback<List<Job>>() {
+                    @Override
+                    public void onResponse(Call<List<Job>> call, Response<List<Job>> response) {
+                        generateDataList(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Job>> call, Throwable t) {
+                        Toast.makeText(JobActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
 
     }
 
@@ -131,27 +168,6 @@ public class JobActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         /* Use the inflater's inflate method to inflate our menu layout to this menu */
         inflater.inflate(R.menu.drawer_view, menu);
-
-        // Associate searchable configuration with the SearchView
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) searchItem.getActionView();
-
-        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
-
-        // listening to search query text change
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String query) {
-                // filter recycler view when text is changed
-                mAdapter.getFilter().filter(query);
-                return false;
-            }
-        });
 
         /* Return true so that the menu is displayed in the Toolbar */
         return true;
