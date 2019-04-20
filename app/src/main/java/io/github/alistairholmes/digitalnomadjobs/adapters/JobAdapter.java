@@ -9,8 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,18 +18,16 @@ import com.bumptech.glide.request.RequestOptions;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
 import io.github.alistairholmes.digitalnomadjobs.R;
 import io.github.alistairholmes.digitalnomadjobs.database.Job;
 
-public class JobAdapter extends RecyclerView.Adapter<JobAdapter.ViewHolder> implements Filterable {
+public class JobAdapter extends RecyclerView.Adapter<JobAdapter.ViewHolder> {
 
     private OnJobClickListener mListener;
     private List<Job> jobs;
-    private List<Job> jobsListFiltered;
     private Context context;
 
     private static final String LOG_TAG = JobAdapter.class.getName();
@@ -39,6 +35,13 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.ViewHolder> impl
 
     public interface OnJobClickListener {
         void onJobClick(Job job);
+    }
+
+    // Job constructor
+    public JobAdapter(Context context, List<Job> job, OnJobClickListener listener) {
+        jobs = new ArrayList<>(job.subList(1, job.size()));
+        this.mListener = listener;
+        this.context = context;
     }
 
     public void setOnItemClickListener(OnJobClickListener listener) {
@@ -79,14 +82,6 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.ViewHolder> impl
         }
     }
 
-
-    // Job constructor
-    public JobAdapter(Context context, List<Job> job, OnJobClickListener listener) {
-        jobs = new ArrayList<>(job.subList(1, job.size()));
-        this.mListener = listener;
-        this.context = context;
-        jobsListFiltered = new LinkedList<>(job);
-    }
 
     // Create new views (invoked by the layout manager)
     @Override
@@ -145,41 +140,5 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.ViewHolder> impl
         public int getItemCount () {
             return (jobs != null) ? jobs.size() : 0;
         }
-
-    @Override
-    public Filter getFilter() {
-        return jobFilter;
-    }
-
-    private Filter jobFilter = new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            List<Job> filteredList = new ArrayList<>();
-
-            if (constraint == null || constraint.length() == 0) {
-                filteredList.addAll(jobsListFiltered);
-            } else {
-                String filterPattern = constraint.toString().toLowerCase().trim();
-
-                for (Job job : jobsListFiltered) {
-                    if (job.getPosition().toLowerCase().contains(filterPattern)) {
-                        filteredList.add(job);
-                    }
-                }
-            }
-
-            FilterResults results = new FilterResults();
-            results.values = filteredList;
-
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            jobs.clear();
-            jobs.addAll((ArrayList)results.values);
-            notifyDataSetChanged();
-        }
-    };
 
 }

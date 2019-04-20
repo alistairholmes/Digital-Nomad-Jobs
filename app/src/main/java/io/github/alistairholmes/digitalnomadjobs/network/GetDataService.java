@@ -10,4 +10,11 @@ public interface GetDataService {
 
     @GET("/api")
     Call<List<Job>> getAllJobs();
+
+    // For making search request
+    @GET("/api?tags=android")
+    Call<List<Job>> getAndroidJobs();
+
+    @GET("/api?tags=frontend")
+    Call<List<Job>> getFrontEndJobs();
 }
