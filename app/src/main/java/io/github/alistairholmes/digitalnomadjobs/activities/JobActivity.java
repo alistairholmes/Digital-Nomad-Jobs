@@ -28,6 +28,7 @@ import io.github.alistairholmes.digitalnomadjobs.adapters.JobAdapter;
 import io.github.alistairholmes.digitalnomadjobs.database.Job;
 import io.github.alistairholmes.digitalnomadjobs.network.ApiClient;
 import io.github.alistairholmes.digitalnomadjobs.network.GetDataService;
+import io.github.alistairholmes.digitalnomadjobs.utils.JobListItemDecoration;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -45,7 +46,6 @@ public class JobActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     public JobAdapter mAdapter;
     public RecyclerView mainRecyclerView;
-    //public String remoteJobUrl = "https://remoteok.io/api";
 
     private static final String LOG_TAG = JobActivity.class.getName();
 
@@ -64,12 +64,10 @@ public class JobActivity extends AppCompatActivity {
         // use a linear layout manager
         layoutManager = new LinearLayoutManager(this);
         mainRecyclerView.setLayoutManager(layoutManager);
-
-        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
-        mainRecyclerView.addItemDecoration(itemDecoration);
-
-        mainRecyclerView.setHasFixedSize(true);
         mainRecyclerView.setAdapter(mAdapter);
+        int smallPadding = getResources().getDimensionPixelSize(R.dimen.job_item_spacing_small);
+        mainRecyclerView.addItemDecoration(new JobListItemDecoration(smallPadding));
+        mainRecyclerView.setHasFixedSize(true);
 
         /*Create handle for the RetrofitInstance interface*/
         final GetDataService service = ApiClient.getRetrofitInstance().create(GetDataService.class);
