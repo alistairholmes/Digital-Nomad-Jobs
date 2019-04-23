@@ -3,6 +3,7 @@ package io.github.alistairholmes.digitalnomadjobs.activities;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -72,10 +73,11 @@ public class JobActivity extends AppCompatActivity {
 
         /*Create handle for the RetrofitInstance interface*/
         final GetDataService service = ApiClient.getRetrofitInstance().create(GetDataService.class);
+        // Request all jobs
         Call<List<Job>> call = service.getAllJobs();
         call.enqueue(new Callback<List<Job>>() {
             @Override
-            public void onResponse(Call<List<Job>> call, Response<List<Job>> response) {
+            public void onResponse(@NonNull Call<List<Job>> call, Response<List<Job>> response) {
                 generateDataList(response.body());
             }
 
@@ -85,6 +87,7 @@ public class JobActivity extends AppCompatActivity {
             }
         });
 
+        // Request android jobs
         findViewById(R.id.btn_android).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,6 +106,7 @@ public class JobActivity extends AppCompatActivity {
             }
         });
 
+        // Request front-end jobs
         findViewById(R.id.btn_frontend).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -121,6 +125,81 @@ public class JobActivity extends AppCompatActivity {
             }
         });
 
+        // Request front-end jobs
+        findViewById(R.id.btn_javascript).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Call<List<Job>> call = service.getJavaScriptJobs();
+                call.enqueue(new Callback<List<Job>>() {
+                    @Override
+                    public void onResponse(Call<List<Job>> call, Response<List<Job>> response) {
+                        generateDataList(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Job>> call, Throwable t) {
+                        Toast.makeText(JobActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
+        // Request front-end jobs
+        findViewById(R.id.btn_devops).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Call<List<Job>> call = service.getDevopsJobs();
+                call.enqueue(new Callback<List<Job>>() {
+                    @Override
+                    public void onResponse(Call<List<Job>> call, Response<List<Job>> response) {
+                        generateDataList(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Job>> call, Throwable t) {
+                        Toast.makeText(JobActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
+        // Request front-end jobs
+        findViewById(R.id.btn_ios).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Call<List<Job>> call = service.getIosJobs();
+                call.enqueue(new Callback<List<Job>>() {
+                    @Override
+                    public void onResponse(Call<List<Job>> call, Response<List<Job>> response) {
+                        generateDataList(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Job>> call, Throwable t) {
+                        Toast.makeText(JobActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
+        // Request front-end jobs
+        findViewById(R.id.btn_backend).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Call<List<Job>> call = service.getPhpJobs();
+                call.enqueue(new Callback<List<Job>>() {
+                    @Override
+                    public void onResponse(@NonNull Call<List<Job>> call, Response<List<Job>> response) {
+                        generateDataList(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Job>> call, Throwable t) {
+                        Toast.makeText(JobActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
 
     }
 

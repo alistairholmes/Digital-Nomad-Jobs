@@ -4,8 +4,6 @@ import android.app.Application;
 import android.content.Context;
 
 import com.facebook.stetho.Stetho;
-import com.instabug.library.Instabug;
-import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.squareup.leakcanary.LeakCanary;
 
 
@@ -42,10 +40,6 @@ public class JobApplication extends Application {
 
         context = getApplicationContext();
 
-        // Required initialization logic here!
-        new Instabug.Builder(this, "a2ffae571a0a8463b7cee78a1bf58d3c")
-                .setInvocationEvents(InstabugInvocationEvent.SHAKE, InstabugInvocationEvent.SCREENSHOT)
-                .build();
     }
 
     public  JobApplication getInstance() {
