@@ -181,7 +181,7 @@ public class JobActivity extends AppCompatActivity {
         });
 
         // Request front-end jobs
-        findViewById(R.id.btn_backend).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btn_php).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Call<List<Job>> call = service.getPhpJobs();

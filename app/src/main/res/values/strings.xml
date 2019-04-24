@@ -3,4 +3,13 @@
     <!-- Error message when there is no internet connectivity [CHAR LIMIT=NONE] -->
     <string name="no_internet_connection">Please connect to the Internet and relaunch the app.</string>
     <string name="format_date">dd MMM</string>
+    <!-- Category Buttons -->
+    <string name="chip_all">All</string>
+    <string name="chip_android">Android</string>
+    <string name="chip_frontend">Frontend</string>
+    <string name="chip_javascript">JavaScript</string>
+    <string name="chip_devops">DevOps</string>
+    <string name="chip_ios">iOS</string>
+    <string name="chip_php">PHP</string>
+
 </resources>
