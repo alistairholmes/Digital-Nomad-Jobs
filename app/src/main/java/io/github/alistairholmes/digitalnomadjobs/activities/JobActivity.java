@@ -21,6 +21,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
+
 import java.util.List;
 
 import io.github.alistairholmes.digitalnomadjobs.R;
@@ -58,6 +60,9 @@ public class JobActivity extends AppCompatActivity {
         mNoWifiConnectionIv = findViewById(R.id.no_wifi_connection_imageview);
         mainRecyclerView =  findViewById(R.id.recyclerView_main);
 
+        // Lottie Loader
+        final LottieAnimationView loaderLottie = findViewById(R.id.loader);
+
         // Lookup the swipe container view
         swipeContainer = findViewById(R.id.swipeRefreshLayout);
 
@@ -77,6 +82,7 @@ public class JobActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<List<Job>> call, Response<List<Job>> response) {
                 generateDataList(response.body());
+                loaderLottie.setVisibility(View.INVISIBLE);
             }
 
             @Override
