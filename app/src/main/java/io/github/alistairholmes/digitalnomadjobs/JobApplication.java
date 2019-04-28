@@ -8,8 +8,6 @@ import android.net.NetworkInfo;
 import androidx.multidex.MultiDexApplication;
 
 import com.facebook.stetho.Stetho;
-import com.instabug.library.Instabug;
-import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.squareup.leakcanary.LeakCanary;
 
 import java.util.Objects;
@@ -52,10 +50,6 @@ public class JobApplication extends MultiDexApplication implements HasActivityIn
 
         context = getApplicationContext();
 
-        // Required initialization logic here!
-        new Instabug.Builder(this, "a2ffae571a0a8463b7cee78a1bf58d3c")
-                .setInvocationEvents(InstabugInvocationEvent.SHAKE, InstabugInvocationEvent.SCREENSHOT)
-                .build();
     }
 
     public static JobApplication getInstance() {

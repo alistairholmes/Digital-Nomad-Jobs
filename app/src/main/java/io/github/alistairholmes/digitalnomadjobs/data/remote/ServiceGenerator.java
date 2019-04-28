@@ -21,12 +21,10 @@ import timber.log.Timber;
 
 import static io.github.alistairholmes.digitalnomadjobs.utils.AppConstants.BASE_URL;
 
-/**
- * A class that defines how Retrofit 2 & OkHttp should communicate with an API.
- * Interceptors, Caching, Logging
- *
- * @author Osaigbovo Odiase.
- */
+
+ // A class that defines how Retrofit 2 & OkHttp should communicate with an API.
+ // Interceptors, Caching, Logging
+
 @Singleton
 public class ServiceGenerator {
 

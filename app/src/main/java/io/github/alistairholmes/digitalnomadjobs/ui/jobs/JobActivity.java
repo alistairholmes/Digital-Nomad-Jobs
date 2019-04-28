@@ -5,6 +5,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.view.View;
+import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -15,6 +17,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.airbnb.lottie.LottieAnimationView;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -23,7 +27,9 @@ import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
 import io.github.alistairholmes.digitalnomadjobs.R;
 import io.github.alistairholmes.digitalnomadjobs.data.model.Job;
+import io.github.alistairholmes.digitalnomadjobs.ui.DetailActivity;
 import io.github.alistairholmes.digitalnomadjobs.ui.adapter.JobAdapter;
+import io.github.alistairholmes.digitalnomadjobs.utils.JobListItemDecoration;
 
 public class JobActivity extends AppCompatActivity implements JobAdapter.OnJobClickListener {
 
@@ -59,6 +65,9 @@ public class JobActivity extends AppCompatActivity implements JobAdapter.OnJobCl
         mNoWifiConnectionIv = findViewById(R.id.no_wifi_connection_imageview);
         mainRecyclerView = findViewById(R.id.recyclerView_main);
 
+        // Lottie Loader
+        final LottieAnimationView loaderLottie = findViewById(R.id.loader);
+
         // Lookup the swipe container view
         swipeContainer = findViewById(R.id.swipeRefreshLayout);
 
@@ -66,10 +75,8 @@ public class JobActivity extends AppCompatActivity implements JobAdapter.OnJobCl
         layoutManager = new LinearLayoutManager(this);
         mainRecyclerView.setLayoutManager(layoutManager);
 
-        RecyclerView.ItemDecoration itemDecoration =
-                new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
-        mainRecyclerView.addItemDecoration(itemDecoration);
-
+        int smallPadding = getResources().getDimensionPixelSize(R.dimen.job_item_spacing_small);
+        mainRecyclerView.addItemDecoration(new JobListItemDecoration(smallPadding));
         mainRecyclerView.setHasFixedSize(true);
         mainRecyclerView.setAdapter(mAdapter);
 
@@ -77,6 +84,7 @@ public class JobActivity extends AppCompatActivity implements JobAdapter.OnJobCl
             if (resource != null && resource.data.size() > 0) {
                 jobList = resource.data;
                 setupRecyclerView(resource.data);
+                loaderLottie.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -108,7 +116,23 @@ public class JobActivity extends AppCompatActivity implements JobAdapter.OnJobCl
 
     @Override
     public void onJobClick(Job job) {
+        //create a Bundle object
+        Bundle extras = new Bundle();
 
+        //Adding key value pairs to this bundle
+        extras.putString("JOB_TITLE", job.getPosition());
+        extras.putString("COMPANY_NAME", job.getCompany());
+        extras.putString("COMPANY_LOGO", job.getLogo());
+        extras.putString("JOB_DESCRIPTION", job.getDescription());
+        extras.putInt("JOB_ID", job.getId());
+        //create and initialize an intent
+        Intent intent = new Intent(JobActivity.this, DetailActivity.class);
+
+        //attach the bundle to the Intent object
+        intent.putExtras(extras);
+
+        //finally start the activity
+        startActivity(intent);
     }
 
 }
