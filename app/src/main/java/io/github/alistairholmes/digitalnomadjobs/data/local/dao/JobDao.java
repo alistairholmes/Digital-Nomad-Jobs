@@ -14,11 +14,14 @@ import io.reactivex.Single;
 @Dao
 public interface JobDao {
 
-    @Query("SELECT * FROM remote_jobs ORDER BY date DESC")
+    @Query("SELECT * FROM remote_jobs ORDER BY date DESC LIMIT 200")
     Flowable<List<Job>> getJobs();
 
     @Query("SELECT * FROM remote_jobs WHERE id = :id")
     Single<Job> getJob(int id);
+
+    /*@Query("UPDATE remote_jobs SET favourite = :favourite WHERE id = :id")
+    void updateJob(int id, boolean favourite);*/
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void saveJobs(List<Job> jobList);

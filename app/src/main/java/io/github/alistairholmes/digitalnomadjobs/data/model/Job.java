@@ -7,6 +7,9 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 
 @Entity(tableName = "remote_jobs")
@@ -16,6 +19,7 @@ public class Job implements Parcelable {
     private int id;
     private String position;
     private String company;
+    private String company_logo;
     private Date date;
     private String logo;
     private String description;
@@ -29,18 +33,20 @@ public class Job implements Parcelable {
      * @param logo     is the company logo
      */
     @Ignore
-    public Job(String position, String company, Date date, String logo, String description) {
+    public Job(String position, String company, String company_logo, Date date, String logo, String description) {
         this.position = position;
         this.company = company;
+        this.company_logo = company_logo;
         this.date = date;
         this.logo = logo;
         this.description = description;
     }
 
-    public Job(int id, String position, String company, Date date, String logo, String description) {
+    public Job(int id, String position, String company, String company_logo, Date date, String logo, String description) {
         this.id = id;
         this.position = position;
         this.company = company;
+        this.company_logo = company_logo;
         this.date = date;
         this.logo = logo;
         this.description = description;
@@ -68,6 +74,14 @@ public class Job implements Parcelable {
 
     public void setCompany(String company) {
         this.company = company;
+    }
+
+    public String getCompany_logo() {
+        return company_logo;
+    }
+
+    public void setCompany_logo(String company_logo) {
+        this.company_logo = company_logo;
     }
 
     public Date getDate() {
@@ -104,6 +118,7 @@ public class Job implements Parcelable {
         parcel.writeInt(id);
         parcel.writeString(position);
         parcel.writeString(company);
+        parcel.writeString(company_logo);
         parcel.writeLong(date != null ? date.getTime() : -1);
         parcel.writeString(logo);
         parcel.writeString(description);
@@ -113,6 +128,7 @@ public class Job implements Parcelable {
         this.id = in.readInt();
         this.position = in.readString();
         this.company = in.readString();
+        this.company_logo = in.readString();
         this.date = new Date(in.readLong());
         this.logo = in.readString();
         this.description = in.readString();

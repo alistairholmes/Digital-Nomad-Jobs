@@ -1,6 +1,9 @@
 package io.github.alistairholmes.digitalnomadjobs.utils;
 
 import android.content.Context;
+import android.graphics.Outline;
+import android.view.View;
+import android.view.ViewOutlineProvider;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,4 +25,13 @@ public class ViewUtil {
         return sdf.format(date);
     }
 
+    public static final ViewOutlineProvider CIRCULAR_OUTLINE = new ViewOutlineProvider() {
+        @Override
+        public void getOutline(View view, Outline outline) {
+            outline.setOval(view.getPaddingLeft(),
+                    view.getPaddingTop(),
+                    view.getWidth() - view.getPaddingRight(),
+                    view.getHeight() - view.getPaddingBottom());
+        }
+    };
 }

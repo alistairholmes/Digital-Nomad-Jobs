@@ -42,7 +42,7 @@ class AppModule {
     @Provides
     @Singleton
     JobsDatabase provideDb(Application app) {
-        return Room.databaseBuilder(app, JobsDatabase.class, "RemoteJobs.db")
+        return Room.databaseBuilder(app, JobsDatabase.class, "moteJobs.db")
                 //.addMigrations(PopularMoviesDatabase.MIGRATION_1_2)
                 .build();
 

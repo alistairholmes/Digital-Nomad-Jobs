@@ -51,6 +51,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="16 June" />
 
+        <!--<io.github.alistairholmes.digitalnomadjobs.ui.widget.CircularImageView
+            android:id="@+id/image_logo"
+            android:layout_width="80dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:adjustViewBounds="true"
+            android:scaleType="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="h,1:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />-->
+
         <ImageView
             android:id="@+id/image_logo"
             android:layout_width="80dp"
@@ -58,6 +72,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
+            android:adjustViewBounds="true"
             android:scaleType="fitCenter"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="h,1:1"

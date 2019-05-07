@@ -9,6 +9,8 @@ public class AppConstants {
 
     // API Constants
     public static final String BASE_URL = "https://remoteok.io";
+    public static final String BASE_IMAGE_URL = "https://remoteok.io/assets/jobs/";
+
 
     /*public static final String BASE_IMAGE_URL_ = "https://image.tmdb.org/t/p/w185";
     public static final String BASE_IMAGE_URL = "https://image.tmdb.org/t/p/w342";

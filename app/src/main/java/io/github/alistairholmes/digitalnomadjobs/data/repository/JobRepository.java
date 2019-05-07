@@ -42,11 +42,13 @@ public class JobRepository {
             new NetworkBoundSource<List<Job>, List<Job>>(emitter) {
                 @Override
                 public Observable<List<Job>> getRemote() {
-                    return Observable.interval(0, 300, TimeUnit.SECONDS).
-                            flatMap(i -> {
+                    return requestInterface.getAllJobs();
+                    /*return Observable
+                            .interval(0, 300, TimeUnit.SECONDS)
+                            .flatMap(i -> {
                                 Timber.e("Calling API for data.....");
                                 return requestInterface.getAllJobs();
-                            });
+                            });*/
                 }
 
                 @Override
