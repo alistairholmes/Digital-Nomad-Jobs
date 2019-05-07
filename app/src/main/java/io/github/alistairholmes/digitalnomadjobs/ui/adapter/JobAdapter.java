@@ -60,7 +60,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobViewHolder> {
                     .placeholder(R.drawable.ic_launcher_foreground)
                     .circleCrop()
                     .into(jobViewHolder.companyLogo);
-        } else {
+        } else if (!TextUtils.isEmpty(currentJob.getCompany())) {
             ColorGenerator generator = ColorGenerator.MATERIAL;
             int color = generator.getRandomColor();
             TextDrawable drawable = TextDrawable.builder()
