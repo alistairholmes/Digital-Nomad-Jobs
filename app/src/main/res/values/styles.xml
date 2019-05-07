@@ -35,4 +35,10 @@
         <item name="android:textStyle">normal</item>
     </style>
 
+    <!-- Details Button -->
+    <style name="Widget.Dnj.Button" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">#FFFF</item>
+        <item name="backgroundTint">?attr/colorPrimaryDark</item>
+    </style>
+
 </resources>

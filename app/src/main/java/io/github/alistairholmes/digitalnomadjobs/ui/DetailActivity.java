@@ -2,6 +2,8 @@ package io.github.alistairholmes.digitalnomadjobs.ui;
 
 import android.content.Intent;
 import android.net.Uri;
+
+import androidx.appcompat.widget.Toolbar;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
 import io.github.alistairholmes.digitalnomadjobs.R;
+import io.github.alistairholmes.digitalnomadjobs.ui.jobs.JobActivity;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -28,6 +31,16 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
+        // toolbar
+        Toolbar toolbar = findViewById(R.id.app_bar);
+
+        toolbar.setNavigationOnClickListener(v -> {
+            // back button pressed
+            Intent intent = new Intent(DetailActivity.this, JobActivity.class);
+            //finally start the activity
+            startActivity(intent);
+        });
 
         tv_JobTitle = findViewById(R.id.textView_jobtitle);
         tv_CompanyName = findViewById(R.id.textView_companyname);
