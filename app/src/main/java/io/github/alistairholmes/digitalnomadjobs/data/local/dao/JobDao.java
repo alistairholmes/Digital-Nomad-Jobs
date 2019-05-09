@@ -14,7 +14,7 @@ import io.reactivex.Single;
 @Dao
 public interface JobDao {
 
-    @Query("SELECT * FROM remote_jobs ORDER BY date DESC LIMIT 200")
+    @Query("SELECT * FROM remote_jobs ORDER BY date DESC LIMIT 300")
     Flowable<List<Job>> getJobs();
 
     @Query("SELECT * FROM remote_jobs WHERE id = :id")
@@ -30,6 +30,6 @@ public interface JobDao {
     void deleteJobs();
 
     @Query("DELETE FROM remote_jobs WHERE id =:id")
-    void deleteJob(int id);
+    int deleteJob(int id);
 
 }

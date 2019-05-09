@@ -34,7 +34,7 @@ public abstract class NetworkBoundSource<LocalType, RemoteType> {
                 .subscribe(new Consumer<LocalType>() {
                     @Override
                     public void accept(LocalType localTypeData) throws Exception {
-                        firstDataDisposable.dispose();
+                        //firstDataDisposable.dispose();
 
                         NetworkBoundSource.this.saveCallResult(localTypeData);
 

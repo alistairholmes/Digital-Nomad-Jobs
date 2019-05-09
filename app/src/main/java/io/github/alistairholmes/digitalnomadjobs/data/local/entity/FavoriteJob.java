@@ -1,18 +1,16 @@
-package io.github.alistairholmes.digitalnomadjobs.data.model;
+package io.github.alistairholmes.digitalnomadjobs.data.local.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.room.Entity;
 import androidx.room.Ignore;
-import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.util.Date;
 
-@Entity(tableName = "remote_jobs",
-        indices = {@Index(value = {"date"}, unique = false)})
-public class Job implements Parcelable {
+@Entity(tableName = "favorite_jobs")
+public class FavoriteJob implements Parcelable {
 
     @PrimaryKey
     private int id;
@@ -24,10 +22,6 @@ public class Job implements Parcelable {
     private String description;
     private boolean favorite = false;
 
-    @Ignore
-    public Job() {
-    }
-
     /**
      * Constructs a new Job object.
      *
@@ -37,8 +31,8 @@ public class Job implements Parcelable {
      * @param logo     is the company logo
      */
     @Ignore
-    public Job(String position, String company, String company_logo, Date date, String logo,
-               String description, boolean favorite) {
+    public FavoriteJob(String position, String company, String company_logo, Date date,
+                       String logo, String description) {
         this.position = position;
         this.company = company;
         this.company_logo = company_logo;
@@ -47,7 +41,8 @@ public class Job implements Parcelable {
         this.description = description;
     }
 
-    public Job(int id, String position, String company, String company_logo, Date date, String logo, String description) {
+    public FavoriteJob(int id, String position, String company, String company_logo, Date date,
+                       String logo, String description, boolean favorite) {
         this.id = id;
         this.position = position;
         this.company = company;
@@ -139,7 +134,7 @@ public class Job implements Parcelable {
         parcel.writeByte(favorite ? (byte) 1 : (byte) 0);
     }
 
-    protected Job(Parcel in) {
+    protected FavoriteJob(Parcel in) {
         this.id = in.readInt();
         this.position = in.readString();
         this.company = in.readString();
@@ -150,15 +145,15 @@ public class Job implements Parcelable {
         this.favorite = in.readByte() != 0;
     }
 
-    public static final Creator<Job> CREATOR = new Creator<Job>() {
+    public static final Creator<FavoriteJob> CREATOR = new Creator<FavoriteJob>() {
         @Override
-        public Job createFromParcel(Parcel in) {
-            return new Job(in);
+        public FavoriteJob createFromParcel(Parcel in) {
+            return new FavoriteJob(in);
         }
 
         @Override
-        public Job[] newArray(int size) {
-            return new Job[size];
+        public FavoriteJob[] newArray(int size) {
+            return new FavoriteJob[size];
         }
     };
 
