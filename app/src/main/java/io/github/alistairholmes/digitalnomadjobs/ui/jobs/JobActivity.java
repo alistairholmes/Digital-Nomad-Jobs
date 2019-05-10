@@ -3,6 +3,7 @@ package io.github.alistairholmes.digitalnomadjobs.ui.jobs;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.view.View;
@@ -27,6 +28,7 @@ import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
 import io.github.alistairholmes.digitalnomadjobs.R;
 import io.github.alistairholmes.digitalnomadjobs.data.model.Job;
+import io.github.alistairholmes.digitalnomadjobs.ui.AboutActivity;
 import io.github.alistairholmes.digitalnomadjobs.ui.DetailActivity;
 import io.github.alistairholmes.digitalnomadjobs.ui.adapter.JobAdapter;
 import io.github.alistairholmes.digitalnomadjobs.utils.JobListItemDecoration;
@@ -88,6 +90,13 @@ public class JobActivity extends AppCompatActivity implements JobAdapter.OnJobCl
             }
         });
 
+        // This is just to test about page
+        findViewById(R.id.btn_android).setOnClickListener(view -> {
+            Intent intent = new Intent(JobActivity.this, AboutActivity.class);
+            //finally start the activity
+            startActivity(intent);
+        });
+
     }
 
     private void setupRecyclerView(List<Job> jobList) {
@@ -112,6 +121,18 @@ public class JobActivity extends AppCompatActivity implements JobAdapter.OnJobCl
 
         /* Return true so that the menu is displayed in the Toolbar */
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.app_bar) {
+            startActivity(new Intent(this, AboutActivity.class));
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

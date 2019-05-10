@@ -42,6 +42,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
 
     // Google Material Design
     implementation 'com.google.android.material:material:1.0.0'
@@ -124,4 +125,7 @@ dependencies {
 
     // Animations
     implementation 'com.airbnb.android:lottie:3.0.0'
+
+    // About Libraries Screen
+    implementation "com.mikepenz:aboutlibraries:6.2.3"
 }
