@@ -15,7 +15,8 @@
         android:theme="@style/Theme.Dnj"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".ui.jobs.JobActivity">
+        <activity android:name=".ui.jobs.JobActivity"
+            android:theme="@style/Theme.Dnj.NoActionBar">
 
             <meta-data
                 android:name="android.app.searchable"
@@ -39,7 +40,8 @@
 
         <activity android:name=".ui.AboutActivity" />
         <activity android:name=".ui.SupportDevActivity" />
-        <activity android:name=".ui.DetailActivity"></activity>
+        <activity android:name=".ui.DetailActivity"
+            android:theme="@style/Theme.Dnj.NoActionBar"/>
     </application>
 
 </manifest>

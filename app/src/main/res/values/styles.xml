@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="Theme.Dnj" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="Theme.Dnj" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -9,12 +9,17 @@
         <item name="android:windowLightStatusBar" tools:targetApi="o_mr1">true</item>
     </style>
 
-    <!-- Toolbar Theme -->
-    <style name="Widget.Dnj.Toolbar" parent="@style/Widget.MaterialComponents.Toolbar">
-        <item name="android:background">#FFFF</item>
-        <item name="android:theme">@style/Theme.Dnj</item>
-        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
-        <item name="titleTextAppearance">@style/TextAppearance.Dnj.Toolbar</item>
+    <!-- This is a fix for window decor error -->
+    <style name="Theme.Dnj.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <!-- Trying something here -->
+    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:elevation">12dp</item>
     </style>
 

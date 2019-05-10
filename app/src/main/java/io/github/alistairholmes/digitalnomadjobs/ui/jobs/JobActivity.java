@@ -1,19 +1,19 @@
 package io.github.alistairholmes.digitalnomadjobs.ui.jobs;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.view.View;
-import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -45,6 +45,7 @@ public class JobActivity extends AppCompatActivity implements JobAdapter.OnJobCl
     private ImageView mNoWifiConnectionIv;
     private SearchView searchView;
     private SwipeRefreshLayout swipeContainer;
+    private Toolbar toolbar;
     private RecyclerView.LayoutManager layoutManager;
     public JobAdapter mAdapter;
     public RecyclerView mainRecyclerView;
@@ -56,6 +57,9 @@ public class JobActivity extends AppCompatActivity implements JobAdapter.OnJobCl
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         ButterKnife.bind(this);
 
@@ -90,13 +94,6 @@ public class JobActivity extends AppCompatActivity implements JobAdapter.OnJobCl
             }
         });
 
-        // This is just to test about page
-        findViewById(R.id.btn_android).setOnClickListener(view -> {
-            Intent intent = new Intent(JobActivity.this, AboutActivity.class);
-            //finally start the activity
-            startActivity(intent);
-        });
-
     }
 
     private void setupRecyclerView(List<Job> jobList) {
@@ -117,7 +114,7 @@ public class JobActivity extends AppCompatActivity implements JobAdapter.OnJobCl
         /* Use AppCompatActivity's method getMenuInflater to get a handle on the menu inflater */
         MenuInflater inflater = getMenuInflater();
         /* Use the inflater's inflate method to inflate our menu layout to this menu */
-        inflater.inflate(R.menu.drawer_view, menu);
+        inflater.inflate(R.menu.dnj_toolbar_menu, menu);
 
         /* Return true so that the menu is displayed in the Toolbar */
         return true;
@@ -125,14 +122,15 @@ public class JobActivity extends AppCompatActivity implements JobAdapter.OnJobCl
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
 
-        if (id == R.id.app_bar) {
-            startActivity(new Intent(this, AboutActivity.class));
-            return true;
+        switch (item.getItemId()) {
+            case R.id.about:
+                Intent intent = new Intent(JobActivity.this, AboutActivity.class);
+                //finally start the activity
+                startActivity(intent);
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
