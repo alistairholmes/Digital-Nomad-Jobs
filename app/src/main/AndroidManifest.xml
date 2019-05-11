@@ -39,9 +39,9 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".ui.AboutActivity" />
+        <activity android:name=".ui.about.AboutActivity" />
         <activity android:name=".ui.SupportDevActivity" />
-        <activity android:name=".ui.DetailActivity"></activity>
+        <activity android:name=".ui.jobdetail.DetailActivity"></activity>
 
         <provider
             android:name=".data.provider.JobsProvider"

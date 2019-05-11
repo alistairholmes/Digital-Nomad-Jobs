@@ -8,7 +8,9 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.RawQuery;
 import androidx.room.Update;
+import androidx.sqlite.db.SupportSQLiteQuery;
 
 import java.util.List;
 
@@ -29,12 +31,6 @@ public interface FavoriteDao {
     @Query("SELECT * FROM favorite_jobs")
     Flowable<List<FavoriteJob>> getFavoriteJobss();
 
-    @Query("SELECT id FROM favorite_jobs")
-    Cursor getFavoriteJobsId();
-
-    @Update
-    int update(FavoriteJob favoriteJob);
-
     @Query("SELECT * FROM favorite_jobs WHERE id=:id")
     LiveData<FavoriteJob> isFavoriteJob(int id);
 
@@ -42,11 +38,30 @@ public interface FavoriteDao {
     LiveData<FavoriteJob> getFavoriteJob(int id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void saveFavoriteJob(FavoriteJob favoriteJob);
+    void saveFavoriteJobc(FavoriteJob favoriteJob);
 
     @Delete
     void deleteFavoriteJob(FavoriteJob favoriteJob);
 
-    @Query("DELETE FROM favorite_jobs WHERE id=:id")
+
+
+
+
+    // ContentProvider access to database
+    @RawQuery
+    Cursor getFavoriteJobsId(SupportSQLiteQuery query);
+
+    @RawQuery
+    Cursor getFavoriteJobId(SupportSQLiteQuery query);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    int insertFavoriteJob(FavoriteJob favoriteJob);
+
+    @Query("DELETE FROM favorite_jobs WHERE id = :id")
     int deleteFavoriteJob(int id);
+
+    @Update
+    int updateFavoriteJob(FavoriteJob favoriteJob);
+
+
 }
