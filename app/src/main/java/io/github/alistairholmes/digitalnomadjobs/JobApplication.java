@@ -34,7 +34,6 @@ public class JobApplication extends MultiDexApplication implements HasActivityIn
     public void onCreate() {
         super.onCreate();
         instance = this;
-        AppInjector.init(this);
 
         if (LeakCanary.isInAnalyzerProcess(this)) {
             return;
@@ -51,6 +50,13 @@ public class JobApplication extends MultiDexApplication implements HasActivityIn
         Timber.i("Creating our Application");
 
         context = getApplicationContext();
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+
+        AppInjector.init(this);
 
     }
 

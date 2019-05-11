@@ -48,5 +48,5 @@ public interface FavoriteDao {
     void deleteFavoriteJob(FavoriteJob favoriteJob);
 
     @Query("DELETE FROM favorite_jobs WHERE id=:id")
-    void deleteFavoriteJob(int id);
+    int deleteFavoriteJob(int id);
 }

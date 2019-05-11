@@ -15,4 +15,7 @@
     <string name="chip_ios">iOS</string>
     <string name="chip_php">PHP</string>
 
+
+    <string name="content_authority">io.github.alistairholmes.digitalnomadjobs.data.provider</string>
+
 </resources>

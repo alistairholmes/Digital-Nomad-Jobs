@@ -19,17 +19,18 @@ import javax.inject.Inject;
 import dagger.android.AndroidInjection;
 import io.github.alistairholmes.digitalnomadjobs.data.local.JobsDatabase;
 import io.github.alistairholmes.digitalnomadjobs.data.local.dao.JobDao;
+import io.github.alistairholmes.digitalnomadjobs.data.local.entity.FavoriteJob;
 import timber.log.Timber;
 
 public class JobsProvider extends ContentProvider {
 
     private static final String TAG = JobsProvider.class.getSimpleName();
 
-    public static final String AUTHORITY = "io.github.alistairholmes.digitalnomadjobs.provider";
-    public static final Uri URI_JOB = Uri.parse("content://" + AUTHORITY + "/" + "remote_jobs");
+    public static final String AUTHORITY = "io.github.alistairholmes.digitalnomadjobs.data.provider";
+    public static final Uri URI_JOB = Uri.parse("content://" + AUTHORITY + "/" + "favorite_jobs");
 
-    private static final int REMOTE_JOB = 1; // TODO Rename CODE_CHEESE_DIR
-    private static final int REMOTE_JOB_ID = 2;  // TODO Rename CODE_CHEESE_ITEM
+    private static final int FAVORITE_JOB_DIR = 1;
+    private static final int FAVORITE_JOB_ID = 2;
 
     private static final UriMatcher MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
 
@@ -39,14 +40,13 @@ public class JobsProvider extends ContentProvider {
     JobDao jobDao;
 
     static {
-        MATCHER.addURI(AUTHORITY, "remote_jobs", REMOTE_JOB);
-        MATCHER.addURI(AUTHORITY, "remote_jobs" + "/*", REMOTE_JOB_ID);
+        MATCHER.addURI(AUTHORITY, "favorite_jobs", FAVORITE_JOB_DIR);
+        MATCHER.addURI(AUTHORITY, "favorite_jobs" + "/*", FAVORITE_JOB_ID);
     }
 
     @Override
     public boolean onCreate() {
-        //AndroidInjection.inject(this);
-
+        AndroidInjection.inject(this);
         return true;
     }
 
@@ -60,16 +60,16 @@ public class JobsProvider extends ContentProvider {
         Timber.tag(TAG).v("uri=" + uri + " match=" + match + " proj=" + Arrays.toString(projection) +
                 " selection=" + selection + " args=" + Arrays.toString(selectionArgs) + ")");
 
-        if (match == REMOTE_JOB || match == REMOTE_JOB_ID) {
+        if (match == FAVORITE_JOB_DIR || match == FAVORITE_JOB_ID) {
             final Context context = getContext();
             if (context == null) {
                 return null;
             }
             final Cursor cursor;
-            if (match == REMOTE_JOB) {
-                cursor = jobsDatabase.query(new SimpleSQLiteQuery("SELECT * FROM remote_jobs ORDER BY date DESC LIMIT 300"));
+            if (match == FAVORITE_JOB_DIR) {
+                cursor = jobsDatabase.query(new SimpleSQLiteQuery("SELECT * FROM favorite_jobs"));
             } else {
-                cursor = jobsDatabase.query(new SimpleSQLiteQuery("SELECT * FROM remote_jobs WHERE id = ?",
+                cursor = jobsDatabase.query(new SimpleSQLiteQuery("SELECT * FROM favorite_jobs WHERE id = ?",
                         new Integer[]{(int) ContentUris.parseId(uri)}));
             }
             cursor.setNotificationUri(context.getContentResolver(), uri);
@@ -84,10 +84,10 @@ public class JobsProvider extends ContentProvider {
     @Override
     public String getType(@NonNull Uri uri) {
         switch (MATCHER.match(uri)) {
-            case REMOTE_JOB:
-                return "vnd.android.cursor.dir/" + AUTHORITY + "." + "remote_jobs";
-            case REMOTE_JOB_ID:
-                return "vnd.android.cursor.item/" + AUTHORITY + "." + "remote_jobs";
+            case FAVORITE_JOB_DIR:
+                return "vnd.android.cursor.dir/" + AUTHORITY + "." + "favorite_jobs";
+            case FAVORITE_JOB_ID:
+                return "vnd.android.cursor.item/" + AUTHORITY + "." + "favorite_jobs";
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);
         }
@@ -146,14 +146,14 @@ public class JobsProvider extends ContentProvider {
     public int delete(@NonNull Uri uri, @Nullable String s, @Nullable String[] strings) {
         Timber.tag(TAG).v("delete(uri=" + uri + ")");
         switch (MATCHER.match(uri)) {
-            case REMOTE_JOB:
+            case FAVORITE_JOB_DIR:
                 throw new IllegalArgumentException("Invalid URI, cannot update without ID" + uri);
-            case REMOTE_JOB_ID:
+            case FAVORITE_JOB_ID:
                 final Context context = getContext();
                 if (context == null) {
                     return 0;
                 }
-                final int count = jobDao.deleteJob((int) ContentUris.parseId(uri));
+                final int count = jobsDatabase.favoriteDao().deleteFavoriteJob((int) ContentUris.parseId(uri));
                 context.getContentResolver().notifyChange(uri, null);
                 return count;
             default:
@@ -166,21 +166,18 @@ public class JobsProvider extends ContentProvider {
                       @Nullable String[] strings) {
         Timber.tag(TAG).v("update(uri=" + uri + ", values=" + contentValues.toString() + ")");
         switch (MATCHER.match(uri)) {
-            case REMOTE_JOB:
+            case FAVORITE_JOB_DIR:
                 throw new IllegalArgumentException("Invalid URI, cannot update without ID" + uri);
-            case REMOTE_JOB_ID:
+            case FAVORITE_JOB_ID:
                 final Context context = getContext();
                 if (context == null) {
                     return 0;
                 }
-
-                /*jobsDatabase.favoriteDao()
-                final Cheese cheese = Cheese.fromContentValues(contentValues);
-                cheese.id = ContentUris.parseId(uri);
-                final int count = SampleDatabase.getInstance(context).cheese()
-                        .update(cheese);
-                context.getContentResolver().notifyChange(uri, null);*/
-                return 0 /*count*/;
+                final FavoriteJob favoriteJob = FavoriteJob.fromContentValues(contentValues);
+                favoriteJob.id = (int) ContentUris.parseId(uri);
+                final int count = jobsDatabase.favoriteDao().update(favoriteJob);
+                context.getContentResolver().notifyChange(uri, null);
+                return count;
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);
         }

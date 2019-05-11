@@ -37,8 +37,7 @@ public class Job implements Parcelable {
      * @param logo     is the company logo
      */
     @Ignore
-    public Job(String position, String company, String company_logo, Date date, String logo,
-               String description, boolean favorite) {
+    public Job(String position, String company, String company_logo, Date date, String logo, String description, boolean favorite) {
         this.position = position;
         this.company = company;
         this.company_logo = company_logo;
@@ -47,7 +46,7 @@ public class Job implements Parcelable {
         this.description = description;
     }
 
-    public Job(int id, String position, String company, String company_logo, Date date, String logo, String description) {
+    public Job(int id, String position, String company, String company_logo, Date date, String logo, String description, boolean favorite) {
         this.id = id;
         this.position = position;
         this.company = company;

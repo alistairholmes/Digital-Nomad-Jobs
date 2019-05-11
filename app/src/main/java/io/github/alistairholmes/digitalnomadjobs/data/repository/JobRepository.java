@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -53,14 +52,7 @@ public class JobRepository {
                 @Override
                 public Observable<List<Job>> getRemote() {
                     return requestInterface.getAllJobs()
-                            .timeout(5, TimeUnit.SECONDS)
-                            .retry(2)
-                            /*.withLatestFrom(getSavedJobIds(), (jobList, favoriteIds) -> {
-                                for (Job job : jobList)
-                                    job.setFavorite(favoriteIds.contains(job.getId()));
-                                return jobList;
-                            })*/
-                            ;
+                            .subscribeOn(Schedulers.io());
                 }
 
                 @Override
@@ -101,7 +93,7 @@ public class JobRepository {
             mSavedJobIdsSubject = BehaviorSubject.create();
             savedJobIds().subscribe(mSavedJobIdsSubject);
         }
-        return mSavedJobIdsSubject;
+        return mSavedJobIdsSubject.hide();
         //return mSavedJobIdsSubject.hide();  mSavedMovieIdsSubject.asObservable()
     }
 

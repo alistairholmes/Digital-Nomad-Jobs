@@ -37,11 +37,11 @@ class AppModule {
         return ServiceGenerator.createService(RequestInterface.class);
     }
 
-    @Provides
+    /*@Provides
     @Singleton
     ContentProvider providerJobsProvider() {
         return new JobsProvider();
-    }
+    }*/
 
     @Provides
     @Singleton

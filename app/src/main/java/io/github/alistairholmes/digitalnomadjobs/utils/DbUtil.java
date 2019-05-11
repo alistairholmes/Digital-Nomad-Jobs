@@ -37,15 +37,18 @@ public final class DbUtil {
             "id"
     };
 
-    public static Function<Cursor, Set<Integer>> ID_PROJECTION_MAP = cursor -> {
-        try {
-            Set<Integer> idSet = new HashSet<>(cursor.getCount());
-            while (cursor.moveToNext()) {
-                idSet.add(getInt(cursor, "id"));
+    public static Function<Cursor, Set<Integer>> ID_PROJECTION_MAP = new Function<Cursor, Set<Integer>>() {
+        @Override
+        public Set<Integer> apply(Cursor cursor) throws Exception {
+            try {
+                Set<Integer> idSet = new HashSet<>(cursor.getCount());
+                while (cursor.moveToNext()) {
+                    idSet.add(getInt(cursor, "id"));
+                }
+                return idSet;
+            } finally {
+                cursor.close();
             }
-            return idSet;
-        } finally {
-            cursor.close();
         }
     };
 

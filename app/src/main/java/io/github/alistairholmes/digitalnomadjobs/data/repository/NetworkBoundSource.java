@@ -2,9 +2,6 @@ package io.github.alistairholmes.digitalnomadjobs.data.repository;
 
 import android.annotation.SuppressLint;
 
-import java.util.List;
-
-import io.github.alistairholmes.digitalnomadjobs.data.model.Job;
 import io.github.alistairholmes.digitalnomadjobs.utils.Resource;
 import io.reactivex.Flowable;
 import io.reactivex.FlowableEmitter;
@@ -13,13 +10,10 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
-import io.reactivex.subjects.BehaviorSubject;
 import timber.log.Timber;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public abstract class NetworkBoundSource<LocalType, RemoteType> {
-
-    private BehaviorSubject<RemoteType> todoSubject = BehaviorSubject.create();
 
     @SuppressLint("CheckResult")
     NetworkBoundSource(FlowableEmitter<Resource<LocalType>> emitter) {
@@ -34,10 +28,8 @@ public abstract class NetworkBoundSource<LocalType, RemoteType> {
                 .subscribe(new Consumer<LocalType>() {
                     @Override
                     public void accept(LocalType localTypeData) throws Exception {
-                        //firstDataDisposable.dispose();
-
+                        firstDataDisposable.dispose();
                         NetworkBoundSource.this.saveCallResult(localTypeData);
-
                         NetworkBoundSource.this.getLocal()
                                 .map(Resource::success)
                                 .onErrorReturn(msg -> Resource.error(msg.getMessage()))

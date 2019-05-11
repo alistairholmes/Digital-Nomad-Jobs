@@ -5,7 +5,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <permission android:name="io.github.alistairholmes.digitalnomadjobs.provider.READ_WRITE" />
+    <permission android:name="io.github.alistairholmes.digitalnomadjobs.data.provider.READ_WRITE" />
 
     <application
         android:name="JobApplication"
@@ -45,10 +45,10 @@
 
         <provider
             android:name=".data.provider.JobsProvider"
-            android:authorities="io.github.alistairholmes.digitalnomadjobs.provider"
-            android:exported="false"
+            android:authorities="@string/content_authority"
+            android:exported="true"
             android:syncable="true"
-            android:permission="io.github.alistairholmes.digitalnomadjobs.provider.READ_WRITE"/>
+            android:permission="io.github.alistairholmes.digitalnomadjobs.data.provider.READ_WRITE"/>
 
     </application>
 

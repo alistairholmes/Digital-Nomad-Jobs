@@ -1,5 +1,6 @@
 package io.github.alistairholmes.digitalnomadjobs.data.local.entity;
 
+import android.content.ContentValues;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -13,14 +14,18 @@ import java.util.Date;
 public class FavoriteJob implements Parcelable {
 
     @PrimaryKey
-    private int id;
+    public int id;
     private String position;
     private String company;
     private String company_logo;
     private Date date;
     private String logo;
     private String description;
-    private boolean favorite = false;
+    private boolean favorite;
+
+    @Ignore
+    public FavoriteJob() {
+    }
 
     /**
      * Constructs a new Job object.
@@ -51,6 +56,35 @@ public class FavoriteJob implements Parcelable {
         this.logo = logo;
         this.description = description;
         this.favorite = favorite;
+    }
+
+    public static FavoriteJob fromContentValues(ContentValues values) {
+        final FavoriteJob favoriteJob = new FavoriteJob();
+        if (values.containsKey("id")) {
+            favoriteJob.id = values.getAsInteger("id");
+        }
+        if (values.containsKey("position")) {
+            favoriteJob.position = values.getAsString("position");
+        }
+        if (values.containsKey("company")) {
+            favoriteJob.company = values.getAsString("company");
+        }
+        if (values.containsKey("company_logo")) {
+            favoriteJob.company_logo = values.getAsString("company_logo");
+        }
+        if (values.containsKey("date")) {
+            favoriteJob.date = new Date(values.getAsLong("date"));
+        }
+        if (values.containsKey("logo")) {
+            favoriteJob.logo = values.getAsString("logo");
+        }
+        if (values.containsKey("description")) {
+            favoriteJob.description = values.getAsString("description");
+        }
+        if (values.containsKey("favorite")) {
+            favoriteJob.favorite = values.getAsBoolean("favorite");
+        }
+        return favoriteJob;
     }
 
     public int getId() {
