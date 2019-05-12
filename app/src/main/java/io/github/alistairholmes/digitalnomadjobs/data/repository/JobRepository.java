@@ -5,7 +5,6 @@ import android.content.ContentResolver;
 import androidx.annotation.NonNull;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -16,6 +15,7 @@ import io.github.alistairholmes.digitalnomadjobs.data.local.dao.JobDao;
 import io.github.alistairholmes.digitalnomadjobs.data.model.Job;
 import io.github.alistairholmes.digitalnomadjobs.data.provider.JobsProvider;
 import io.github.alistairholmes.digitalnomadjobs.data.remote.RequestInterface;
+import io.github.alistairholmes.digitalnomadjobs.utils.Optional;
 import io.github.alistairholmes.digitalnomadjobs.utils.Resource;
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
@@ -31,8 +31,6 @@ import static io.github.alistairholmes.digitalnomadjobs.utils.DbUtil.ID_PROJECTI
 @Singleton
 public class JobRepository {
 
-    private BehaviorSubject<Set<Integer>> mSavedJobIdsSubject = BehaviorSubject.create();
-    private BehaviorSubject<List<Job>> mSubject = BehaviorSubject.create();
     private final RequestInterface requestInterface;
     private final JobDao jobDao;
     private final FavoriteDao favoriteDao;
@@ -48,48 +46,38 @@ public class JobRepository {
     }
 
     public Flowable<Resource<List<Job>>> retrieveJobs() {
-        return Flowable.create(emitter -> {
-            new NetworkBoundSource<List<Job>, List<Job>>(emitter) {
-                @Override
-                public Observable<List<Job>> getRemote() {
-                    return /*requestInterface
-                            .getAllJobs()
-                            .withLatestFrom(savedJobIds(), new BiFunction<List<Job>, Set<Integer>, List<Job>>() {
-                                @Override
-                                public List<Job> apply(List<Job> jobList, Set<Integer> integers) throws Exception {
-                                    return jobList;
-                                }
-                            })
-                            .subscribeOn(Schedulers.io());*/
+        return Flowable.create(emitter -> new NetworkBoundSource<List<Job>, List<Job>>(emitter) {
+            @Override
+            public Observable<List<Job>> getRemote() {
+                return Observable.combineLatest(requestInterface.getAllJobs(), savedJobIds(),
+                        (jobList, favoriteIds) -> {
+                            for (Job job : jobList) {
+                                job.setFavorite(favoriteIds.contains(job.getId()));
+                            }
+                            Timber.e(String.valueOf(favoriteIds.size()));
+                            Timber.e(String.valueOf(jobList.size()));
+                            return jobList;
+                        })
+                        .subscribeOn(Schedulers.io())
+                        .doOnError(Timber::e);
+            }
 
-                            Observable.combineLatest(requestInterface.getAllJobs(), savedJobIds(),
-                                    (jobList, favoriteIds) -> {
-                                        for (Job job : jobList) {
-                                            job.setFavorite(favoriteIds.contains(job.getId()));
-                                        }
-                                        Timber.e(String.valueOf(jobList.size()));
-                                        return jobList;
-                                    })
-                                    .subscribeOn(Schedulers.io());
-                }
+            @Override
+            public Flowable<List<Job>> getLocal() {
+                Timber.e("Getting data from database.....");
+                return jobDao.getJobs();
+            }
 
-                @Override
-                public Flowable<List<Job>> getLocal() {
-                    Timber.e("Getting data from database.....");
-                    return jobDao.getJobs();
-                }
+            @Override
+            public void saveCallResult(@NonNull List<Job> jobList) {
+                jobDao.saveJobs(jobList);
+                Timber.e("Save to database.....");
+            }
 
-                @Override
-                public void saveCallResult(@NonNull List<Job> jobList) {
-                    jobDao.saveJobs(jobList);
-                    Timber.e("Save to database.....");
-                }
-
-                @Override
-                public Function<List<Job>, List<Job>> mapper() {
-                    return jobList -> jobList;
-                }
-            };
+            @Override
+            public Function<List<Job>, List<Job>> mapper() {
+                return jobList -> jobList;
+            }
         }, BackpressureStrategy.BUFFER);
     }
 
@@ -100,16 +88,10 @@ public class JobRepository {
 
     private Observable<Set<Integer>> savedJobIds() {
         return Observable
-                .just(Objects.requireNonNull(contentResolver.query(JobsProvider.URI_JOB,
+                .just(new Optional<>(contentResolver.query(JobsProvider.URI_JOB,
                         ID_PROJECTION, null, null, null)))
                 .map(ID_PROJECTION_MAP)
                 .subscribeOn(Schedulers.io());
-    }
-
-    private Observable<Set<Integer>> getSavedJobIds() {
-        savedJobIds().subscribe();
-        //mSavedJobIdsSubject.onNext(integers);
-        return mSavedJobIdsSubject.hide();
     }
 
 }
