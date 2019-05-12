@@ -107,7 +107,7 @@ public class JobsProvider extends ContentProvider {
                 if (context == null) {
                     return null;
                 }
-                final int id = favoriteDao
+                final long id = favoriteDao
                         .insertFavoriteJob(FavoriteJob.fromContentValues(contentValues));
 
                 context.getContentResolver().notifyChange(uri, null);

@@ -55,7 +55,7 @@ public interface FavoriteDao {
     Cursor getFavoriteJobId(SupportSQLiteQuery query);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    int insertFavoriteJob(FavoriteJob favoriteJob);
+    long insertFavoriteJob(FavoriteJob favoriteJob);
 
     @Query("DELETE FROM favorite_jobs WHERE id = :id")
     int deleteFavoriteJob(int id);

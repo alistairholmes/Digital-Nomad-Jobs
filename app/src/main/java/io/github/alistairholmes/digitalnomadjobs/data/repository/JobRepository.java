@@ -31,7 +31,8 @@ import static io.github.alistairholmes.digitalnomadjobs.utils.DbUtil.ID_PROJECTI
 @Singleton
 public class JobRepository {
 
-    private BehaviorSubject<Set<Integer>> mSavedJobIdsSubject;
+    private BehaviorSubject<Set<Integer>> mSavedJobIdsSubject = BehaviorSubject.create();
+    private BehaviorSubject<List<Job>> mSubject = BehaviorSubject.create();
     private final RequestInterface requestInterface;
     private final JobDao jobDao;
     private final FavoriteDao favoriteDao;
@@ -51,8 +52,25 @@ public class JobRepository {
             new NetworkBoundSource<List<Job>, List<Job>>(emitter) {
                 @Override
                 public Observable<List<Job>> getRemote() {
-                    return requestInterface.getAllJobs()
-                            .subscribeOn(Schedulers.io());
+                    return /*requestInterface
+                            .getAllJobs()
+                            .withLatestFrom(savedJobIds(), new BiFunction<List<Job>, Set<Integer>, List<Job>>() {
+                                @Override
+                                public List<Job> apply(List<Job> jobList, Set<Integer> integers) throws Exception {
+                                    return jobList;
+                                }
+                            })
+                            .subscribeOn(Schedulers.io());*/
+
+                            Observable.combineLatest(requestInterface.getAllJobs(), savedJobIds(),
+                                    (jobList, favoriteIds) -> {
+                                        for (Job job : jobList) {
+                                            job.setFavorite(favoriteIds.contains(job.getId()));
+                                        }
+                                        Timber.e(String.valueOf(jobList.size()));
+                                        return jobList;
+                                    })
+                                    .subscribeOn(Schedulers.io());
                 }
 
                 @Override
@@ -89,12 +107,9 @@ public class JobRepository {
     }
 
     private Observable<Set<Integer>> getSavedJobIds() {
-        if (mSavedJobIdsSubject == null) {
-            mSavedJobIdsSubject = BehaviorSubject.create();
-            savedJobIds().subscribe(mSavedJobIdsSubject);
-        }
+        savedJobIds().subscribe();
+        //mSavedJobIdsSubject.onNext(integers);
         return mSavedJobIdsSubject.hide();
-        //return mSavedJobIdsSubject.hide();  mSavedMovieIdsSubject.asObservable()
     }
 
 }
