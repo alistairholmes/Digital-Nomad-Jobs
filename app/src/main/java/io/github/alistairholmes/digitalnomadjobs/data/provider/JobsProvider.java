@@ -13,11 +13,11 @@ import androidx.annotation.Nullable;
 import androidx.sqlite.db.SimpleSQLiteQuery;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
-import io.github.alistairholmes.digitalnomadjobs.data.local.JobsDatabase;
 import io.github.alistairholmes.digitalnomadjobs.data.local.dao.FavoriteDao;
 import io.github.alistairholmes.digitalnomadjobs.data.local.entity.FavoriteJob;
 import timber.log.Timber;
@@ -38,14 +38,11 @@ public class JobsProvider extends ContentProvider {
     }
 
     @Inject
-    JobsDatabase jobsDatabase;
-    @Inject
     FavoriteDao favoriteDao;
 
     @Override
     public boolean onCreate() {
         AndroidInjection.inject(this);
-        //favoriteDao = jobsDatabase.favoriteDao();
         return true;
     }
 
@@ -74,13 +71,12 @@ public class JobsProvider extends ContentProvider {
                                         new Object[]{ContentUris.parseId(uri)}));
             }
 
-            cursor.setNotificationUri(this.getContext().getContentResolver(), uri);
+            cursor.setNotificationUri(Objects.requireNonNull(this.getContext()).getContentResolver(), uri);
             return cursor;
         } else {
             throw new IllegalArgumentException("Unknown URI: " + uri);
         }
     }
-
 
     @Nullable
     @Override
@@ -95,11 +91,11 @@ public class JobsProvider extends ContentProvider {
         }
     }
 
-
     @Nullable
     @Override
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues contentValues) {
-        Timber.tag(TAG).v("insert(uri=" + uri + ", values=" + contentValues.toString() + ")");
+        Timber.tag(TAG).v("insert(uri=" + uri + ", " +
+                "values=" + Objects.requireNonNull(contentValues).toString() + ")");
 
         switch (MATCHER.match(uri)) {
             case FAVORITE_JOB_DIR:
@@ -142,7 +138,8 @@ public class JobsProvider extends ContentProvider {
     @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues contentValues, @Nullable String s,
                       @Nullable String[] strings) {
-        Timber.tag(TAG).v("update(uri=" + uri + ", values=" + contentValues.toString() + ")");
+        Timber.tag(TAG).v("update(uri=" + uri + ", " +
+                "values=" + Objects.requireNonNull(contentValues).toString() + ")");
         switch (MATCHER.match(uri)) {
             case FAVORITE_JOB_DIR:
                 throw new IllegalArgumentException("Invalid URI, cannot update without ID" + uri);
