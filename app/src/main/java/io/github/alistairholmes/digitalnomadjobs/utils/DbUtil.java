@@ -38,15 +38,12 @@ public final class DbUtil {
     };
 
     public static Function<Optional<Cursor>, Set<Integer>> ID_PROJECTION_MAP = cursorOptional -> {
-        Cursor cursor = cursorOptional.get();
-        try {
+        try (Cursor cursor = cursorOptional.get()) {
             Set<Integer> idSet = new HashSet<>(cursor.getCount());
             while (cursor.moveToNext()) {
                 idSet.add(getInt(cursor, "id"));
             }
             return idSet;
-        } finally {
-            cursor.close();
         }
     };
 
