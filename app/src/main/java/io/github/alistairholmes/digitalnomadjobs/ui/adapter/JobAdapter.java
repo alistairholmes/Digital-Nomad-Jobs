@@ -54,11 +54,11 @@ public class JobAdapter extends RecyclerView.Adapter<JobViewHolder> {
         String dateFormat = formatDayMonth(context, currentJob.getDate());
         jobViewHolder.datePosted.setText(dateFormat);
 
-        if (!TextUtils.isEmpty(currentJob.getLogo())) {
+        if (!TextUtils.isEmpty(currentJob.getCompany_logo())) {
             GlideApp.with(context)
-                    .load(currentJob.getLogo())
-                    .placeholder(R.drawable.ic_launcher_foreground)
-                    .circleCrop()
+                    .load(currentJob.getCompany_logo())
+                    //.placeholder(R.drawable.ic_launcher_foreground)
+                    //.circleCrop()
                     .into(jobViewHolder.companyLogo);
         } else if (!TextUtils.isEmpty(currentJob.getCompany())) {
             ColorGenerator generator = ColorGenerator.MATERIAL;

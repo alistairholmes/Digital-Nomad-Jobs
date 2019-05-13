@@ -1,4 +1,4 @@
-package io.github.alistairholmes.digitalnomadjobs.ui;
+package io.github.alistairholmes.digitalnomadjobs.ui.jobdetail;
 
 import android.content.Intent;
 import android.net.Uri;

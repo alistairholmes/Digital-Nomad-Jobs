@@ -1,6 +1,8 @@
 package io.github.alistairholmes.digitalnomadjobs.di;
 
 import android.app.Application;
+import android.content.ContentProvider;
+import android.content.ContentResolver;
 import android.content.Context;
 
 import androidx.room.Room;
@@ -10,7 +12,9 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import io.github.alistairholmes.digitalnomadjobs.data.local.JobsDatabase;
+import io.github.alistairholmes.digitalnomadjobs.data.local.dao.FavoriteDao;
 import io.github.alistairholmes.digitalnomadjobs.data.local.dao.JobDao;
+import io.github.alistairholmes.digitalnomadjobs.data.provider.JobsProvider;
 import io.github.alistairholmes.digitalnomadjobs.data.remote.RequestInterface;
 import io.github.alistairholmes.digitalnomadjobs.data.remote.ServiceGenerator;
 import io.reactivex.disposables.CompositeDisposable;
@@ -33,6 +37,18 @@ class AppModule {
         return ServiceGenerator.createService(RequestInterface.class);
     }
 
+    /*@Provides
+    @Singleton
+    ContentProvider providerJobsProvider() {
+        return new JobsProvider();
+    }*/
+
+    @Provides
+    @Singleton
+    ContentResolver provideContentResolver(Application application) {
+        return application.getContentResolver();
+    }
+
     @Provides
     @Singleton
     JobDao provideJobDao(JobsDatabase db) {
@@ -41,8 +57,14 @@ class AppModule {
 
     @Provides
     @Singleton
+    FavoriteDao provideFavoriteDao(JobsDatabase db) {
+        return db.favoriteDao();
+    }
+
+    @Provides
+    @Singleton
     JobsDatabase provideDb(Application app) {
-        return Room.databaseBuilder(app, JobsDatabase.class, "RemoteJobs.db")
+        return Room.databaseBuilder(app, JobsDatabase.class, "moteJ.db")
                 //.addMigrations(PopularMoviesDatabase.MIGRATION_1_2)
                 .build();
 
