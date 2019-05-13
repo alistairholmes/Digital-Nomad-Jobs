@@ -7,16 +7,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/app_bar"
+        android:theme="@style/ToolbarTheme"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:elevation="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:title="@string/app_name" />
+
     <TextView
         android:id="@+id/textView_jobtitle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
-        android:fontFamily="@font/source_code_pro"
-        android:textSize="18sp"
+        android:fontFamily="@font/montserrat"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="16sp"
+        android:textStyle="normal"
         app:layout_constraintStart_toEndOf="@+id/imageView_Logo"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar"
         tools:text="Front-end Dev" />
 
     <TextView
@@ -26,7 +40,9 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/montserrat"
+        android:textColor="?android:attr/textColorPrimary"
         android:textSize="16sp"
+        android:textStyle="normal"
         app:layout_constraintStart_toEndOf="@+id/imageView_Logo"
         app:layout_constraintTop_toBottomOf="@+id/textView_jobtitle"
         tools:text="SquareSpace" />
@@ -37,9 +53,9 @@
         android:layout_width="80dp"
         android:layout_height="88dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/app_bar" />
 
     <ScrollView
         android:id="@+id/scroll_view"
@@ -59,12 +75,16 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="36dp"
             android:text="TextView"
+            android:fontFamily="@font/montserrat"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="14sp"
+            android:textStyle="normal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageViewLogo" />
+            app:layout_constraintTop_toBottomOf="@+id/imageView_Logo" />
 
     </ScrollView>
 
-        <mehdi.sakout.fancybuttons.FancyButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_applyforjob"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -76,13 +96,8 @@
             app:layout_constraintTop_toBottomOf="@+id/scroll_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            fancy:fb_borderColor="#FFFFFF"
-            fancy:fb_borderWidth="1dp"
-            fancy:fb_defaultColor="#7ab800"
-            fancy:fb_focusColor="#9bd823"
-            fancy:fb_radius="30dp"
-            fancy:fb_text="APPLY FOR THIS JOB"
-            fancy:fb_textColor="#FFFFFF"
+            style="@style/Widget.Dnj.Button"
+            android:text="APPLY FOR JOB"
             tools:layout_editor_absoluteX="16dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

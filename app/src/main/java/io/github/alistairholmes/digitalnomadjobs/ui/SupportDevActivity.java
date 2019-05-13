@@ -1,4 +1,4 @@
-package io.github.alistairholmes.digitalnomadjobs.activities;
+package io.github.alistairholmes.digitalnomadjobs.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
