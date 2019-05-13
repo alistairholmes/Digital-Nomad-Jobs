@@ -1,5 +1,6 @@
 package io.github.alistairholmes.digitalnomadjobs.data.repository;
 
+import android.content.AsyncQueryHandler;
 import android.content.ContentResolver;
 
 import androidx.annotation.NonNull;
@@ -82,8 +83,8 @@ public class JobRepository {
     }
 
     public void saveJob(Job job) {
-        /*AsyncQueryHandler handler = new AsyncQueryHandler(mContentResolver) {};
-        handler.startInsert(-1, null, Movies.CONTENT_URI, new Movie.Builder().movie(movie).build());*/
+        AsyncQueryHandler handler = new AsyncQueryHandler(contentResolver) {};
+        //handler.startInsert(-1, null, Movies.CONTENT_URI, new Movie.Builder().movie(movie).build());
     }
 
     private Observable<Set<Integer>> savedJobIds() {
