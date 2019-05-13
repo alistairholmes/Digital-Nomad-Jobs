@@ -1,15 +1,17 @@
 package io.github.alistairholmes.digitalnomadjobs.ui.jobs;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.view.View;
-import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,7 +28,8 @@ import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
 import io.github.alistairholmes.digitalnomadjobs.R;
 import io.github.alistairholmes.digitalnomadjobs.data.model.Job;
-import io.github.alistairholmes.digitalnomadjobs.ui.jobdetail.DetailActivity;
+import io.github.alistairholmes.digitalnomadjobs.ui.AboutActivity;
+import io.github.alistairholmes.digitalnomadjobs.ui.DetailActivity;
 import io.github.alistairholmes.digitalnomadjobs.ui.adapter.JobAdapter;
 import io.github.alistairholmes.digitalnomadjobs.utils.JobListItemDecoration;
 
@@ -42,6 +45,7 @@ public class JobActivity extends AppCompatActivity implements JobAdapter.OnJobCl
     private ImageView mNoWifiConnectionIv;
     private SearchView searchView;
     private SwipeRefreshLayout swipeContainer;
+    private Toolbar toolbar;
     private RecyclerView.LayoutManager layoutManager;
     public JobAdapter mAdapter;
     public RecyclerView mainRecyclerView;
@@ -53,6 +57,9 @@ public class JobActivity extends AppCompatActivity implements JobAdapter.OnJobCl
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         ButterKnife.bind(this);
 
@@ -107,10 +114,23 @@ public class JobActivity extends AppCompatActivity implements JobAdapter.OnJobCl
         /* Use AppCompatActivity's method getMenuInflater to get a handle on the menu inflater */
         MenuInflater inflater = getMenuInflater();
         /* Use the inflater's inflate method to inflate our menu layout to this menu */
-        inflater.inflate(R.menu.drawer_view, menu);
+        inflater.inflate(R.menu.dnj_toolbar_menu, menu);
 
         /* Return true so that the menu is displayed in the Toolbar */
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.about:
+                Intent intent = new Intent(JobActivity.this, AboutActivity.class);
+                //finally start the activity
+                startActivity(intent);
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
