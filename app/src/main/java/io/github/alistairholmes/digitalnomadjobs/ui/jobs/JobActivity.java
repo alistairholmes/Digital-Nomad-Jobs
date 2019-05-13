@@ -28,9 +28,9 @@ import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
 import io.github.alistairholmes.digitalnomadjobs.R;
 import io.github.alistairholmes.digitalnomadjobs.data.model.Job;
-import io.github.alistairholmes.digitalnomadjobs.ui.AboutActivity;
-import io.github.alistairholmes.digitalnomadjobs.ui.DetailActivity;
+import io.github.alistairholmes.digitalnomadjobs.ui.about.AboutActivity;
 import io.github.alistairholmes.digitalnomadjobs.ui.adapter.JobAdapter;
+import io.github.alistairholmes.digitalnomadjobs.ui.jobdetail.DetailActivity;
 import io.github.alistairholmes.digitalnomadjobs.utils.JobListItemDecoration;
 
 public class JobActivity extends AppCompatActivity implements JobAdapter.OnJobClickListener {
