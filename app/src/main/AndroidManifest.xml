@@ -17,7 +17,8 @@
         android:theme="@style/Theme.Dnj"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".ui.favorite.FavoriteActivity"></activity>
-        <activity android:name=".ui.jobs.JobActivity">
+        <activity android:name=".ui.jobs.JobActivity"
+            android:theme="@style/Theme.Dnj.NoActionBar">
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
@@ -36,9 +37,11 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".ui.about.AboutActivity" />
+        <activity android:name=".ui.about.AboutActivity"
+            android:theme="@style/Theme.Dnj.NoActionBar"/>
         <activity android:name=".ui.SupportDevActivity" />
-        <activity android:name=".ui.jobdetail.DetailActivity" />
+        <activity android:name=".ui.jobdetail.DetailActivity"
+            android:theme="@style/Theme.Dnj.NoActionBar"/>
 
         <provider
             android:name=".data.provider.JobsProvider"
