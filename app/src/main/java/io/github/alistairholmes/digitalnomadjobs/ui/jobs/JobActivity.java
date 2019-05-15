@@ -30,6 +30,7 @@ import io.github.alistairholmes.digitalnomadjobs.R;
 import io.github.alistairholmes.digitalnomadjobs.data.model.Job;
 import io.github.alistairholmes.digitalnomadjobs.ui.about.AboutActivity;
 import io.github.alistairholmes.digitalnomadjobs.ui.adapter.JobAdapter;
+import io.github.alistairholmes.digitalnomadjobs.ui.favorite.FavoriteActivity;
 import io.github.alistairholmes.digitalnomadjobs.ui.jobdetail.DetailActivity;
 import io.github.alistairholmes.digitalnomadjobs.utils.JobListItemDecoration;
 
@@ -128,6 +129,12 @@ public class JobActivity extends AppCompatActivity implements JobAdapter.OnJobCl
                 Intent intent = new Intent(JobActivity.this, AboutActivity.class);
                 //finally start the activity
                 startActivity(intent);
+
+            case R.id.favorites:
+                intent = new Intent(JobActivity.this, FavoriteActivity.class);
+                //finally start the activity
+                startActivity(intent);
+
             default:
                 return super.onOptionsItemSelected(item);
         }
