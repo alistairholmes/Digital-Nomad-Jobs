@@ -7,13 +7,13 @@
         android:icon="@drawable/about_info"
         android:title="About"
         android:orderInCategory="200"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/favorites"
         android:icon="@drawable/star"
         android:title="Favorites"
         android:orderInCategory="100"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 
 </menu>
