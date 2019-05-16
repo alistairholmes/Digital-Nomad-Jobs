@@ -25,26 +25,27 @@ import io.reactivex.Flowable;
 @Dao
 public interface FavoriteDao {
 
+    // Repository access to database
     @Query("SELECT * FROM favorite_jobs")
-    LiveData<List<FavoriteJob>> getFavoriteJobs();
+    LiveData<List<FavoriteJob>> getFavoriteJobss();
 
-    @Query("SELECT * FROM favorite_jobs")
-    Flowable<List<FavoriteJob>> getFavoriteJobss();
+    @Query("SELECT * FROM favorite_jobs ORDER BY date")
+    Flowable<List<FavoriteJob>> getFavoriteJobs();
 
-    @Query("SELECT * FROM favorite_jobs WHERE id=:id")
+    @Query("SELECT * FROM favorite_jobs WHERE id = :id")
     LiveData<FavoriteJob> isFavoriteJob(int id);
 
-    @Query("SELECT * from favorite_jobs where id = :id")
+    @Query("SELECT * FROM favorite_jobs WHERE id = :id")
     LiveData<FavoriteJob> getFavoriteJob(int id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void saveFavoriteJobc(FavoriteJob favoriteJob);
 
+    @Query("DELETE FROM favorite_jobs WHERE id = :id")
+    void deleteFavoriteJoba(int id);
+
     @Delete
     void deleteFavoriteJob(FavoriteJob favoriteJob);
-
-
-
 
 
     // ContentProvider access to database

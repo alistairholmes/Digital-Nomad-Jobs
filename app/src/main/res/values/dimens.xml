@@ -1,4 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="job_item_spacing_small">8dp</dimen>
+
+
+    <!-- Widget -->
+    <dimen name="widget_elevation">4dp</dimen>
+    <dimen name="widget_header_height">56dp</dimen>
+    <dimen name="widget_margin">8dp</dimen>
+
+    <dimen name="marginStart_widget_list_title">24dp</dimen>
+
+    <dimen name="widget_list_divider_height">0.5dp</dimen>
+
+    <dimen name="paddingStartWidgetListItem">16dp</dimen>
+    <dimen name="paddingEndWidgetListItem">16dp</dimen>
+    <dimen name="paddingEnd_bidprice">10dp</dimen>
+    <dimen name="paddingStartChange">3dp</dimen>
+    <dimen name="paddingEndChange">3dp</dimen>
+
+    <dimen name="height_widget_list_item">72dp</dimen>
+
+    <dimen name="widget_list_default_width">250dp</dimen>
+    <dimen name="widget_list_default_height">180dp</dimen>
+    <dimen name="widget_list_min_resize_width">220dp</dimen>
+    <dimen name="widget_list_min_resize_height">110dp</dimen>
+
+
 </resources>
