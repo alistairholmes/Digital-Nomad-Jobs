@@ -60,7 +60,7 @@ public class JobActivity extends AppCompatActivity implements JobAdapter.OnJobCl
         setContentView(R.layout.activity_main);
 
         toolbar = findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);
 
         ButterKnife.bind(this);
 
