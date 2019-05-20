@@ -51,41 +51,43 @@ public class JobRepository {
     }
 
     public Flowable<Resource<List<Job>>> retrieveJobs() {
-        return Flowable.create(emitter -> new NetworkBoundSource<List<Job>, List<Job>>(emitter) {
-            @Override
-            public Observable<List<Job>> getRemote() {
-                return Observable
-                        .combineLatest(requestInterface
-                                        .getAllJobs()
-                                        .timeout(5, TimeUnit.SECONDS).retry(2), savedJobIds(),
-                        (jobList, favoriteIds) -> {
-                            for (Job job : jobList) {
-                                job.setFavorite(favoriteIds.contains(job.getId()));
-                            }
-                            Timber.e(String.valueOf(favoriteIds.size()));
-                            Timber.e(String.valueOf(jobList.size()));
-                            return jobList;
-                        })
-                        .subscribeOn(Schedulers.io())
-                        .doOnError(Timber::e);
-            }
+        return Flowable.create(emitter -> {
+            new NetworkBoundSource<List<Job>, List<Job>>(emitter) {
+                @Override
+                public Observable<List<Job>> getRemote() {
+                    return Observable
+                            .combineLatest(requestInterface
+                                            .getAllJobs()
+                                            .timeout(5, TimeUnit.SECONDS).retry(2), savedJobIds(),
+                                    (jobList, favoriteIds) -> {
+                                        for (Job job : jobList) {
+                                            job.setFavorite(favoriteIds.contains(job.getId()));
+                                        }
+                                        Timber.e(String.valueOf(favoriteIds.size()));
+                                        Timber.e(String.valueOf(jobList.size()));
+                                        return jobList;
+                                    })
+                            .subscribeOn(Schedulers.io())
+                            .doOnError(Timber::e);
+                }
 
-            @Override
-            public Flowable<List<Job>> getLocal() {
-                Timber.e("Getting data from database.....");
-                return jobDao.getJobs();
-            }
+                @Override
+                public Flowable<List<Job>> getLocal() {
+                    Timber.e("Getting data from database.....");
+                    return jobDao.getJobs();
+                }
 
-            @Override
-            public void saveCallResult(@NonNull List<Job> jobList) {
-                jobDao.saveJobs(jobList);
-                Timber.e("Save to database.....");
-            }
+                @Override
+                public void saveCallResult(@NonNull List<Job> jobList) {
+                    jobDao.saveJobs(jobList);
+                    Timber.e("Save to database.....");
+                }
 
-            @Override
-            public Function<List<Job>, List<Job>> mapper() {
-                return jobList -> jobList;
-            }
+                @Override
+                public Function<List<Job>, List<Job>> mapper() {
+                    return jobList -> jobList;
+                }
+            };
         }, BackpressureStrategy.BUFFER);
     }
 
