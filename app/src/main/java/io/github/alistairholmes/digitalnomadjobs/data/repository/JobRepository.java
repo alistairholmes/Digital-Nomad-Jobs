@@ -105,8 +105,8 @@ public class JobRepository {
                         null, null, "date")))
                 .map(WIDGET_PROJECTION_MAP)
                 .subscribeOn(Schedulers.io());
-
     }
+
 
     public LiveData<List<FavoriteJob>> getFavoritess() {
         return favoriteDao.getFavoriteJobss();

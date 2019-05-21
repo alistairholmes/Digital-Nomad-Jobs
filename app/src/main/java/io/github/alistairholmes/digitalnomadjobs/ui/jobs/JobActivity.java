@@ -123,21 +123,17 @@ public class JobActivity extends AppCompatActivity implements JobAdapter.OnJobCl
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
             case R.id.about:
-                Intent intent = new Intent(JobActivity.this, AboutActivity.class);
-                //finally start the activity
-                startActivity(intent);
-
+                this.startActivity(new Intent(JobActivity.this, AboutActivity.class));
+                break;
             case R.id.favorites:
-                intent = new Intent(JobActivity.this, FavoriteActivity.class);
-                //finally start the activity
-                startActivity(intent);
-
+                this.startActivity(new Intent(JobActivity.this, FavoriteActivity.class));
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
+        return true;
     }
 
     @Override

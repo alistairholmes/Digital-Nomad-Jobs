@@ -18,7 +18,7 @@
     <dimen name="paddingStartChange">3dp</dimen>
     <dimen name="paddingEndChange">3dp</dimen>
 
-    <dimen name="height_widget_list_item">72dp</dimen>
+    <dimen name="height_widget_list_item">80dp</dimen>
 
     <dimen name="widget_list_default_width">250dp</dimen>
     <dimen name="widget_list_default_height">180dp</dimen>

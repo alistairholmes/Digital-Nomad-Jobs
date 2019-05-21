@@ -1,5 +1,7 @@
 package io.github.alistairholmes.digitalnomadjobs.utils;
 
+import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 
 import java.util.ArrayList;
@@ -10,6 +12,8 @@ import java.util.Set;
 
 import io.github.alistairholmes.digitalnomadjobs.data.local.entity.FavoriteJob;
 import io.reactivex.functions.Function;
+
+import static io.github.alistairholmes.digitalnomadjobs.widget.FavoriteJobsAppWidget.FAVORITE_DATA_UPDATED;
 
 public final class DbUtil {
 
@@ -80,6 +84,15 @@ public final class DbUtil {
             return favoriteJobs;
         }
     };
+
+
+    // TODO: When the favorite button is clicked send broadcast.
+    // but for now put it
+    private void updateWidgets(Context context) {
+        // Setting the package ensures that only components in our app will receive the broadcast
+        Intent dataUpdatedIntent = new Intent(FAVORITE_DATA_UPDATED).setPackage(context.getPackageName());
+        context.sendBroadcast(dataUpdatedIntent);
+    }
 
 
 }
