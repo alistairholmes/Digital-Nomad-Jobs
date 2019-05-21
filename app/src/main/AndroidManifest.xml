@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Dnj"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.favorite.FavoriteActivity"></activity>
+
         <activity android:name=".ui.jobs.JobActivity"
             android:theme="@style/Theme.Dnj.NoActionBar">
             <meta-data
@@ -38,8 +38,22 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity android:name=".ui.about.AboutActivity"
-            android:theme="@style/Theme.Dnj.NoActionBar"/>
+            android:theme="@style/Theme.Dnj.NoActionBar"
+            android:parentActivityName=".ui.jobs.JobActivity">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="io.github.alistairholmes.digitalnomadjobs.ui.jobs.JobActivity"/>
+        </activity>
+
         <activity android:name=".ui.SupportDevActivity" />
+
+        <activity android:name=".ui.favorite.FavoriteActivity"
+            android:parentActivityName=".ui.jobs.JobActivity">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="io.github.alistairholmes.digitalnomadjobs.ui.jobs.JobActivity" />
+        </activity>
+
         <activity android:name=".ui.jobdetail.DetailActivity"
             android:theme="@style/Theme.Dnj.NoActionBar"/>
 
@@ -49,6 +63,21 @@
             android:exported="true"
             android:permission="io.github.alistairholmes.digitalnomadjobs.data.provider.READ_WRITE"
             android:syncable="true" />
+
+        <receiver
+            android:name=".widget.FavoriteJobsAppWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/favorite_jobs_app_widget_info" />
+        </receiver>
+
+        <service
+            android:name=".widget.FavoriteJobWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
     </application>
 
 </manifest>
