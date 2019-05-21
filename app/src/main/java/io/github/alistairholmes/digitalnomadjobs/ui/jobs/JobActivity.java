@@ -28,6 +28,7 @@ import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
 import io.github.alistairholmes.digitalnomadjobs.R;
 import io.github.alistairholmes.digitalnomadjobs.data.model.Job;
+import io.github.alistairholmes.digitalnomadjobs.ui.about.AboutActivity;
 import io.github.alistairholmes.digitalnomadjobs.ui.adapter.JobAdapter;
 import io.github.alistairholmes.digitalnomadjobs.ui.favorite.FavoriteActivity;
 import io.github.alistairholmes.digitalnomadjobs.ui.jobdetail.DetailActivity;
@@ -122,13 +123,15 @@ public class JobActivity extends AppCompatActivity implements JobAdapter.OnJobCl
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
-
+            case R.id.about:
+                this.startActivity(new Intent(JobActivity.this, AboutActivity.class));
+                break;
             case R.id.favorites:
-                Intent intent = new Intent(JobActivity.this, FavoriteActivity.class);
-                //finally start the activity
-                startActivity(intent);
+                this.startActivity(new Intent(JobActivity.this, FavoriteActivity.class));
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
 
             default:
                 return super.onOptionsItemSelected(item);
