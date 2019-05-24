@@ -1,5 +1,6 @@
 package io.github.alistairholmes.digitalnomadjobs.ui.jobs;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,9 +10,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
@@ -32,7 +36,10 @@ import io.github.alistairholmes.digitalnomadjobs.ui.about.AboutActivity;
 import io.github.alistairholmes.digitalnomadjobs.ui.adapter.JobAdapter;
 import io.github.alistairholmes.digitalnomadjobs.ui.favorite.FavoriteActivity;
 import io.github.alistairholmes.digitalnomadjobs.ui.jobdetail.DetailActivity;
+import io.github.alistairholmes.digitalnomadjobs.utils.DbUtil;
 import io.github.alistairholmes.digitalnomadjobs.utils.JobListItemDecoration;
+import io.github.alistairholmes.digitalnomadjobs.utils.Resource;
+import timber.log.Timber;
 
 public class JobActivity extends AppCompatActivity implements JobAdapter.OnJobClickListener {
 
@@ -85,31 +92,27 @@ public class JobActivity extends AppCompatActivity implements JobAdapter.OnJobCl
         int smallPadding = getResources().getDimensionPixelSize(R.dimen.job_item_spacing_small);
         mainRecyclerView.addItemDecoration(new JobListItemDecoration(smallPadding));
         mainRecyclerView.setHasFixedSize(true);
-        mainRecyclerView.setAdapter(mAdapter);
 
-        jobViewModel.getJobsLiveData().observe(this, resource -> {
+
+       /* jobViewModel.getJobsLiveData().observe(this, resource -> {
             if (resource != null && resource.data.size() > 0) {
                 jobList = resource.data;
                 setupRecyclerView(resource.data);
                 loaderLottie.setVisibility(View.INVISIBLE);
             }
-        });
+        });*/
 
-    }
-
-    private void setupRecyclerView(List<Job> jobList) {
-        mAdapter = new JobAdapter(this, jobList, this);
+        mAdapter = new JobAdapter(this, this);
+        jobViewModel.jobsLiveData.observe(this, resource -> mAdapter.submitList(resource.data));
         mainRecyclerView.setAdapter(mAdapter);
+
     }
 
+//    private void setupRecyclerView(List<Job> jobList) {
+//        mAdapter = new JobAdapter(this, jobList, this);
+//        mainRecyclerView.setAdapter(mAdapter);
+//    }
 
-    /**
-     * This is where we inflate and set up the menu for this Activity.
-     *
-     * @param menu The options menu in which you place your items.
-     * @return You must return true for the menu to be displayed;
-     * if you return false it will not be shown.
-     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         /* Use AppCompatActivity's method getMenuInflater to get a handle on the menu inflater */
@@ -149,12 +152,30 @@ public class JobActivity extends AppCompatActivity implements JobAdapter.OnJobCl
         extras.putInt("JOB_ID", job.getId());
         //create and initialize an intent
         Intent intent = new Intent(JobActivity.this, DetailActivity.class);
-
         //attach the bundle to the Intent object
         intent.putExtras(extras);
-
         //finally start the activity
         startActivity(intent);
     }
+
+    @Override
+    public void onFavoredClicked(@NonNull Job job, boolean isFavorite, int position) {
+        jobViewModel.setJobFavored(job, isFavorite);
+
+        //Timber.e("onFavoredClicked: favored=%s", isFavorite);
+
+        /*if (isFavorite) {
+            Snackbar.make(findViewById(R.id.container),
+                    job.getPosition().substring(0, 10) + "... is removed to Favorites!",
+                    Snackbar.LENGTH_SHORT).show();
+        } else {
+            Snackbar.make(findViewById(R.id.container),
+                    job.getPosition().substring(0, 10) + "... is added from Favorites!",
+                    Snackbar.LENGTH_SHORT).show();
+        }*/
+
+        DbUtil.updateWidgets(this);
+    }
+
 
 }

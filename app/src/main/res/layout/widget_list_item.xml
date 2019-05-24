@@ -1,57 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/widget_list_item"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/height_widget_list_item"
-    android:foreground="@drawable/grey_ripple"
-    android:gravity="center_vertical"
-    tools:ignore="UnusedAttribute"
-    tools:targetApi="m">
+    android:layout_height="@dimen/height_widget_list_item">
 
     <ImageView
         android:id="@+id/widget_company_logo"
         android:layout_width="75dp"
-        android:layout_height="0dp"
-        android:contentDescription="@null"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="h,1:1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/ic_launcher" />
+        android:layout_height="75dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:contentDescription="@null" />
 
     <TextView
         android:id="@+id/widget_position"
-        style="@style/StockSymbolTextStyle"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_toEndOf="@id/widget_company_logo"
         android:ellipsize="end"
-        android:gravity="start|center_vertical"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/widget_company_logo"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="TSLA" />
+        android:lines="1"
+        android:singleLine="true"
+        android:textColor="#000000"
+        android:textSize="16sp" />
 
 
     <TextView
         android:id="@+id/widget_company"
-        style="@style/BidPriceTextStyle"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/widget_position"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_toEndOf="@id/widget_company_logo"
         android:ellipsize="end"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/widget_position"
-        app:layout_constraintTop_toBottomOf="@+id/widget_position"
-        tools:text="1000.00" />
+        android:lines="1"
+        android:singleLine="true"
+        android:textSize="12sp" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
