@@ -112,9 +112,6 @@ dependencies {
     implementation "androidx.work:work-runtime:${versions.workmanager}"
     implementation "androidx.work:work-rxjava2:${versions.workmanager}" // RxJava2 support
 
-    // Fancy Buttons
-    implementation 'com.github.medyo:fancybuttons:1.9.1'
-
     // Testing
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
@@ -125,7 +122,4 @@ dependencies {
 
     // Animations
     implementation 'com.airbnb.android:lottie:3.0.0'
-
-    // About Libraries Screen
-    implementation "com.mikepenz:aboutlibraries:6.2.3"
 }
