@@ -1,6 +1,7 @@
 package io.github.alistairholmes.digitalnomadjobs;
 
 import android.app.Activity;
+import android.app.Service;
 import android.content.ContentProvider;
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -19,16 +20,18 @@ import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
 import dagger.android.HasContentProviderInjector;
+import dagger.android.HasServiceInjector;
 import io.github.alistairholmes.digitalnomadjobs.di.AppInjector;
 import timber.log.Timber;
 
-public class JobApplication extends MultiDexApplication implements HasActivityInjector, HasContentProviderInjector {
+public class JobApplication extends MultiDexApplication implements HasActivityInjector, HasContentProviderInjector, HasServiceInjector {
 
     private static JobApplication instance;
     public Context context;
 
     @Inject DispatchingAndroidInjector<Activity> dispatchingAndroidInjector;
     @Inject DispatchingAndroidInjector<ContentProvider> contentProviderInjector;
+    @Inject DispatchingAndroidInjector<Service> dispatchingServiceInjector;
 
     @Override
     public void onCreate() {
@@ -86,6 +89,11 @@ public class JobApplication extends MultiDexApplication implements HasActivityIn
     @Override
     public AndroidInjector<ContentProvider> contentProviderInjector() {
         return contentProviderInjector;
+    }
+
+    @Override
+    public AndroidInjector<Service> serviceInjector() {
+        return dispatchingServiceInjector;
     }
 
 }

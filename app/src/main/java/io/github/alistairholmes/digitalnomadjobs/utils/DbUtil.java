@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 import io.github.alistairholmes.digitalnomadjobs.data.local.entity.FavoriteJob;
+import io.github.alistairholmes.digitalnomadjobs.data.model.Job;
 import io.reactivex.functions.Function;
 
 import static io.github.alistairholmes.digitalnomadjobs.widget.FavoriteJobsAppWidget.FAVORITE_DATA_UPDATED;
@@ -20,6 +21,16 @@ public final class DbUtil {
     public static final int BOOLEAN_FALSE = 0;
     public static final int BOOLEAN_TRUE = 1;
 
+    public static FavoriteJob getFavorite(Job job, boolean favorite) {
+        return new FavoriteJob(job.getId(),
+                job.getPosition(),
+                job.getCompany(),
+                job.getCompany_logo(),
+                job.getDate(),
+                job.getLogo(),
+                job.getDescription(),
+                favorite);
+    }
 
     public static String getString(Cursor cursor, String columnName) {
         return cursor.getString(cursor.getColumnIndexOrThrow(columnName));
@@ -88,7 +99,7 @@ public final class DbUtil {
 
     // TODO: When the favorite button is clicked send broadcast.
     // but for now put it
-    private void updateWidgets(Context context) {
+    public static void updateWidgets(Context context) {
         // Setting the package ensures that only components in our app will receive the broadcast
         Intent dataUpdatedIntent = new Intent(FAVORITE_DATA_UPDATED).setPackage(context.getPackageName());
         context.sendBroadcast(dataUpdatedIntent);

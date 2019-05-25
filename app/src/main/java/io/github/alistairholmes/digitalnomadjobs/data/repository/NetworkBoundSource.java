@@ -20,10 +20,10 @@ public abstract class NetworkBoundSource<LocalType, RemoteType> {
 
         Disposable firstDataDisposable = getLocal()
                 .map(Resource::loading)
-                .subscribe(value -> emitter.onNext(value));
+                .subscribe(emitter::onNext);
 
         getRemote().map(mapper())
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.newThread())
                 .subscribe(new Consumer<LocalType>() {
                     @Override

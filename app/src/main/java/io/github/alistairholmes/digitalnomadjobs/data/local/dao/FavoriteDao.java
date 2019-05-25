@@ -39,7 +39,7 @@ public interface FavoriteDao {
     LiveData<FavoriteJob> getFavoriteJob(int id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void saveFavoriteJobc(FavoriteJob favoriteJob);
+    void saveFavoriteJob(FavoriteJob favoriteJob);
 
     @Query("DELETE FROM favorite_jobs WHERE id = :id")
     void deleteFavoriteJoba(int id);

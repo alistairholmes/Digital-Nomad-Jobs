@@ -14,7 +14,8 @@ import io.github.alistairholmes.digitalnomadjobs.JobApplication;
         AndroidSupportInjectionModule.class,
         AppModule.class,
         ActivityModule.class,
-        FragmentBuildersModule.class})
+        FragmentBuildersModule.class,
+        ServiceBuilderModule.class})
 public interface AppComponent {
 
     @Component.Builder

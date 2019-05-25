@@ -2,6 +2,7 @@ package io.github.alistairholmes.digitalnomadjobs.data.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 import androidx.room.Entity;
 import androidx.room.Ignore;

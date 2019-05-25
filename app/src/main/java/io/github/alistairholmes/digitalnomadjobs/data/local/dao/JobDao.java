@@ -4,6 +4,7 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -22,6 +23,12 @@ public interface JobDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void saveJobs(List<Job> jobList);
+
+    @Update
+    int updateJob(Job job);
+
+    @Query("UPDATE remote_jobs SET favorite = :favorite WHERE id = :id")
+    void update(int id, boolean favorite);
 
     @Query("DELETE FROM remote_jobs")
     void deleteJobs();

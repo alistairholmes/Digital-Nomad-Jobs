@@ -1,6 +1,5 @@
 package io.github.alistairholmes.digitalnomadjobs.data.repository;
 
-import android.content.AsyncQueryHandler;
 import android.content.ContentResolver;
 
 import androidx.annotation.NonNull;
@@ -8,7 +7,7 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.Callable;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -22,10 +21,16 @@ import io.github.alistairholmes.digitalnomadjobs.data.remote.RequestInterface;
 import io.github.alistairholmes.digitalnomadjobs.utils.Optional;
 import io.github.alistairholmes.digitalnomadjobs.utils.Resource;
 import io.reactivex.BackpressureStrategy;
+import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Action;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.BehaviorSubject;
+import io.reactivex.subjects.PublishSubject;
 import timber.log.Timber;
 
 import static io.github.alistairholmes.digitalnomadjobs.utils.DbUtil.FAVORITE_WIDGET_PROJECTION;
@@ -36,10 +41,15 @@ import static io.github.alistairholmes.digitalnomadjobs.utils.DbUtil.WIDGET_PROJ
 @Singleton
 public class JobRepository {
 
+    private BehaviorSubject<Set<Integer>> mSavedJobIdsSubject;
+    //private PublishSubject<FavoriteJob> favoriteJobPublishSubject = PublishSubject.create();
+    private BehaviorSubject<List<Job>> mJobsBehaviorSubject = BehaviorSubject.create();
+
     private final RequestInterface requestInterface;
     private final JobDao jobDao;
     private final FavoriteDao favoriteDao;
     private final ContentResolver contentResolver;
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Inject
     public JobRepository(JobDao jobDao, FavoriteDao favoriteDao, RequestInterface requestInterface,
@@ -55,10 +65,13 @@ public class JobRepository {
             new NetworkBoundSource<List<Job>, List<Job>>(emitter) {
                 @Override
                 public Observable<List<Job>> getRemote() {
+                    /*compositeDisposable.add(requestInterface.getAllJobs()
+                            .subscribe(t -> mJobsBehaviorSubject.onNext(t)));*/
+
+                    Timber.e("Getting data from Remote.....");
+
                     return Observable
-                            .combineLatest(requestInterface
-                                            .getAllJobs()
-                                            .timeout(5, TimeUnit.SECONDS).retry(2), savedJobIds(),
+                            .combineLatest(/*mJobsBehaviorSubject.hide()*/ requestInterface.getAllJobs(), savedJobIds(),
                                     (jobList, favoriteIds) -> {
                                         for (Job job : jobList) {
                                             job.setFavorite(favoriteIds.contains(job.getId()));
@@ -67,7 +80,6 @@ public class JobRepository {
                                         Timber.e(String.valueOf(jobList.size()));
                                         return jobList;
                                     })
-                            .subscribeOn(Schedulers.io())
                             .doOnError(Timber::e);
                 }
 
@@ -99,6 +111,17 @@ public class JobRepository {
                 .subscribeOn(Schedulers.io());
     }
 
+    private Observable<Set<Integer>> getSavedMovieIds() {
+        if (mSavedJobIdsSubject == null) {
+            //mSavedJobIdsSubject = BehaviorSubject.createDefault();
+            mSavedJobIdsSubject = BehaviorSubject.create();
+            savedJobIds().filter(integers -> (integers != null))
+                    .subscribe(mSavedJobIdsSubject);
+
+        }
+        return mSavedJobIdsSubject.hide();
+    }
+
     public Observable<List<FavoriteJob>> getFavoriteListForWidget() {
         return Observable
                 .just(new Optional<>(contentResolver.query(JobsProvider.URI_JOB, FAVORITE_WIDGET_PROJECTION,
@@ -106,7 +129,6 @@ public class JobRepository {
                 .map(WIDGET_PROJECTION_MAP)
                 .subscribeOn(Schedulers.io());
     }
-
 
     public LiveData<List<FavoriteJob>> getFavoritess() {
         return favoriteDao.getFavoriteJobss();
@@ -125,30 +147,29 @@ public class JobRepository {
     }
 
     public void addFavorite(FavoriteJob favoriteJob) {
-        Timber.i("Adding %s to database", favoriteJob.getPosition());
-        favoriteDao.saveFavoriteJobc(favoriteJob);
+
+        compositeDisposable.add(Completable.fromAction(() -> {
+            jobDao.update(favoriteJob.getId(), favoriteJob.isFavorite());
+            favoriteDao.saveFavoriteJob(favoriteJob);
+        })
+                //.doOnComplete(() -> favoriteJobPublishSubject.onNext(favoriteJob))
+                .subscribeOn(Schedulers.io())
+                .subscribe(() -> Timber.e("Adding %s to database", favoriteJob.getPosition())));
     }
 
     public void removeFavorite(FavoriteJob favoriteJob) {
-        Timber.i("Removing %s to database", favoriteJob.getPosition());
-        favoriteDao.deleteFavoriteJob(favoriteJob);
+
+        compositeDisposable.add(Completable.fromAction(() -> {
+            jobDao.update(favoriteJob.getId(), favoriteJob.isFavorite());
+            favoriteDao.deleteFavoriteJob(favoriteJob);
+        })
+                //.doOnComplete(() -> favoriteJobPublishSubject.onNext(favoriteJob))
+                .subscribeOn(Schedulers.io())
+                .subscribe(() -> Timber.e("Removing %s to database", favoriteJob.getPosition())));
     }
 
-    public void saveJob(Job job) {
-        AsyncQueryHandler handler = new AsyncQueryHandler(contentResolver) {
-
-        };
-        //handler.startInsert(-1, null, Movies.CONTENT_URI, new Movie.Builder().movie(movie).build());
-    }
-
-    public void deleteMovie(Job job) {
-        //String where = Movies.MOVIE_ID + "=?";
-        //String[] args = new String[]{String.valueOf(movie.getId())};
-
-        AsyncQueryHandler handler = new AsyncQueryHandler(contentResolver) {
-
-        };
-        //handler.startDelete(-1, null, Movies.CONTENT_URI, where, args);
+    public void clear() {
+        compositeDisposable.clear();
     }
 
 }
