@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/widget_margin">
+
+    <LinearLayout
+        android:id="@+id/widget_header"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/widget_header_height"
+        android:background="@color/widget_title_background"
+        android:elevation="@dimen/widget_elevation"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/appIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/app_name"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            style="@style/WidgetTitleTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/marginStart_widget_list_title"
+            android:layout_marginStart="@dimen/marginStart_widget_list_title"
+            android:gravity="center"
+            android:text="@string/app_name" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:background="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <ListView
+            android:id="@+id/widget_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@color/textSecondary"
+            android:dividerHeight="@dimen/widget_list_divider_height"
+            tools:listitem="@layout/widget_list_item" />
+
+        <TextView
+            android:id="@+id/widget_empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center"
+            android:text="@string/empty_job_list_no_saved_jobs"
+            android:textAppearance="?android:textAppearanceLarge" />
+    </FrameLayout>
+
+</LinearLayout>

@@ -17,7 +17,8 @@
         android:theme="@style/Theme.Dnj"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".ui.jobs.JobActivity"
+        <activity
+            android:name=".ui.jobs.JobActivity"
             android:theme="@style/Theme.Dnj.NoActionBar">
             <meta-data
                 android:name="android.app.searchable"
@@ -33,29 +34,31 @@
             </intent-filter>
         </activity>
 
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
-
-        <activity android:name=".ui.about.AboutActivity"
+        <activity
+            android:name=".ui.about.AboutActivity"
             android:theme="@style/Theme.Dnj.NoActionBar"
             android:parentActivityName=".ui.jobs.JobActivity">
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value="io.github.alistairholmes.digitalnomadjobs.ui.jobs.JobActivity"/>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="io.github.alistairholmes.digitalnomadjobs.ui.jobs.JobActivity" />
         </activity>
 
         <activity android:name=".ui.SupportDevActivity" />
 
         <activity android:name=".ui.favorite.FavoriteActivity"
-            android:parentActivityName=".ui.jobs.JobActivity">
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value="io.github.alistairholmes.digitalnomadjobs.ui.jobs.JobActivity" />
+            android:parentActivityName=".ui.jobs.JobActivity"> <!--android:theme="@style/AppTheme.Details"-->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="io.github.alistairholmes.digitalnomadjobs.ui.jobs.JobActivity" />
         </activity>
 
-        <activity android:name=".ui.jobdetail.DetailActivity"
-            android:theme="@style/Theme.Dnj.NoActionBar"/>
+        <activity
+            android:name=".ui.jobdetail.DetailActivity"
+            android:theme="@style/Theme.Dnj.NoActionBar" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
 
         <provider
             android:name=".data.provider.JobsProvider"

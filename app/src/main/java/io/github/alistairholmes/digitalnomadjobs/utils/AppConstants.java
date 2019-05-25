@@ -11,6 +11,9 @@ public class AppConstants {
     public static final String BASE_URL = "https://remoteok.io";
     public static final String BASE_IMAGE_URL = "https://remoteok.io/assets/jobs/";
 
+    //public static final String SELECTED_STOCK_COMPANY_NAME = "selectedStockCompany";
+    public static final String SELECTED_JOB_POSITION = "selectedJobPosition";
+
 
     /*public static final String BASE_IMAGE_URL_ = "https://image.tmdb.org/t/p/w185";
     public static final String BASE_IMAGE_URL = "https://image.tmdb.org/t/p/w342";

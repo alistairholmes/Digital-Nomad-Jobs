@@ -132,10 +132,8 @@ public class JobActivity extends AppCompatActivity implements JobAdapter.OnJobCl
                 break;
             default:
                 return super.onOptionsItemSelected(item);
-
-            default:
-                return super.onOptionsItemSelected(item);
         }
+        return true;
     }
 
     @Override

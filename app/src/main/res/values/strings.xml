@@ -15,6 +15,12 @@
     <string name="chip_php">PHP</string>
 
 
+    <!-- ContentProvider -->
     <string name="content_authority">io.github.alistairholmes.digitalnomadjobs.data.provider</string>
+
+    <!-- App Widget -->
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="empty_job_list_no_saved_jobs">No Saved Jobs</string>
 
 </resources>
