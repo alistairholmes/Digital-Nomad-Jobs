@@ -16,7 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.alistairholmes.digitalnomadjobs.R;
 
-public class AboutActivity extends AppCompatActivity {
+public class AboutActivity extends AppCompatActivity implements View.OnClickListener {
 
     @BindView(R.id.toolbar_about) Toolbar mToolbar;
 
@@ -78,13 +78,12 @@ public class AboutActivity extends AppCompatActivity {
                 break;
 
             case R.id.container_about_rate:
-                mFirebaseAnalytics.logEvent(Resplash.FIREBASE_EVENT_RATE_FROM_APP, null);
                 goToURL("https://play.google.com/store/apps/details?id=io.github.alistairholmes.digitalnomadjobs&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1");
                 break;
 
-            case R.id.container_about_donate:
+            /*case R.id.container_about_donate:
                 startActivity(new Intent(AboutActivity.this, DonateActivity.class));
-                break;
+                break;*/
 
             case R.id.container_about_bug:
                 goToURL("https://github.com/alistairholmes/Digital-Nomad-Jobs/issues");
@@ -107,7 +106,7 @@ public class AboutActivity extends AppCompatActivity {
                 break;
 
             case R.id.container_about_library3:
-                goToURL("https://github.com/mikepenz/FastAdapter");
+                goToURL("https://developer.android.com/jetpack/androidx");
                 break;
 
             case R.id.container_about_library4:
@@ -115,11 +114,11 @@ public class AboutActivity extends AppCompatActivity {
                 break;
 
             case R.id.container_about_library5:
-                goToURL("https://github.com/mikepenz/MaterialDrawer");
+                goToURL("https://developer.android.com/topic/libraries/architecture/room");
                 break;
 
             case R.id.container_about_library6:
-                goToURL("https://github.com/DavidPacioianu/InkPageIndicator");
+                goToURL("https://github.com/ReactiveX/RxJava");
                 break;
 
             case R.id.container_about_library7:
@@ -127,27 +126,27 @@ public class AboutActivity extends AppCompatActivity {
                 break;
 
             case R.id.container_about_library9:
-                goToURL("https://github.com/chrisbanes/PhotoView");
+                goToURL("https://github.com/google/dagger");
                 break;
 
             case R.id.container_about_library10:
-                goToURL("https://github.com/Clans/FloatingActionButton");
+                goToURL("https://github.com/google/gson");
                 break;
 
             case R.id.container_about_library11:
-                goToURL("https://github.com/ocpsoft/prettytime");
+                goToURL("https://github.com/facebook/stetho");
                 break;
 
             case R.id.container_about_library12:
-                goToURL("https://github.com/ocpsoft/prettytime");
+                goToURL("https://github.com/square/leakcanary");
                 break;
 
             case R.id.container_about_library13:
-                goToURL("https://github.com/ocpsoft/prettytime");
+                goToURL("https://github.com/JakeWharton/timber");
                 break;
 
             case R.id.container_about_library14:
-                goToURL("https://github.com/ocpsoft/prettytime");
+                goToURL("https://github.com/amulyakhare/TextDrawable");
                 break;
         }
     }
