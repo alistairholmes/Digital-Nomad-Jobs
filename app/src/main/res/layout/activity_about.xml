@@ -150,11 +150,11 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:text="Alistair Holmes"
+                                android:text="Osai.G.Bovo"
                                 style="@style/about_title_text"/>
 
                             <TextView
-                                android:text="Bulawayo, Zimbabwe"
+                                android:text="Lagos, Nigeria"
                                 style="@style/about_subtitle_text"/>
 
                         </LinearLayout>

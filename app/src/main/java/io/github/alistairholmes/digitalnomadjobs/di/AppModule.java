@@ -1,7 +1,6 @@
 package io.github.alistairholmes.digitalnomadjobs.di;
 
 import android.app.Application;
-import android.content.ContentProvider;
 import android.content.ContentResolver;
 import android.content.Context;
 
@@ -14,14 +13,10 @@ import dagger.Provides;
 import io.github.alistairholmes.digitalnomadjobs.data.local.JobsDatabase;
 import io.github.alistairholmes.digitalnomadjobs.data.local.dao.FavoriteDao;
 import io.github.alistairholmes.digitalnomadjobs.data.local.dao.JobDao;
-import io.github.alistairholmes.digitalnomadjobs.data.provider.JobsProvider;
 import io.github.alistairholmes.digitalnomadjobs.data.remote.RequestInterface;
 import io.github.alistairholmes.digitalnomadjobs.data.remote.ServiceGenerator;
 import io.reactivex.disposables.CompositeDisposable;
 
-/**
- * @author Osaigbovo Odiase.
- */
 @Module(includes = ViewModelModule.class)
 class AppModule {
 
@@ -36,12 +31,6 @@ class AppModule {
     RequestInterface provideJobService() {
         return ServiceGenerator.createService(RequestInterface.class);
     }
-
-    /*@Provides
-    @Singleton
-    ContentProvider providerJobsProvider() {
-        return new JobsProvider();
-    }*/
 
     @Provides
     @Singleton
@@ -65,24 +54,8 @@ class AppModule {
     @Singleton
     JobsDatabase provideDb(Application app) {
         return Room.databaseBuilder(app, JobsDatabase.class, "moteJ.db")
-                //.addMigrations(PopularMoviesDatabase.MIGRATION_1_2)
+                //.addMigrations(JobsDatabase.MIGRATION_1_2)
                 .build();
-
-        /*
-    private static final Object LOCK = new Object();
-    private static final String DATABASE_NAME = "jobs";
-    private static JobsDatabase sInstance;
-
-    public static JobsDatabase getInstance(Context context) {
-        if (sInstance == null) {
-            synchronized (LOCK) {
-                sInstance = Room.databaseBuilder(context.getApplicationContext(),
-                        JobsDatabase.class, JobsDatabase.DATABASE_NAME)
-                        .build();
-            }
-        }
-        return sInstance;
-    }*/
     }
 
     /*

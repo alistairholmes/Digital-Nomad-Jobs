@@ -13,11 +13,6 @@ import dagger.android.support.AndroidSupportInjection;
 import dagger.android.support.HasSupportFragmentInjector;
 import io.github.alistairholmes.digitalnomadjobs.JobApplication;
 
-/**
- * Helper class to automatically inject fragments if they implement {link Injectable}.
- *
- * @author Osaigbovo Odiase.
- */
 public class AppInjector {
 
     private AppInjector() {

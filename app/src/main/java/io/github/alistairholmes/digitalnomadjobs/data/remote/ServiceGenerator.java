@@ -28,10 +28,10 @@ import static io.github.alistairholmes.digitalnomadjobs.utils.AppConstants.BASE_
 @Singleton
 public class ServiceGenerator {
 
-    private static File httpCacheDirectory
+    /*private static File httpCacheDirectory
             = new File(JobApplication.getInstance().getCacheDir(), "responses");
     private static int cacheSize = 30 * 1024 * 1024; // 10 MB
-    private static Cache cache = new Cache(httpCacheDirectory, cacheSize);
+    private static Cache cache = new Cache(httpCacheDirectory, cacheSize);*/
 
     private static Retrofit.Builder builder = new Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -47,7 +47,7 @@ public class ServiceGenerator {
             .addNetworkInterceptor(new ResponseCacheInterceptor())
             .addInterceptor(new OfflineResponseCacheInterceptor())
             .addInterceptor(new ErrorHandlerInterceptor())
-            .cache(cache);
+            /*.cache(cache)*/;
 
     public static <S> S createService(Class<S> serviceClass) {
 

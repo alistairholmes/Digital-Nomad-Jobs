@@ -69,36 +69,24 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.container_about_app:
+            /*case R.id.container_about_app:
                 goToURL("https://digitalnomadjobs.ml/");
-                break;
-
-            case R.id.container_about_app_github:
-                goToURL("https://github.com/alistairholmes/Digital-Nomad-Jobs");
-                break;
+                break;*/
 
             case R.id.container_about_app_website:
                 goToURL("https://digitalnomadjobs.ml");
-                break;
-
-            case R.id.container_about_rate:
-                goToURL("https://play.google.com/store/apps/details?id=io.github.alistairholmes.digitalnomadjobs&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1");
                 break;
 
             /*case R.id.container_about_donate:
                 startActivity(new Intent(AboutActivity.this, DonateActivity.class));
                 break;*/
 
-            case R.id.container_about_bug:
-                goToURL("https://github.com/alistairholmes/Digital-Nomad-Jobs/issues");
-                break;
-
             case R.id.container_about_website:
-                goToURL("https://alistair.ml/");
+                goToURL("https://github.com/Osaigbovo");
                 break;
 
             case R.id.container_about_instagram:
-                goToURL("https://www.instagram.com/alistair.holmes/");
+                goToURL("https://www.instagram.com/0saigbovo/");
                 break;
 
             case R.id.container_about_library1:

@@ -14,6 +14,8 @@ import io.github.alistairholmes.digitalnomadjobs.R;
 import io.github.alistairholmes.digitalnomadjobs.ui.jobdetail.DetailActivity;
 import io.github.alistairholmes.digitalnomadjobs.ui.jobs.JobActivity;
 
+import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
+
 /**
  * Implementation of App Widget functionality.
  */
@@ -27,7 +29,7 @@ public class FavoriteJobsAppWidget extends AppWidgetProvider {
         super.onReceive(context, intent);
 
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        if (FAVORITE_DATA_UPDATED.equals(intent.getAction())) {
+        if (ACTION_APPWIDGET_UPDATE.equals(intent.getAction())) {
             int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, getClass()));
             // This will take us to RemoteViewsFactory onDataSetChanged method
             appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_list);

@@ -5,6 +5,8 @@
     <string name="format_date">dd MMM</string>
 
 
+
+
     <!-- Category Buttons -->
     <string name="chip_all">All</string>
     <string name="chip_android">Android</string>
@@ -43,6 +45,13 @@
     <string name="about_library14_title" translatable="false">TextDrawable</string>
     <string name="about_library14_subtitle" translatable="false">This light-weight library provides images with letter/text like the Gmail app.</string>
 
+
+    <!-- Favorite -->
+    <string name="favorite_jobs">Favorite Jobs</string>
+    <string name="image_favorite_job">Image of a Favorite Job</string>
+    <string name="image_no_favorites">Empty Favorites List</string>
+    <string name="no_favorites">No Jobs Here</string>
+    <string name="add_favorites">Add a Job to your favorites list</string>
 
     <!-- ContentProvider -->
     <string name="content_authority">io.github.alistairholmes.digitalnomadjobs.data.provider</string>

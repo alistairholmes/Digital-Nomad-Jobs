@@ -46,35 +46,7 @@ public class FavoriteRemoteViewsFactory implements RemoteViewsService.RemoteView
     public void onDataSetChanged() {
         final long identityToken = Binder.clearCallingIdentity();
 
-//        compositeDisposable.add(jobRepository.getFavoriteListForWidget()
-//                /*.map(new Function<List<FavoriteJob>, List<FavoriteJob>>() {
-//                    @Override
-//                    public List<FavoriteJob> apply(List<FavoriteJob> favoriteJobs1) throws Exception {
-//                        Timber.e("Widget Data Loading Completed! %s", favoriteJobs.size());
-//                        favoriteJobs.addAll(favoriteJobs1);
-//                        Timber.e("Widget Data Loading Completed! %s", favoriteJobs.size());
-//                        return favoriteJobs;
-//                    }
-//                })*/
-//                .observeOn(Schedulers.io())
-//                .subscribe(new Consumer<List<FavoriteJob>>() {
-//                               @Override
-//                               public void accept(List<FavoriteJob> favoriteJobs1) throws Exception {
-//                                   favoriteJobs = new ArrayList<>(favoriteJobs1.size());
-//                                   favoriteJobs.addAll(favoriteJobs1);
-//                               }
-//                           },
-//                        throwable -> Timber.e("Widget Data loading Failed!: %s", throwable.toString())
-//                        ,() -> Timber.e("Widget Data Loading Completed! %s", favoriteJobs.size())));
-
-        favoriteJobs = jobRepository.getFavoriteListForWidget().blockingLast()/*.map(new Function<List<FavoriteJob>, List<FavoriteJob>>() {
-            @Override
-            public List<FavoriteJob> apply(List<FavoriteJob> favoriteJobs1) throws Exception {
-                favoriteJobs.addAll(favoriteJobs1);
-                return favoriteJobs;
-            }
-        }).subscribe()*/;
-
+        favoriteJobs = jobRepository.getFavoriteListForWidget().blockingLast();
         Timber.e(String.valueOf(favoriteJobs.size()));
 
         Binder.restoreCallingIdentity(identityToken);
@@ -131,7 +103,6 @@ public class FavoriteRemoteViewsFactory implements RemoteViewsService.RemoteView
     @Override
     public RemoteViews getLoadingView() {
         return new RemoteViews(mContext.getPackageName(), R.layout.widget_list_item);
-        //return null;
     }
 
     @Override
