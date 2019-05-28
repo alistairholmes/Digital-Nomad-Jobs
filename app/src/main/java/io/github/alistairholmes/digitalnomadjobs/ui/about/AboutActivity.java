@@ -18,7 +18,7 @@ import io.github.alistairholmes.digitalnomadjobs.R;
 
 public class AboutActivity extends AppCompatActivity implements View.OnClickListener {
 
-    @BindView(R.id.toolbar_about) Toolbar mToolbar;
+    @BindView(R.id.app_bar) Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,13 +27,13 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
 
         ButterKnife.bind(this);
 
-        mToolbar = findViewById(R.id.toolbar_about);
+        mToolbar = findViewById(R.id.app_bar);
         setSupportActionBar(mToolbar);
 
         LinearLayout [] containers = new LinearLayout[] {
-                findViewById(R.id.container_about_unsplash),
+                findViewById(R.id.container_about_app_website),
+                findViewById(R.id.container_about_app_github),
                 findViewById(R.id.container_about_app),
-                findViewById(R.id.container_about_github),
                 findViewById(R.id.container_about_rate),
                 findViewById(R.id.container_about_donate),
                 findViewById(R.id.container_about_bug),
@@ -69,12 +69,16 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.container_about_unsplash:
+            case R.id.container_about_app:
                 goToURL("https://digitalnomadjobs.ml/");
                 break;
 
-            case R.id.container_about_github:
+            case R.id.container_about_app_github:
                 goToURL("https://github.com/alistairholmes/Digital-Nomad-Jobs");
+                break;
+
+            case R.id.container_about_app_website:
+                goToURL("https://digitalnomadjobs.ml");
                 break;
 
             case R.id.container_about_rate:

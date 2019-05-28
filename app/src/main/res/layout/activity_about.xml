@@ -11,23 +11,17 @@
     tools:context=".ui.about.AboutActivity"
     tools:ignore="MissingPrefix">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/app_bar"
+        android:theme="@style/ToolbarTheme"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:theme="@style/ToolbarTheme">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_about"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:elevation="1dp"
-            app:navigationIcon="?attr/homeAsUpIndicator"
-            style="@style/ToolbarTheme"
-            app:title="About"
-            app:layout_scrollFlags="scroll"/>
-
-    </com.google.android.material.appbar.AppBarLayout>
+        android:elevation="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:title="About"/>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -43,48 +37,74 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardUseCompatPadding="true"
-                app:cardBackgroundColor="@color/textColorChips"
+                app:cardBackgroundColor="#ffff"
+                android:layout_marginTop="10dp"
                 android:paddingTop="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:textStyle="bold"
+                        style="@style/about_title_text"
+                        android:text="Info" />
 
                     <LinearLayout
                         android:id="@+id/container_about_app"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical">
+                        style="@style/about_entry">
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="10dp"
-                            android:paddingTop="10dp"
-                            android:paddingBottom="5dp"
-                            android:src="@mipmap/ic_launcher"/>
+                            android:src="@drawable/about_info"
+                            style="@style/material_icon" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
-                            android:text="@string/app_name"
-                            android:textSize="22sp" />
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:text="Digital Nomad Jobs"
+                                style="@style/about_title_text"/>
+
+                            <TextView
+                                android:text="Developed to help people find a remote job"
+                                style="@style/about_subtitle_text"/>
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/container_about_unsplash"
-                        style="@style/about_entry">
-
-                    <LinearLayout
-                        android:id="@+id/container_about_github"
+                        android:id="@+id/container_about_app_website"
                         style="@style/about_entry">
 
                         <ImageView
-                            android:src="@drawable/ic_github_circle_black_24dp"
+                            android:src="@drawable/baseline_public_24"
                             style="@style/material_icon" />
 
                         <TextView
-                            android:text="GitHub"
+                            android:text="Website"
+                            style="@style/about_title_text"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/container_about_app_github"
+                        style="@style/about_entry">
+
+                        <ImageView
+                            android:src="@drawable/baseline_star_24"
+                            style="@style/material_icon" />
+
+                        <TextView
+                            android:text="Star on Github"
                             style="@style/about_title_text"/>
 
                     </LinearLayout>
@@ -113,6 +133,7 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
                         android:textStyle="bold"
+                        style="@style/about_title_text"
                         android:text="Author" />
 
                     <LinearLayout
@@ -120,7 +141,7 @@
                         style="@style/about_entry">
 
                         <ImageView
-                            android:src="@drawable/ic_account_circle_black_24dp"
+                            android:src="@drawable/baseline_account_box_24"
                             style="@style/material_icon" />
 
                         <LinearLayout
@@ -145,7 +166,7 @@
                         style="@style/about_entry">
 
                         <ImageView
-                            android:src="@drawable/ic_earth_black_24dp"
+                            android:src="@drawable/baseline_public_24"
                             style="@style/material_icon" />
 
                         <TextView
@@ -159,7 +180,7 @@
                         style="@style/about_entry">
 
                         <ImageView
-                            android:src="@drawable/ic_instagram_black_24dp"
+                            android:src="@drawable/about_instagram"
                             style="@style/material_icon" />
 
                         <TextView
@@ -192,14 +213,15 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
                         android:textStyle="bold"
-                        android:text="Support Development" />
+                        android:text="Support Development"
+                        style="@style/about_title_text"/>
 
                     <LinearLayout
                         android:id="@+id/container_about_rate"
                         style="@style/about_entry">
 
                         <ImageView
-                            android:src="@drawable/ic_star_black_24dp"
+                            android:src="@drawable/baseline_star_24"
                             style="@style/material_icon" />
 
                         <LinearLayout
@@ -224,7 +246,7 @@
                         style="@style/about_entry">
 
                         <ImageView
-                            android:src="@drawable/ic_gift_black_24dp"
+                            android:src="@drawable/baseline_mood_24"
                             style="@style/material_icon" />
 
 
@@ -250,7 +272,7 @@
                         style="@style/about_entry">
 
                         <ImageView
-                            android:src="@drawable/ic_bug_report_black_24dp"
+                            android:src="@drawable/baseline_bug_report_24"
                             style="@style/material_icon" />
 
                         <LinearLayout
@@ -297,6 +319,7 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
                         android:textStyle="bold"
+                        style="@style/about_title_text"
                         android:text="Libraries" />
 
                     <LinearLayout

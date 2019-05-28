@@ -69,17 +69,17 @@ public class DetailActivity extends AppCompatActivity {
                 .load(company_logo)
                 .into(iv_CompanyLogo);*/
 
-        if (company_logo == null) {
+        if (company_logo != null) {
+            Glide.with(this)
+                    .load(company_logo)
+                    .into(iv_CompanyLogo);
+        } else  {
             ColorGenerator generator = ColorGenerator.MATERIAL;
             int color = generator.getRandomColor();
             TextDrawable drawable = TextDrawable
                     .builder()
                     .buildRoundRect(company_name.substring(0, 1).toUpperCase(), color, 50);
             iv_CompanyLogo.setImageDrawable(drawable);
-        } else  {
-            Glide.with(this)
-                    .load(company_logo)
-                    .into(iv_CompanyLogo);
         }
 
         final String jobURL = REMOTEOK_URL + jobID;
