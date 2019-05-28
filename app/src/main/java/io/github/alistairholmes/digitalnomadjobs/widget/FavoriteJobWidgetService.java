@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.widget.RemoteViewsService;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import dagger.android.AndroidInjection;
 import io.github.alistairholmes.digitalnomadjobs.data.repository.JobRepository;

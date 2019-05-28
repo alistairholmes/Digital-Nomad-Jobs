@@ -2,7 +2,6 @@ package io.github.alistairholmes.digitalnomadjobs.ui.jobs;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.LiveDataReactiveStreams;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.List;
@@ -31,10 +30,6 @@ public class JobViewModel extends ViewModel {
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                 );
-    }
-
-    LiveData<Resource<List<Job>>> getJobsLiveData() {
-        return jobsLiveData;
     }
 
     void setJobFavored(Job job, boolean favorite) {

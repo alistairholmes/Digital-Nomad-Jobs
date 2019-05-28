@@ -15,9 +15,6 @@ abstract class ActivityModule {
     @ContributesAndroidInjector(modules = FragmentBuildersModule.class)
     abstract FavoriteActivity contributeFavoriteActivity();
 
-    @ContributesAndroidInjector
-    abstract JobsProvider contributeJobsProvider();
-
     /*@ContributesAndroidInjector
     abstract SearchActivity contributeSearchActivity();*/
 }

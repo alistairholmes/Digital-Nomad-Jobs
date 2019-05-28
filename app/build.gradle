@@ -124,7 +124,7 @@ dependencies {
     implementation 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
 
     // Animations
-    implementation 'com.airbnb.android:lottie:3.0.0'
+    implementation 'com.airbnb.android:lottie:3.0.2'
 
     // About Libraries Screen
     implementation "com.mikepenz:aboutlibraries:6.2.3"

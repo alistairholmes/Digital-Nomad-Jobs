@@ -46,6 +46,8 @@
         <activity android:name=".ui.SupportDevActivity" />
 
         <activity android:name=".ui.favorite.FavoriteActivity"
+            android:theme="@style/Theme.Dnj.Favorite"
+            android:label="@string/favorite_jobs"
             android:parentActivityName=".ui.jobs.JobActivity"> <!--android:theme="@style/AppTheme.Details"-->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

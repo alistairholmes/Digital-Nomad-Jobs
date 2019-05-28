@@ -20,7 +20,6 @@ import io.github.alistairholmes.digitalnomadjobs.R;
 import io.github.alistairholmes.digitalnomadjobs.data.model.Job;
 import io.github.alistairholmes.digitalnomadjobs.ui.viewholder.JobViewHolder;
 import io.github.alistairholmes.digitalnomadjobs.utils.GlideApp;
-import timber.log.Timber;
 
 import static io.github.alistairholmes.digitalnomadjobs.utils.ViewUtil.formatDayMonth;
 
@@ -28,7 +27,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobViewHolder> {
 
     private final AsyncListDiffer<Job> mDiffer = new AsyncListDiffer(this, DIFF_CALLBACK);
     private final OnJobClickListener onJobClickListener;
-    private Context context;
+    private final Context context;
 
     public interface OnJobClickListener {
         void onJobClick(Job job);
@@ -54,13 +53,12 @@ public class JobAdapter extends RecyclerView.Adapter<JobViewHolder> {
     @Override
     public JobViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.job_item_row, parent, false);
+                .inflate(R.layout.item_job, parent, false);
         return new JobViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull JobViewHolder jobViewHolder, int position) {
-
         final Job currentJob = mDiffer.getCurrentList().get(position);
 
         jobViewHolder.itemView.setOnClickListener(view -> {
@@ -77,7 +75,6 @@ public class JobAdapter extends RecyclerView.Adapter<JobViewHolder> {
             GlideApp.with(context)
                     .load(currentJob.getCompany_logo())
                     //.placeholder(R.drawable.ic_launcher_foreground)
-                    //.circleCrop()
                     .into(jobViewHolder.companyLogo);
         } else if (!TextUtils.isEmpty(currentJob.getCompany())) {
             ColorGenerator generator = ColorGenerator.MATERIAL;
@@ -85,16 +82,15 @@ public class JobAdapter extends RecyclerView.Adapter<JobViewHolder> {
             TextDrawable drawable = TextDrawable
                     .builder()
                     .buildRoundRect(currentJob.getCompany().substring(0, 1).toUpperCase(), color, 50);
-            //.buildRound(currentJob.getCompany().substring(0, 1).toUpperCase(), color);
             jobViewHolder.companyLogo.setImageDrawable(drawable);
         }
 
         jobViewHolder.favoriteButton.isFavorite(currentJob.isFavorite());
-
         jobViewHolder.favoriteButton.setOnClickListener(view -> {
             jobViewHolder.favoriteButton.toggleWishlisted();
             onJobClickListener.onFavoredClicked(currentJob, !currentJob.isFavorite(), position);
         });
+
     }
 
     private static final DiffUtil.ItemCallback DIFF_CALLBACK = new DiffUtil.ItemCallback<Job>() {

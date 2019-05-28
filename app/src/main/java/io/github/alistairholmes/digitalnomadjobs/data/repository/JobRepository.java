@@ -58,20 +58,24 @@ public class JobRepository {
         this.jobDao = jobDao;
         this.favoriteDao = favoriteDao;
         this.contentResolver = contentResolver;
+
     }
 
     public Flowable<Resource<List<Job>>> retrieveJobs() {
+
+
+
         return Flowable.create(emitter -> {
             new NetworkBoundSource<List<Job>, List<Job>>(emitter) {
                 @Override
                 public Observable<List<Job>> getRemote() {
+                    Timber.e("Getting data from Remote.....");
+
                     /*compositeDisposable.add(requestInterface.getAllJobs()
                             .subscribe(t -> mJobsBehaviorSubject.onNext(t)));*/
 
-                    Timber.e("Getting data from Remote.....");
-
                     return Observable
-                            .combineLatest(/*mJobsBehaviorSubject.hide()*/ requestInterface.getAllJobs(), savedJobIds(),
+                            .combineLatest(/*mJobsBehaviorSubject.hide()*/requestInterface.getAllJobs(), savedJobIds(),
                                     (jobList, favoriteIds) -> {
                                         for (Job job : jobList) {
                                             job.setFavorite(favoriteIds.contains(job.getId()));

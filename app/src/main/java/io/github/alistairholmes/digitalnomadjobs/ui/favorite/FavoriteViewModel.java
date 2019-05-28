@@ -16,7 +16,7 @@ import io.reactivex.schedulers.Schedulers;
 public class FavoriteViewModel extends ViewModel {
 
     private JobRepository jobRepository;
-    private LiveData<List<FavoriteJob>> favoriteJobLiveData;
+    LiveData<List<FavoriteJob>> favoriteJobLiveData;
 
     @Inject
     FavoriteViewModel(JobRepository jobRepository) {
@@ -27,12 +27,17 @@ public class FavoriteViewModel extends ViewModel {
                 .observeOn(AndroidSchedulers.mainThread()));
     }
 
-    LiveData<List<FavoriteJob>> getFavorites() {
-        return favoriteJobLiveData;
+    void addFavorite(FavoriteJob favoriteJob) {
+        jobRepository.addFavorite(favoriteJob);
+    }
+
+    void removeFavorite(FavoriteJob favoriteJob) {
+        jobRepository.removeFavorite(favoriteJob);
     }
 
     @Override
     protected void onCleared() {
         super.onCleared();
     }
+
 }
