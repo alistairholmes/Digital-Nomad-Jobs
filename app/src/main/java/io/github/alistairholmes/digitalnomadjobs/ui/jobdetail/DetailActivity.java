@@ -2,18 +2,19 @@ package io.github.alistairholmes.digitalnomadjobs.ui.jobdetail;
 
 import android.content.Intent;
 import android.net.Uri;
-
-import androidx.appcompat.widget.Toolbar;
-import androidx.browser.customtabs.CustomTabsIntent;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.browser.customtabs.CustomTabsIntent;
+import androidx.core.content.ContextCompat;
+
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 
 import io.github.alistairholmes.digitalnomadjobs.R;
 import io.github.alistairholmes.digitalnomadjobs.ui.jobs.JobActivity;
@@ -63,13 +64,23 @@ public class DetailActivity extends AppCompatActivity {
         tv_CompanyName.setText(company_name);
         tv_JobDescription.setText(job_description);
 
-        RequestOptions requestOptions = new RequestOptions()
-                .placeholder(R.drawable.ic_launcher_foreground)
-                .circleCrop();
-        Glide.with(this)
+
+        /*Glide.with(this)
                 .load(company_logo)
-                .apply(requestOptions)
-                .into(iv_CompanyLogo);
+                .into(iv_CompanyLogo);*/
+
+        if (company_logo == null) {
+            ColorGenerator generator = ColorGenerator.MATERIAL;
+            int color = generator.getRandomColor();
+            TextDrawable drawable = TextDrawable
+                    .builder()
+                    .buildRoundRect(company_name.substring(0, 1).toUpperCase(), color, 50);
+            iv_CompanyLogo.setImageDrawable(drawable);
+        } else  {
+            Glide.with(this)
+                    .load(company_logo)
+                    .into(iv_CompanyLogo);
+        }
 
         final String jobURL = REMOTEOK_URL + jobID;
 

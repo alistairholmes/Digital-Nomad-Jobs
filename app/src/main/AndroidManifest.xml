@@ -54,7 +54,8 @@
 
         <activity
             android:name=".ui.jobdetail.DetailActivity"
-            android:theme="@style/Theme.Dnj.NoActionBar" />
+            android:theme="@style/Theme.Dnj.NoActionBar"
+            />
 
         <meta-data
             android:name="preloaded_fonts"
