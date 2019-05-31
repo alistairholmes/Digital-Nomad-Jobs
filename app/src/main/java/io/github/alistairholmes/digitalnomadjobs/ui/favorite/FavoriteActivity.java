@@ -1,5 +1,6 @@
 package io.github.alistairholmes.digitalnomadjobs.ui.favorite;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ import dagger.android.support.HasSupportFragmentInjector;
 import io.github.alistairholmes.digitalnomadjobs.R;
 import io.github.alistairholmes.digitalnomadjobs.data.local.entity.FavoriteJob;
 import io.github.alistairholmes.digitalnomadjobs.ui.adapter.FavoriteAdapter;
+import io.github.alistairholmes.digitalnomadjobs.ui.jobdetail.DetailActivity;
 
 public class FavoriteActivity extends AppCompatActivity implements HasSupportFragmentInjector,
         FavoriteAdapter.OnFavoriteJobClickListener {
@@ -59,7 +61,21 @@ public class FavoriteActivity extends AppCompatActivity implements HasSupportFra
 
     @Override
     public void onJobClick(FavoriteJob favoriteJob) {
+        //create a Bundle object
+        Bundle extras = new Bundle();
 
+        //Adding key value pairs to this bundle
+        extras.putString("JOB_TITLE", favoriteJob.getPosition());
+        extras.putString("COMPANY_NAME", favoriteJob.getCompany());
+        extras.putString("COMPANY_LOGO", favoriteJob.getLogo());
+        extras.putString("JOB_DESCRIPTION", favoriteJob.getDescription());
+        extras.putInt("JOB_ID", favoriteJob.getId());
+        //create and initialize an intent
+        Intent intent = new Intent(FavoriteActivity.this, DetailActivity.class);
+        //attach the bundle to the Intent object
+        intent.putExtras(extras);
+        //finally start the activity
+        startActivity(intent);
     }
 
     @Override
