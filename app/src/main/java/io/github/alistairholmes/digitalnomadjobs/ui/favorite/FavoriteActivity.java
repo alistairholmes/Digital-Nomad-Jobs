@@ -22,7 +22,7 @@ public class FavoriteActivity extends AppCompatActivity implements HasSupportFra
 
     @Inject
     DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
-    @BindView(R.id.favorite_toolbar) Toolbar toolbar;
+    @BindView(R.id.app_bar) Toolbar toolbar;
 
     @Override
     public DispatchingAndroidInjector<Fragment> supportFragmentInjector() {

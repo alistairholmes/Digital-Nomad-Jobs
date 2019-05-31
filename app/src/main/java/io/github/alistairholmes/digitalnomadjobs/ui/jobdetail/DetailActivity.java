@@ -17,7 +17,6 @@ import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.bumptech.glide.Glide;
 
 import io.github.alistairholmes.digitalnomadjobs.R;
-import io.github.alistairholmes.digitalnomadjobs.ui.jobs.JobActivity;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -35,13 +34,12 @@ public class DetailActivity extends AppCompatActivity {
 
         // toolbar
         Toolbar toolbar = findViewById(R.id.app_bar);
-
-        toolbar.setNavigationOnClickListener(v -> {
-            // back button pressed
-            Intent intent = new Intent(DetailActivity.this, JobActivity.class);
-            //finally start the activity
-            startActivity(intent);
-        });
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            toolbar.setNavigationOnClickListener(view -> onBackPressed());
+        }
 
         tv_JobTitle = findViewById(R.id.textView_jobtitle);
         tv_CompanyName = findViewById(R.id.textView_companyname);

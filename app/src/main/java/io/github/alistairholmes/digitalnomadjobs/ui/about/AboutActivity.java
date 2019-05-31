@@ -29,6 +29,11 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
 
         mToolbar = findViewById(R.id.app_bar);
         setSupportActionBar(mToolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            mToolbar.setNavigationOnClickListener(view -> onBackPressed());
+        }
 
         LinearLayout [] containers = new LinearLayout[] {
                 findViewById(R.id.container_about_app_website),
@@ -77,16 +82,28 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
                 goToURL("https://digitalnomadjobs.ml");
                 break;
 
-            /*case R.id.container_about_donate:
-                startActivity(new Intent(AboutActivity.this, DonateActivity.class));
-                break;*/
+            case R.id.container_about_author:
+                goToURL("https://github.com/alistairholmes");
+                break;
 
             case R.id.container_about_website:
-                goToURL("https://github.com/Osaigbovo");
+                goToURL("https://alistair.ml");
                 break;
 
             case R.id.container_about_instagram:
-                goToURL("https://www.instagram.com/0saigbovo/");
+                goToURL("https://www.instagram.com/alistair.holmes/");
+                break;
+
+            case R.id.container_about_rate:
+                goToURL("https://play.google.com/store/apps/details?id=io.github.alistairholmes.digitalnomadjobs");
+                break;
+
+            /*case R.id.container_about_donate:
+            startActivity(new Intent(AboutActivity.this, DonateActivity.class));
+            break;*/
+
+            case R.id.container_about_bug:
+                goToURL("https://github.com/alistairholmes/Digital-Nomad-Jobs/issues");
                 break;
 
             case R.id.container_about_library1:
