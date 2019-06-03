@@ -40,6 +40,7 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
                 findViewById(R.id.container_about_app_github),
                 findViewById(R.id.container_about_app),
                 findViewById(R.id.container_about_rate),
+                findViewById(R.id.container_about_app_privacy),
                 findViewById(R.id.container_about_donate),
                 findViewById(R.id.container_about_bug),
                 findViewById(R.id.container_about_author),
@@ -74,12 +75,13 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            /*case R.id.container_about_app:
-                goToURL("https://digitalnomadjobs.ml/");
-                break;*/
 
             case R.id.container_about_app_website:
                 goToURL("https://digitalnomadjobs.ml");
+                break;
+
+            case R.id.container_about_app_privacy:
+                goToURL("https://digitalnomadjobs.ml/privacy_policy.html");
                 break;
 
             case R.id.container_about_author:

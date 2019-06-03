@@ -109,6 +109,20 @@
 
                     </LinearLayout>
 
+                    <LinearLayout
+                        android:id="@+id/container_about_app_privacy"
+                        style="@style/about_entry">
+
+                        <ImageView
+                            android:src="@drawable/about_info"
+                            style="@style/material_icon" />
+
+                        <TextView
+                            android:text="Privacy Policy"
+                            style="@style/about_title_text"/>
+
+                    </LinearLayout>
+
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
