@@ -56,7 +56,6 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
                 findViewById(R.id.container_about_library9),
                 findViewById(R.id.container_about_library10),
                 findViewById(R.id.container_about_library11),
-                findViewById(R.id.container_about_library12),
                 findViewById(R.id.container_about_library13),
                 findViewById(R.id.container_about_library14)};
         for (LinearLayout r : containers) {
@@ -100,9 +99,9 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
                 goToURL("https://play.google.com/store/apps/details?id=io.github.alistairholmes.digitalnomadjobs");
                 break;
 
-            /*case R.id.container_about_donate:
-            startActivity(new Intent(AboutActivity.this, DonateActivity.class));
-            break;*/
+            case R.id.container_about_donate:
+            goToURL("https://paypal.me/alistairholmes?locale.x=en_US");
+            break;
 
             case R.id.container_about_bug:
                 goToURL("https://github.com/alistairholmes/Digital-Nomad-Jobs/issues");
@@ -146,10 +145,6 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
 
             case R.id.container_about_library11:
                 goToURL("https://github.com/facebook/stetho");
-                break;
-
-            case R.id.container_about_library12:
-                goToURL("https://github.com/square/leakcanary");
                 break;
 
             case R.id.container_about_library13:

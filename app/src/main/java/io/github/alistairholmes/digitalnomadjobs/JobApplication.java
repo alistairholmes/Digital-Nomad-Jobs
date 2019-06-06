@@ -10,7 +10,6 @@ import android.net.NetworkInfo;
 import androidx.multidex.MultiDexApplication;
 
 import com.facebook.stetho.Stetho;
-import com.squareup.leakcanary.LeakCanary;
 
 import java.util.Objects;
 
@@ -37,11 +36,6 @@ public class JobApplication extends MultiDexApplication implements HasActivityIn
     public void onCreate() {
         super.onCreate();
         instance = this;
-
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            return;
-        }
-        LeakCanary.install(this);
 
         // Stetho init code
         Stetho.initializeWithDefaults(this);

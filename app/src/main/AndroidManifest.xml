@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="io.github.alistairholmes.digitalnomadjobs">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <permission android:name="io.github.alistairholmes.digitalnomadjobs.data.provider.READ_WRITE" />

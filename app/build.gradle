@@ -104,10 +104,6 @@ dependencies {
     implementation "com.facebook.stetho:stetho:${versions.stetho}"
     implementation "com.facebook.stetho:stetho-okhttp3:${versions.stetho}"
 
-    // Memory Leaks
-    debugImplementation "com.squareup.leakcanary:leakcanary-android:${versions.leakcanary}"
-    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:${versions.leakcanary}"
-
     // WorkManager
     implementation "androidx.work:work-runtime:${versions.workmanager}"
     implementation "androidx.work:work-rxjava2:${versions.workmanager}" // RxJava2 support

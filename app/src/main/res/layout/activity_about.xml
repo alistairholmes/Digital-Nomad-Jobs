@@ -527,25 +527,6 @@
                         android:background="#EEEE" />
 
                     <LinearLayout
-                        android:id="@+id/container_about_library12"
-                        style="@style/about_library">
-
-                        <TextView
-                            android:text="@string/about_library12_title"
-                            style="@style/about_title_text"/>
-
-                        <TextView
-                            android:text="@string/about_library12_subtitle"
-                            style="@style/about_subtitle_text"/>
-
-                    </LinearLayout>
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="#EEEE" />
-
-                    <LinearLayout
                         android:id="@+id/container_about_library13"
                         style="@style/about_library">
 
