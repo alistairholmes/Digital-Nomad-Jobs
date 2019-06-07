@@ -1,12 +1,16 @@
 package io.github.alistairholmes.digitalnomadjobs.ui.jobs;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,8 +24,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.airbnb.lottie.LottieAnimationView;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -52,8 +54,10 @@ public class JobActivity extends AppCompatActivity implements JobAdapter.OnJobCl
     private RecyclerView.LayoutManager layoutManager;
     public JobAdapter mAdapter;
     public RecyclerView mainRecyclerView;
+    public LinearLayout linearLayout;
+    public TextView mCategoriesTv;
+    public TextView mJobsTv;
 
-    private List<Job> jobList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,11 +77,14 @@ public class JobActivity extends AppCompatActivity implements JobAdapter.OnJobCl
         mNoInternetConnectionTv = findViewById(R.id.no_internet_connection_tv);
         mNoWifiConnectionIv = findViewById(R.id.no_wifi_connection_imageview);
         mainRecyclerView = findViewById(R.id.recyclerView_main);
+        linearLayout = findViewById(R.id.linearLayout);
+        mCategoriesTv = findViewById(R.id.tv_categories);
+        mJobsTv = findViewById(R.id.tv_jobs);
 
         // Lottie Loader
         final LottieAnimationView loaderLottie = findViewById(R.id.loader);
 
-        // Lookup the swipe container view
+        // Swipe refresh
         swipeContainer = findViewById(R.id.swipeRefreshLayout);
 
         // use a linear layout manager
@@ -101,12 +108,12 @@ public class JobActivity extends AppCompatActivity implements JobAdapter.OnJobCl
         loaderLottie.setVisibility(View.INVISIBLE);
         mainRecyclerView.setAdapter(mAdapter);
 
-    }
+        if(!haveNetworkConnection()) {
+            mNoInternetConnectionTv.setText(R.string.no_internet_connection);
+            mNoWifiConnectionIv.setVisibility(View.VISIBLE);
+        }
 
-//    private void setupRecyclerView(List<Job> jobList) {
-//        mAdapter = new JobAdapter(this, jobList, this);
-//        mainRecyclerView.setAdapter(mAdapter);
-//    }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -172,5 +179,21 @@ public class JobActivity extends AppCompatActivity implements JobAdapter.OnJobCl
         DbUtil.updateWidgets(this);
     }
 
+    private boolean haveNetworkConnection() {
+        boolean haveConnectedWifi = false;
+        boolean haveConnectedMobile = false;
+
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+        for (NetworkInfo ni : netInfo) {
+            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+                if (ni.isConnected())
+                    haveConnectedWifi = true;
+            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+                if (ni.isConnected())
+                    haveConnectedMobile = true;
+        }
+        return haveConnectedWifi || haveConnectedMobile;
+    }
 
 }
