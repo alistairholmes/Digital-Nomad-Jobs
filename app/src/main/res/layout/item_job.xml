@@ -16,13 +16,18 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:fontFamily="@font/montserrat"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:lines="1"
+            android:transitionName="title"
+            app:layout_constraintEnd_toStartOf="@+id/text_date"
             app:layout_constraintStart_toEndOf="@+id/image_logo"
-            app:layout_constraintTop_toTopOf="@+id/image_logo"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="Front-end Dev" />
 
         <TextView
@@ -45,13 +50,14 @@
             android:id="@+id/text_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="64dp"
             android:layout_marginBottom="12dp"
             android:fontFamily="@font/montserrat"
             android:textColor="?android:attr/textColorPrimary"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="8dp"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/text_job_title"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/text_job_title"
             tools:text="16 June" />
 
         <io.github.alistairholmes.digitalnomadjobs.ui.views.WishListIconView
