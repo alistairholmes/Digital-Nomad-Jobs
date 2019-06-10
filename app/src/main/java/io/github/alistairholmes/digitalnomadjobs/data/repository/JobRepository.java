@@ -1,13 +1,13 @@
 package io.github.alistairholmes.digitalnomadjobs.data.repository;
 
 import android.content.ContentResolver;
+import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.Callable;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -17,6 +17,7 @@ import io.github.alistairholmes.digitalnomadjobs.data.local.dao.JobDao;
 import io.github.alistairholmes.digitalnomadjobs.data.local.entity.FavoriteJob;
 import io.github.alistairholmes.digitalnomadjobs.data.model.Job;
 import io.github.alistairholmes.digitalnomadjobs.data.provider.JobsProvider;
+import io.github.alistairholmes.digitalnomadjobs.data.remote.FetchJobsIntentService;
 import io.github.alistairholmes.digitalnomadjobs.data.remote.RequestInterface;
 import io.github.alistairholmes.digitalnomadjobs.utils.Optional;
 import io.github.alistairholmes.digitalnomadjobs.utils.Resource;
@@ -24,13 +25,10 @@ import io.reactivex.BackpressureStrategy;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.functions.Action;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.BehaviorSubject;
-import io.reactivex.subjects.PublishSubject;
 import timber.log.Timber;
 
 import static io.github.alistairholmes.digitalnomadjobs.utils.DbUtil.FAVORITE_WIDGET_PROJECTION;
@@ -50,15 +48,16 @@ public class JobRepository {
     private final FavoriteDao favoriteDao;
     private final ContentResolver contentResolver;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private Context context;
 
     @Inject
     public JobRepository(JobDao jobDao, FavoriteDao favoriteDao, RequestInterface requestInterface,
-                         ContentResolver contentResolver) {
+                         ContentResolver contentResolver, Context context) {
         this.requestInterface = requestInterface;
         this.jobDao = jobDao;
         this.favoriteDao = favoriteDao;
         this.contentResolver = contentResolver;
-
+        this.context = context;
     }
 
     public Flowable<Resource<List<Job>>> retrieveJobs() {
@@ -105,6 +104,10 @@ public class JobRepository {
                 }
             };
         }, BackpressureStrategy.BUFFER);
+    }
+
+    public void getFreshJobs() {
+        FetchJobsIntentService.startActionGetRemoteJobs(context);
     }
 
     private Observable<Set<Integer>> savedJobIds() {

@@ -13,7 +13,7 @@
     <string name="chip_ios">iOS</string>
     <string name="chip_php">PHP</string>
 
-    <!-- Libraries -->
+       <!-- Libraries -->
     <string name="about_libraries_card_title">Libraries</string>
     <string name="about_library1_title" translatable="false">Retrofit</string>
     <string name="about_library1_subtitle" translatable="false">Type-safe HTTP client for Android and Java by Square, Inc.</string>

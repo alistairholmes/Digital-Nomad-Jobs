@@ -49,7 +49,7 @@ public class JobActivity extends AppCompatActivity implements JobAdapter.OnJobCl
     private TextView mNoInternetConnectionTv;
     private ImageView mNoWifiConnectionIv;
     private SearchView searchView;
-    private SwipeRefreshLayout swipeContainer;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private Toolbar toolbar;
     private RecyclerView.LayoutManager layoutManager;
     public JobAdapter mAdapter;
@@ -85,7 +85,7 @@ public class JobActivity extends AppCompatActivity implements JobAdapter.OnJobCl
         final LottieAnimationView loaderLottie = findViewById(R.id.loader);
 
         // Swipe refresh
-        swipeContainer = findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
 
         // use a linear layout manager
         layoutManager = new LinearLayoutManager(this);
@@ -104,8 +104,13 @@ public class JobActivity extends AppCompatActivity implements JobAdapter.OnJobCl
         });*/
 
         mAdapter = new JobAdapter(this, this);
-        jobViewModel.jobsLiveData.observe(this, resource -> mAdapter.submitList(resource.data));
-        loaderLottie.setVisibility(View.INVISIBLE);
+        jobViewModel.jobsLiveData.observe(this, resource -> {
+            if (resource.data != null) {
+                loaderLottie.setVisibility(View.GONE);
+                mAdapter.submitList(resource.data);
+            }
+        });
+        initSwipeToRefresh();
         mainRecyclerView.setAdapter(mAdapter);
 
         if(!haveNetworkConnection()) {
@@ -194,6 +199,16 @@ public class JobActivity extends AppCompatActivity implements JobAdapter.OnJobCl
                     haveConnectedMobile = true;
         }
         return haveConnectedWifi || haveConnectedMobile;
+    }
+
+    private void initSwipeToRefresh() {
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            swipeRefreshLayout.setRefreshing(true);
+            jobViewModel.refresh();
+            if (swipeRefreshLayout.isRefreshing()) {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
 
 }

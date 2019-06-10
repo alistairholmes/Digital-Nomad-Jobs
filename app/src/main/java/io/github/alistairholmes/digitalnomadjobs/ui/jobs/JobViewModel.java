@@ -41,6 +41,10 @@ public class JobViewModel extends ViewModel {
         }
     }
 
+    void refresh(){
+        jobRepository.getFreshJobs();
+    }
+
     @Override
     protected void onCleared() {
         super.onCleared();
