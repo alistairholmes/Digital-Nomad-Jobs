@@ -104,12 +104,8 @@ public class JobActivity extends AppCompatActivity implements JobAdapter.OnJobCl
         });*/
 
         mAdapter = new JobAdapter(this, this);
-        jobViewModel.jobsLiveData.observe(this, resource -> {
-            if (resource.data != null) {
-                loaderLottie.setVisibility(View.GONE);
-                mAdapter.submitList(resource.data);
-            }
-        });
+        jobViewModel.jobsLiveData.observe(this, resource -> mAdapter.submitList(resource.data));
+        loaderLottie.setVisibility(View.INVISIBLE);
         initSwipeToRefresh();
         mainRecyclerView.setAdapter(mAdapter);
 

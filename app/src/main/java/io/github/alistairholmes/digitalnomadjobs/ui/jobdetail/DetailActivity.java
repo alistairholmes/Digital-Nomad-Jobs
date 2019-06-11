@@ -16,9 +16,19 @@ import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.bumptech.glide.Glide;
 
+import java.util.Objects;
+
+import butterknife.BindString;
 import io.github.alistairholmes.digitalnomadjobs.R;
+import io.github.alistairholmes.digitalnomadjobs.data.local.entity.FavoriteJob;
+import io.github.alistairholmes.digitalnomadjobs.data.model.Job;
 
 public class DetailActivity extends AppCompatActivity {
+
+    public static final String ARG_DETAIL_JOB = "detail_job";
+
+    @BindString(R.string.no_description_job)
+    String no_description;
 
     public TextView tv_JobTitle;
     public TextView tv_CompanyName;
@@ -26,6 +36,9 @@ public class DetailActivity extends AppCompatActivity {
     public int jobID;
     public ImageView iv_CompanyLogo;
     public final String REMOTEOK_URL = "https://remoteok.io/l/";
+
+    private Job job;
+    private FavoriteJob favoriteJob;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +58,23 @@ public class DetailActivity extends AppCompatActivity {
         tv_CompanyName = findViewById(R.id.textView_companyname);
         iv_CompanyLogo = findViewById(R.id.imageView_Logo);
         tv_JobDescription = findViewById(R.id.textView_description);
+
+        if (savedInstanceState == null) {
+            Intent intent = getIntent();
+            if (intent.hasExtra(ARG_DETAIL_JOB)) {
+                if (Objects.requireNonNull(intent.getExtras()).getParcelable(ARG_DETAIL_JOB) instanceof Job) {
+                    this.job = intent.getExtras().getParcelable(ARG_DETAIL_JOB);
+                } else if (intent.getExtras().getParcelable(ARG_DETAIL_JOB) instanceof FavoriteJob) {
+                    this.favoriteJob = intent.getExtras().getParcelable(ARG_DETAIL_JOB);
+                }
+            }
+        } else {
+            if (savedInstanceState.getParcelable(ARG_DETAIL_JOB) instanceof Job) {
+                this.job = savedInstanceState.getParcelable(ARG_DETAIL_JOB);
+            } else {
+                this.favoriteJob = savedInstanceState.getParcelable(ARG_DETAIL_JOB);
+            }
+        }
 
 
         //get the intent in the target activity
@@ -98,4 +128,5 @@ public class DetailActivity extends AppCompatActivity {
         });
 
     }
+
 }

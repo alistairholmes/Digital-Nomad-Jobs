@@ -65,9 +65,10 @@
                 <com.google.android.material.chip.Chip
                     android:id="@+id/btn_all"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
-                    android:layout_width="wrap_content"
+                    android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:text="@string/chip_all"
+                    android:textAlignment="center"
                     app:chipBackgroundColor="#eeeeee" />
 
                 <com.google.android.material.chip.Chip

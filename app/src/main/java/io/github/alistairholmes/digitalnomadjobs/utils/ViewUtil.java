@@ -12,6 +12,9 @@ import android.view.ViewOutlineProvider;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -27,6 +30,14 @@ public class ViewUtil {
                 context.getString(R.string.format_date),
                 Locale.US);
         return sdf.format(date);
+    }
+
+    public static Drawable getDrawableLogo(String companyName) {
+        ColorGenerator generator = ColorGenerator.MATERIAL;
+        int color = generator.getRandomColor();
+        return TextDrawable
+                .builder()
+                .buildRoundRect(companyName.substring(0, 1).toUpperCase(), color, 25);
     }
 
     /**

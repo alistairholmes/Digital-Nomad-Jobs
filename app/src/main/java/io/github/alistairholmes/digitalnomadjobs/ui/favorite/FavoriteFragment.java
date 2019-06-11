@@ -34,6 +34,7 @@ import io.github.alistairholmes.digitalnomadjobs.data.local.entity.FavoriteJob;
 import io.github.alistairholmes.digitalnomadjobs.di.Injectable;
 import io.github.alistairholmes.digitalnomadjobs.ui.adapter.FavoriteAdapter;
 import io.github.alistairholmes.digitalnomadjobs.ui.viewholder.FavoriteViewHolder;
+import io.github.alistairholmes.digitalnomadjobs.utils.JobListItemDecoration;
 import io.github.alistairholmes.digitalnomadjobs.utils.ViewUtil;
 
 public class FavoriteFragment extends Fragment implements Injectable {
@@ -80,7 +81,8 @@ public class FavoriteFragment extends Fragment implements Injectable {
 
         linearLayoutManager = new LinearLayoutManager(getActivity());
         favoriteRecyclerView.setLayoutManager(linearLayoutManager);
-
+        int smallPadding = getResources().getDimensionPixelSize(R.dimen.job_item_spacing_small);
+        favoriteRecyclerView.addItemDecoration(new JobListItemDecoration(smallPadding));
         favoriteRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemTouchCallback);

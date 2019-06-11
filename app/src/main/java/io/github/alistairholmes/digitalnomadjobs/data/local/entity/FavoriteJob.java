@@ -192,3 +192,4 @@ public class FavoriteJob implements Parcelable {
     };
 
 }
+
