@@ -22,7 +22,7 @@
 
 # Screenshots
 
-<img src="https://user-images.githubusercontent.com/22801227/59331785-0a592000-8cf5-11e9-9058-9bf92fdeb59d.png" width="250"> <img src="https://user-images.githubusercontent.com/22801227/59331790-0cbb7a00-8cf5-11e9-8ebf-bece9e2fa13e.png" width="250"><img src="https://user-images.githubusercontent.com/22801227/59331792-0e853d80-8cf5-11e9-8589-aabd51b8184d.png" width="250"> <img src="https://user-images.githubusercontent.com/22801227/59331794-0fb66a80-8cf5-11e9-9a3d-7784c0155e5f.png" width="250">
+<img src="https://user-images.githubusercontent.com/22801227/59331785-0a592000-8cf5-11e9-9058-9bf92fdeb59d.png" width="210"> <img src="https://user-images.githubusercontent.com/22801227/59331790-0cbb7a00-8cf5-11e9-8ebf-bece9e2fa13e.png" width="210"> <img src="https://user-images.githubusercontent.com/22801227/59331792-0e853d80-8cf5-11e9-8589-aabd51b8184d.png" width="210"> <img src="https://user-images.githubusercontent.com/22801227/59331794-0fb66a80-8cf5-11e9-9a3d-7784c0155e5f.png" width="210">
 
 # Libraries
 
