@@ -28,12 +28,10 @@ public class SearchJobsAdapter extends RecyclerView.Adapter<SearchJobsAdapter.Se
 
     private List<Job> searchJobsList;
     private final SearchActivity mParentActivity;
-    private final boolean mTwoPane;
     private final Context context;
 
-    SearchJobsAdapter(SearchActivity parentActivity, boolean twoPane,Context context) {
+    public SearchJobsAdapter(SearchActivity parentActivity, Context context) {
         mParentActivity = parentActivity;
-        mTwoPane = twoPane;
         this.context = context;
     }
 
@@ -51,7 +49,7 @@ public class SearchJobsAdapter extends RecyclerView.Adapter<SearchJobsAdapter.Se
 
     @Override
     public void onBindViewHolder(@NonNull SearchViewHolder holder, int position) {
-        holder.bindTo(position, mParentActivity, mTwoPane);
+        holder.bindTo(position, mParentActivity);
     }
 
     @Override
@@ -76,7 +74,7 @@ public class SearchJobsAdapter extends RecyclerView.Adapter<SearchJobsAdapter.Se
             ButterKnife.bind(this, itemView);
         }
 
-        private void bindTo(final int position, SearchActivity mParentActivity, boolean mTwoPane) {
+        private void bindTo(final int position, SearchActivity mParentActivity) {
             this.m = searchJobsList.get(position);
 
             // Use RoundedCornered ImageView

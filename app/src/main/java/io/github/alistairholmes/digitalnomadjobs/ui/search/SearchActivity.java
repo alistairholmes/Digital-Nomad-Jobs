@@ -2,6 +2,7 @@ package io.github.alistairholmes.digitalnomadjobs.ui.search;
 
 import android.app.SearchManager;
 import android.app.SharedElementCallback;
+import android.content.Context;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -45,7 +46,10 @@ import butterknife.OnClick;
 import dagger.android.AndroidInjection;
 import io.github.alistairholmes.digitalnomadjobs.R;
 import io.github.alistairholmes.digitalnomadjobs.data.model.Job;
+import io.github.alistairholmes.digitalnomadjobs.data.model.SearchResponse;
 import io.github.alistairholmes.digitalnomadjobs.ui.adapter.SearchJobsAdapter;
+import io.github.alistairholmes.digitalnomadjobs.utils.ImeUtils;
+import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Function;
@@ -87,7 +91,8 @@ public class SearchActivity extends AppCompatActivity {
 
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
-    private boolean mTwoPane;
+    private Context context;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -100,12 +105,8 @@ public class SearchActivity extends AppCompatActivity {
 
         setupSearchView();
 
-        if (findViewById(R.id.item_detail_container) != null) {
-            mTwoPane = true;
-        }
-
         linearLayoutManager = new LinearLayoutManager(this);
-        searchJobsAdapter = new SearchJobsAdapter(this, mTwoPane);
+        searchJobsAdapter = new SearchJobsAdapter(this, context);
 
         searchRecyclerView.setAdapter(searchJobsAdapter);
         searchRecyclerView.setLayoutManager(linearLayoutManager);

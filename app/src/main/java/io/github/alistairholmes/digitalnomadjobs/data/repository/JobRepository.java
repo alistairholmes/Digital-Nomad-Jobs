@@ -16,6 +16,7 @@ import io.github.alistairholmes.digitalnomadjobs.data.local.dao.FavoriteDao;
 import io.github.alistairholmes.digitalnomadjobs.data.local.dao.JobDao;
 import io.github.alistairholmes.digitalnomadjobs.data.local.entity.FavoriteJob;
 import io.github.alistairholmes.digitalnomadjobs.data.model.Job;
+import io.github.alistairholmes.digitalnomadjobs.data.model.SearchResponse;
 import io.github.alistairholmes.digitalnomadjobs.data.provider.JobsProvider;
 import io.github.alistairholmes.digitalnomadjobs.data.remote.FetchJobsIntentService;
 import io.github.alistairholmes.digitalnomadjobs.data.remote.RequestInterface;
