@@ -2,7 +2,6 @@ package io.github.alistairholmes.digitalnomadjobs.ui.search;
 
 import android.app.SearchManager;
 import android.app.SharedElementCallback;
-import android.graphics.Movie;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -26,6 +25,7 @@ import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.TransitionRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -44,6 +44,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import dagger.android.AndroidInjection;
 import io.github.alistairholmes.digitalnomadjobs.R;
+import io.github.alistairholmes.digitalnomadjobs.data.model.Job;
+import io.github.alistairholmes.digitalnomadjobs.ui.adapter.SearchJobsAdapter;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Function;
@@ -76,12 +78,12 @@ public class SearchActivity extends AppCompatActivity {
     @BindView(R.id.results_scrim)
     View resultsScrim;
 
-    private SearchMoviesAdapter searchMoviesAdapter;
+    private SearchJobsAdapter searchJobsAdapter;
     private TextView noResults;
     private SparseArray<Transition> transitions = new SparseArray<>();
 
     private LinearLayoutManager linearLayoutManager;
-    private List<Movie> searchMoviesList;
+    private List<Job> searchJobsList;
 
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
@@ -103,9 +105,9 @@ public class SearchActivity extends AppCompatActivity {
         }
 
         linearLayoutManager = new LinearLayoutManager(this);
-        searchMoviesAdapter = new SearchMoviesAdapter(this, mTwoPane);
+        searchJobsAdapter = new SearchJobsAdapter(this, mTwoPane);
 
-        searchRecyclerView.setAdapter(searchMoviesAdapter);
+        searchRecyclerView.setAdapter(searchJobsAdapter);
         searchRecyclerView.setLayoutManager(linearLayoutManager);
         searchRecyclerView.setHasFixedSize(true);
 
@@ -191,8 +193,8 @@ public class SearchActivity extends AppCompatActivity {
 
                             if (searchResponse.getResults() != null
                                     && searchResponse.getResults().size() > 0) {
-                                searchMoviesList = searchResponse.getResults();
-                                Log.d(TAG, "Result:" + searchMoviesList.get(0).getOriginalTitle());
+                                searchJobsList = searchResponse.getResults();
+                                Log.d(TAG, "Result:" + searchJobsList.get(0).getOriginalTitle());
 
                                 if (searchRecyclerView.getVisibility() != View.VISIBLE) {
                                     setNoResultsVisibility(View.GONE);
@@ -202,7 +204,7 @@ public class SearchActivity extends AppCompatActivity {
                                     searchRecyclerView.setVisibility(View.VISIBLE);
                                     //fab.setVisibility(View.VISIBLE);
                                 }
-                                searchMoviesAdapter.setSearchMoviesList(searchMoviesList);
+                                searchJobsAdapter.setSearchJobsList(searchJobsList);
                             } else {
                                 TransitionManager.beginDelayedTransition(
                                         container, getTransition(R.transition.auto));
@@ -233,7 +235,7 @@ public class SearchActivity extends AppCompatActivity {
 
     private void clearResults() {
         TransitionManager.beginDelayedTransition(container, getTransition(R.transition.auto));
-        searchMoviesList.clear();
+        searchJobsList.clear();
         searchRecyclerView.setVisibility(View.GONE);
         progress.setVisibility(View.GONE);
         resultsScrim.setVisibility(View.GONE);
