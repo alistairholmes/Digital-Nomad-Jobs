@@ -70,7 +70,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobViewHolder> {
         String dateFormat = formatDayMonth(context, currentJob.getDate());
         jobViewHolder.datePosted.setText(dateFormat);
 
-        // TODO 3 Use RoundedCornered ImageView
+        // Use RoundedCornered ImageView
         if (!TextUtils.isEmpty(currentJob.getCompany_logo())) {
             GlideApp.with(context)
                     .load(currentJob.getCompany_logo())

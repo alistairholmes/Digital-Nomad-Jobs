@@ -35,7 +35,7 @@ public class SearchJobsAdapter extends RecyclerView.Adapter<SearchJobsAdapter.Se
         this.context = context;
     }
 
-    void setSearchJobsList(List<Job> searchJobsList) {
+    public void setSearchJobsList(List<Job> searchJobsList) {
         this.searchJobsList = searchJobsList;
         notifyDataSetChanged();
     }
@@ -66,6 +66,7 @@ public class SearchJobsAdapter extends RecyclerView.Adapter<SearchJobsAdapter.Se
         @BindView(R.id.text_date)
         TextView md;
         @BindView(R.id.text_company_name)
+        TextView company_name;
 
         Job m;
 

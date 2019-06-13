@@ -1,9 +1,7 @@
 package io.github.alistairholmes.digitalnomadjobs.ui.search;
 
 import android.app.SearchManager;
-import android.app.SharedElementCallback;
 import android.content.Context;
-import android.graphics.Point;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.InputType;
@@ -12,8 +10,6 @@ import android.text.Spanned;
 import android.text.style.StyleSpan;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
-import android.transition.TransitionManager;
-import android.transition.TransitionSet;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
@@ -112,7 +108,7 @@ public class SearchActivity extends AppCompatActivity {
         searchRecyclerView.setLayoutManager(linearLayoutManager);
         searchRecyclerView.setHasFixedSize(true);
 
-        setupTransitions();
+        //setupTransitions();
     }
 
     @Override
@@ -195,20 +191,20 @@ public class SearchActivity extends AppCompatActivity {
                             if (searchResponse.getResults() != null
                                     && searchResponse.getResults().size() > 0) {
                                 searchJobsList = searchResponse.getResults();
-                                Log.d(TAG, "Result:" + searchJobsList.get(0).getOriginalTitle());
+                                Log.d(TAG, "Result:" + searchJobsList.get(0).getPosition());
 
                                 if (searchRecyclerView.getVisibility() != View.VISIBLE) {
                                     setNoResultsVisibility(View.GONE);
-                                    TransitionManager.beginDelayedTransition(container,
-                                            getTransition(R.transition.search_show_results));
+                                    /*TransitionManager.beginDelayedTransition(container,
+                                            getTransition(R.transition.search_show_results));*/
                                     progress.setVisibility(View.GONE);
                                     searchRecyclerView.setVisibility(View.VISIBLE);
                                     //fab.setVisibility(View.VISIBLE);
                                 }
                                 searchJobsAdapter.setSearchJobsList(searchJobsList);
                             } else {
-                                TransitionManager.beginDelayedTransition(
-                                        container, getTransition(R.transition.auto));
+                                /*TransitionManager.beginDelayedTransition(
+                                        container, getTransition(R.transition.auto));*/
                                 progress.setVisibility(View.GONE);
                                 setNoResultsVisibility(View.VISIBLE);
                             }
@@ -235,7 +231,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void clearResults() {
-        TransitionManager.beginDelayedTransition(container, getTransition(R.transition.auto));
+        //TransitionManager.beginDelayedTransition(container, getTransition(R.transition.auto));
         searchJobsList.clear();
         searchRecyclerView.setVisibility(View.GONE);
         progress.setVisibility(View.GONE);
@@ -268,7 +264,7 @@ public class SearchActivity extends AppCompatActivity {
         }
     }
 
-    private void setupTransitions() {
+    /*private void setupTransitions() {
         // grab the position that the search icon transitions in *from*
         // & use it to configure the return transition
         setEnterSharedElementCallback(new SharedElementCallback() {
@@ -290,7 +286,7 @@ public class SearchActivity extends AppCompatActivity {
                 }
             }
         });
-    }
+    }*/
 
     private Transition getTransition(@TransitionRes int transitionId) {
         Transition transition = transitions.get(transitionId);

@@ -3,8 +3,8 @@ package io.github.alistairholmes.digitalnomadjobs.data.remote;
 import java.util.List;
 
 import io.github.alistairholmes.digitalnomadjobs.data.model.Job;
+import io.github.alistairholmes.digitalnomadjobs.data.model.SearchResponse;
 import io.reactivex.Observable;
-import io.reactivex.Single;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
