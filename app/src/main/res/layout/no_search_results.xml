@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/no_search_results"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:drawablePadding="4dp"
+    android:drawableTop="@drawable/ic_search"
+    android:padding="64dp"
+
+    android:paddingTop="64dp"
+    android:textAlignment="center" /><!--android:textAppearance="@style/TextAppearance.EmptyText"-->

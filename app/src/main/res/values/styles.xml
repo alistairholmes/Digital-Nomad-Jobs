@@ -38,6 +38,24 @@
         <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
 
+    <!-- Search Themes -->
+    <style name="SearchViewTheme" parent="JobsDarkOverlay">
+        <item name="colorControlActivated">?android:colorAccent</item>
+        <item name="android:searchViewStyle">@style/Widget.Jobs.SearchView</item>
+    </style>
+
+    <style name="Widget.Jobs.SearchView" parent="android:style/Widget.Material.SearchView">
+        <item name="android:searchIcon">@android:color/transparent</item>
+        <!--<item name="android:searchHintIcon">@android:color/transparent</item>-->
+        <item name="android:queryBackground">@android:color/transparent</item>
+        <item name="android:submitBackground">@android:color/transparent</item>
+    </style>
+
+    <style name="JobsDarkOverlay" parent="@android:style/ThemeOverlay.Material.Dark.ActionBar">
+        <!-- Used to theme dark elements in light themed screens.
+             Extend the material dark Action Bar overlay as this contains text styling. -->
+    </style>
+
     <!-- Chips Style -->
     <style name="TextAppearance.Dnj.Chips" parent="TextAppearance.MaterialComponents.Button">
         <item name="android:textSize">10sp</item>

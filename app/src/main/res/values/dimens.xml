@@ -2,6 +2,9 @@
 <resources>
     <dimen name="job_item_spacing_small">8dp</dimen>
 
+    <!-- For seach app bar -->
+    <dimen name="z_app_bar">4dp</dimen>
+
 
     <!-- Widget -->
     <dimen name="widget_elevation">4dp</dimen>

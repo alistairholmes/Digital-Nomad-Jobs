@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Dnj"
         tools:ignore="GoogleAppIndexingWarning">
-
+        <activity android:name=".ui.search.SearchActivity"></activity>
         <activity
             android:name=".ui.jobs.JobActivity"
             android:theme="@style/Theme.Dnj.NoActionBar">
@@ -34,31 +34,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.about.AboutActivity"
-            android:theme="@style/Theme.Dnj.NoActionBar"
-            android:parentActivityName=".ui.jobs.JobActivity">
+            android:parentActivityName=".ui.jobs.JobActivity"
+            android:theme="@style/Theme.Dnj.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="io.github.alistairholmes.digitalnomadjobs.ui.jobs.JobActivity" />
         </activity>
-
         <activity android:name=".ui.SupportDevActivity" />
-
-        <activity android:name=".ui.favorite.FavoriteActivity"
-            android:theme="@style/Theme.Dnj.NoActionBar"
+        <activity
+            android:name=".ui.favorite.FavoriteActivity"
             android:label="@string/favorite_jobs"
-            android:parentActivityName=".ui.jobs.JobActivity"> <!--android:theme="@style/AppTheme.Details"-->
+            android:parentActivityName=".ui.jobs.JobActivity"
+            android:theme="@style/Theme.Dnj.NoActionBar"> <!-- android:theme="@style/AppTheme.Details" -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="io.github.alistairholmes.digitalnomadjobs.ui.jobs.JobActivity" />
         </activity>
-
         <activity
             android:name=".ui.jobdetail.DetailActivity"
-            android:theme="@style/Theme.Dnj.NoActionBar"
-            />
+            android:theme="@style/Theme.Dnj.NoActionBar" />
 
         <meta-data
             android:name="preloaded_fonts"
@@ -71,11 +67,11 @@
             android:permission="io.github.alistairholmes.digitalnomadjobs.data.provider.READ_WRITE"
             android:syncable="true" />
 
-        <receiver
-            android:name=".widget.FavoriteJobsAppWidget">
+        <receiver android:name=".widget.FavoriteJobsAppWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
+
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/favorite_jobs_app_widget_info" />
@@ -84,7 +80,6 @@
         <service
             android:name=".widget.FavoriteJobWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
-
     </application>
 
 </manifest>

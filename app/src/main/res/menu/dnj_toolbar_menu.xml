@@ -6,14 +6,21 @@
         android:id="@+id/about"
         android:icon="@drawable/about_info"
         android:title="About"
-        android:orderInCategory="200"
+        android:orderInCategory="300"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/menu_search"
+        android:icon="@drawable/ic_search"
+        android:title="Search"
+        android:orderInCategory="100"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/favorites"
         android:icon="@drawable/ic_star"
         android:title="Favorites"
-        android:orderInCategory="100"
+        android:orderInCategory="200"
         app:showAsAction="always" />
 
 </menu>

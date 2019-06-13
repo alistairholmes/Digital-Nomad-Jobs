@@ -21,6 +21,6 @@
     <color name="window_background">#FFF5F5F5</color>
     <color name="grey_ripple">#8ddd</color>
 
-
+    <color name="scrim">#99323232</color>
 
 </resources>
