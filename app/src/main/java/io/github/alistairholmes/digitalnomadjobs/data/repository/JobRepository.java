@@ -129,6 +129,10 @@ public class JobRepository {
         return mSavedJobIdsSubject.hide();
     }
 
+    public Observable<SearchResponse> getSearch(String query) {
+        return requestInterface.search(query);
+    }
+
     public Observable<List<FavoriteJob>> getFavoriteListForWidget() {
         return Observable
                 .just(new Optional<>(contentResolver.query(JobsProvider.URI_JOB, FAVORITE_WIDGET_PROJECTION,
