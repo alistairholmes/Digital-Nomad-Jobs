@@ -1,0 +1,44 @@
+
+Have questions, feedback, or issues? Get support by visiting:
+  https://firebase.google.com/support/
+
+Uploading [app/build/outputs/apk/debug/app-debug.apk] to Firebase Test Lab...
+Uploading [app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk] to Firebase Test Lab...
+Raw results will be stored in your GCS bucket at [https://console.developers.google.com/storage/browser/test-lab-sj006zwwc1594-mm1s8z2fuuqt8/2018-09-27_13:45:45.780907_NKnq/]
+
+Test [matrix-54pqmjlo6cu5a] has been created in the Google Cloud.
+Firebase Test Lab will execute your instrumentation test on 1 device(s).
+Creating individual test executions...
+.............................done.
+
+Test results will be streamed to [https://console.firebase.google.com/project/digital-nomad-jobs-60d5f/testlab/histories/bh.6dcd165e6d2bf25/matrices/6294094996972271163].
+13:50:09 Test is Pending
+13:50:36 Starting attempt 1.
+13:50:36 Test is Running
+13:51:23 Started logcat recording.
+13:51:23 Preparing device.
+13:52:03 Logging in to Google account on device.
+13:52:03 Installing apps.
+13:52:03 Retrieving Pre-Test Package Stats information from the device.
+13:52:03 Retrieving Performance Environment information from the device.
+13:52:03 Started crash monitoring.
+13:52:03 Started performance monitoring.
+13:52:29 Started video recording.
+13:52:43 Stopped performance monitoring.
+13:52:56 Stopped crash monitoring.
+13:52:56 Retrieving Post-test Package Stats information from the device.
+13:52:56 Stopped logcat recording.
+13:52:56 Logging out of Google account on device.
+13:52:56 Done. Test time = 5 (secs)
+13:52:56 Starting results processing. Attempt: 1
+13:53:09 Completed results processing. Time taken = 4 (secs)
+13:53:09 Test is Finished
+
+Instrumentation testing complete.
+
+More details are available at [https://console.firebase.google.com/project/digital-nomad-jobs-60d5f/testlab/histories/bh.6dcd165e6d2bf25/matrices/6294094996972271163].
++---------+---------------------------+---------------------+
+| OUTCOME |      TEST_AXIS_VALUE      |     TEST_DETAILS    |
++---------+---------------------------+---------------------+
+| Passed  | Nexus6P-27-en_US-portrait | 1 test cases passed |
++---------+---------------------------+---------------------+

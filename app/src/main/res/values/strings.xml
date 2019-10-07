@@ -3,4 +3,66 @@
     <!-- Error message when there is no internet connectivity [CHAR LIMIT=NONE] -->
     <string name="no_internet_connection">Please connect to the Internet and relaunch the app.</string>
     <string name="format_date">dd MMM</string>
+
+    <!-- Category Buttons -->
+    <string name="chip_all">All</string>
+    <string name="chip_android">Android</string>
+    <string name="chip_frontend">Frontend</string>
+    <string name="chip_javascript">JavaScript</string>
+    <string name="chip_devops">DevOps</string>
+    <string name="chip_ios">iOS</string>
+    <string name="chip_php">PHP</string>
+
+       <!-- Libraries -->
+    <string name="about_libraries_card_title">Libraries</string>
+    <string name="about_library1_title" translatable="false">Retrofit</string>
+    <string name="about_library1_subtitle" translatable="false">Type-safe HTTP client for Android and Java by Square, Inc.</string>
+    <string name="about_library2_title" translatable="false">Glide</string>
+    <string name="about_library2_subtitle" translatable="false">An image loading and caching library for Android focused on smooth scrolling</string>
+    <string name="about_library3_title" translatable="false">AndroidX</string>
+    <string name="about_library3_subtitle" translatable="false">AndroidX is the open-source project that the Android team uses to develop, test, package, version and release libraries within Jetpack.</string>
+    <string name="about_library4_title" translatable="false">Lottie</string>
+    <string name="about_library4_subtitle" translatable="false">Render After Effects animations natively on Android</string>
+    <string name="about_library5_title" translatable="false">Room</string>
+    <string name="about_library5_subtitle" translatable="false">The Room persistence library provides an abstraction layer over SQLite to allow for more robust database access while harnessing the full power of SQLite.</string>
+    <string name="about_library6_title" translatable="false">RxJava</string>
+    <string name="about_library6_subtitle" translatable="false">RxJava is a Java based implementation of Reactive Programming.</string>
+    <string name="about_library7_title" translatable="false">Butter Knife</string>
+    <string name="about_library7_subtitle" translatable="false">Bind Android views and callbacks to fields and methods</string>
+    <string name="about_library9_title" translatable="false">Dagger 2</string>
+    <string name="about_library9_subtitle" translatable="false">A fast dependency injector for Android and Java.</string>
+    <string name="about_library10_title" translatable="false">Gson</string>
+    <string name="about_library10_subtitle" translatable="false">A Java serialization/deserialization library to convert Java Objects into JSON and back</string>
+    <string name="about_library11_title" translatable="false">Stetho</string>
+    <string name="about_library11_subtitle" translatable="false">Stetho is a debug bridge for Android applications, enabling the powerful Chrome Developer Tools and much more.</string>
+    <string name="about_library12_title" translatable="false">Leak Canary</string>
+    <string name="about_library12_subtitle" translatable="false">A memory leak detection library for Android</string>
+    <string name="about_library13_title" translatable="false">Timber</string>
+    <string name="about_library13_subtitle" translatable="false">A logger with a small, extensible API which provides utility on top of Androids normal Log class.</string>
+    <string name="about_library14_title" translatable="false">TextDrawable</string>
+    <string name="about_library14_subtitle" translatable="false">This light-weight library provides images with letter/text like the Gmail app.</string>
+
+
+    <!-- Favorite -->
+    <string name="favorite_jobs">Favorite Jobs</string>
+    <string name="image_favorite_job">Image of a Favorite Job</string>
+    <string name="image_no_favorites">Empty Favorites List</string>
+    <string name="no_favorites">No Jobs Here</string>
+    <string name="add_favorites">Add a Job to your favorites list</string>
+
+    <!-- ContentProvider -->
+    <string name="content_authority">io.github.alistairholmes.digitalnomadjobs.data.provider</string>
+
+    <!-- App Widget -->
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="empty_job_list_no_saved_jobs">No Saved Jobs</string>
+
+    <!-- Jobs -->
+    <string name="no_description_job">No Description For This Job Is Available</string>
+
+    <!-- Transition -->
+    <string name="transition_image_name" translatable="false">logo</string>
+    <string name="transition_title_name" translatable="false">title</string>
+
 </resources>

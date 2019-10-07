@@ -1,11 +1,144 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="Theme.Dnj" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="o_mr1">true</item>
+        <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>
     </style>
-    
+
+    <!-- This is a fix for window decor error -->
+    <style name="Theme.Dnj.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Dnj.Favorite">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <!-- Trying something here -->
+    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:elevation">12dp</item>
+    </style>
+
+    <style name="TextAppearance.Dnj.Toolbar" parent="TextAppearance.MaterialComponents.Button">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="fontFamily">@font/montserrat</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <!-- Chips Style -->
+    <style name="TextAppearance.Dnj.Chips" parent="TextAppearance.MaterialComponents.Button">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@color/textColorChips</item>
+        <item name="fontFamily">@font/montserrat</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <!-- Details Button -->
+    <style name="Widget.Dnj.Button" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">#FFFF</item>
+        <item name="backgroundTint">?attr/colorPrimaryDark</item>
+    </style>
+
+    <!-- Widget -->
+    <style name="WidgetTitleTextStyle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/textAndIcons</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="StockSymbolTextStyle">
+        <item name="android:textColor">@color/textPrimary</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="CompanyNameTextStyle">
+        <item name="android:textColor">@color/textSecondary</item>
+    </style>
+
+    <style name="BidPriceTextStyle">
+        <item name="android:textColor">@color/textSecondary</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="PercentChangeTextStyle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/textAndIcons</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="about_entry">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingStart">4dp</item>
+        <item name="android:paddingEnd">4dp</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="fontFamily">@font/montserrat</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="about_title_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">3dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="fontFamily">@font/montserrat</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="about_subtitle_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginRight">15dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="fontFamily">@font/montserrat</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="about_library">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingTop">15dp</item>
+        <item name="android:paddingBottom">15dp</item>
+        <item name="android:paddingStart">15dp</item>
+        <item name="android:paddingEnd">15dp</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="fontFamily">@font/montserrat</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="material_icon">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+    </style>
+
+    <style name="CustomActivityAnimation" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>
+        <item name="android:activityCloseEnterAnimation">@anim/slide_in_left</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
+    </style>
+
 </resources>

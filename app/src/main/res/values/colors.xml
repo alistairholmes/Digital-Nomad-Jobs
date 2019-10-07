@@ -3,4 +3,24 @@
     <color name="colorPrimary">#3cec77</color>
     <color name="colorPrimaryDark">#3cec77</color>
     <color name="colorAccent">#3cec77</color>
+
+    <color name="textColorChips">#ffffff</color>
+
+    <!-- Favorite -->
+    <color name="colorBlack">#000000</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorGrey">#757575</color>
+    <color name="colorGreyLight">#39a99898</color>
+
+    <!-- Widget -->
+    <color name="widget_title_background">@color/colorPrimary</color>
+    <color name="textAndIcons">#FFFFFF</color>
+    <color name="textPrimary">#212121</color>>
+    <color name="textSecondary">#727272</color>
+    <color name="dividerColor">#B6B6B6</color>
+    <color name="window_background">#FFF5F5F5</color>
+    <color name="grey_ripple">#8ddd</color>
+
+
+
 </resources>
