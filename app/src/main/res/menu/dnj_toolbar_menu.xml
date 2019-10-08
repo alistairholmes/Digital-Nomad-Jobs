@@ -6,13 +6,20 @@
         android:id="@+id/about"
         android:icon="@drawable/about_info"
         android:title="About"
-        android:orderInCategory="200"
+        android:orderInCategory="300"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/favorites"
         android:icon="@drawable/ic_star"
         android:title="Favorites"
+        android:orderInCategory="200"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/filter"
+        android:icon="@drawable/baseline_filter_list_black_24dp"
+        android:title="Filter"
         android:orderInCategory="100"
         app:showAsAction="always" />
 

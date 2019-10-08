@@ -34,6 +34,7 @@ import io.github.alistairholmes.digitalnomadjobs.data.model.Job;
 import io.github.alistairholmes.digitalnomadjobs.ui.about.AboutActivity;
 import io.github.alistairholmes.digitalnomadjobs.ui.adapter.JobAdapter;
 import io.github.alistairholmes.digitalnomadjobs.ui.favorite.FavoriteActivity;
+import io.github.alistairholmes.digitalnomadjobs.ui.fragments.BottomSheetDialog;
 import io.github.alistairholmes.digitalnomadjobs.ui.jobdetail.DetailActivity;
 import io.github.alistairholmes.digitalnomadjobs.utils.DbUtil;
 import io.github.alistairholmes.digitalnomadjobs.utils.JobListItemDecoration;
@@ -48,7 +49,6 @@ public class JobActivity extends AppCompatActivity implements JobAdapter.OnJobCl
 
     private TextView mNoInternetConnectionTv;
     private ImageView mNoWifiConnectionIv;
-    private SearchView searchView;
     private SwipeRefreshLayout swipeRefreshLayout;
     private Toolbar toolbar;
     private RecyclerView.LayoutManager layoutManager;
@@ -135,6 +135,10 @@ public class JobActivity extends AppCompatActivity implements JobAdapter.OnJobCl
                 break;
             case R.id.favorites:
                 this.startActivity(new Intent(JobActivity.this, FavoriteActivity.class));
+                break;
+            case R.id.filter:
+                BottomSheetDialog bottomSheetFragment = new BottomSheetDialog();
+                bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
                 break;
             default:
                 return super.onOptionsItemSelected(item);

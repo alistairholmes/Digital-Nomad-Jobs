@@ -24,6 +24,8 @@
     <dimen name="widget_list_default_height">180dp</dimen>
     <dimen name="widget_list_min_resize_width">220dp</dimen>
     <dimen name="widget_list_min_resize_height">110dp</dimen>
+    <dimen name="list_item_spacing">16dp</dimen>
+    <dimen name="list_item_spacing_half">8dp</dimen>
 
 
 </resources>

@@ -56,6 +56,7 @@ dependencies {
     // Room
     implementation "androidx.room:room-runtime:${versions.room}"
     implementation "androidx.room:room-rxjava2:${versions.room}" // Room RxJava Support for Room
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     annotationProcessor "androidx.room:room-compiler:${versions.room}"
 
     // Paging
