@@ -45,5 +45,40 @@
  * [Portfolio Site](http://www.alistair.ml)
  * [Instagram](https://www.instagram.com/alistair.holmes/)
  * [Donate](https://www.paypal.me/alistairholmes)
+ 
+ # Contributions :
+
+Contributions are welcome!
+
+1. Check out our [public issues board][0]. If your issue isn't on the board, [open a new one][1].
+2. Fork the project ([Need help forking a project?][3]). You'll do all of your work on your forked copy.
+3. Create a branch specific to the issue or feature you are working on. Push your work on that branch ([Need help with branching?][4]).
+4. Name the branch something like `fixes-xxx-issue` or `add-xxx-feature` where `xxx` is a short description of the changes or feature you are adding.
+5. Once your code is ready, submit a pull request from your branch to DevJournal's `master` branch. I'll do a quick review and give you feedback.
+
+[0]: https://github.com/alistairholmes/Digital-Nomad-Jobs/issues
+[1]: https://github.com/alistairholmes/Digital-Nomad-Jobs/issues/new
+[3]: https://help.github.com/articles/fork-a-repo/
+[4]: https://github.com/Kunena/Kunena-Forum/wiki/Create-a-new-branch-with-git-and-manage-branches
+
+# Contributors:
+* [Osaigbovo](https://github.com/Osaigbovo)
 
 # License
+
+    Copyright 2019 Alistair Holmes
+
+    Licensed to the Apache Software Foundation (ASF) under one or more contributor
+    license agreements. See the NOTICE file distributed with this work for
+    additional information regarding copyright ownership. The ASF licenses this
+    file to you under the Apache License, Version 2.0 (the "License"); you may not
+    use this file except in compliance with the License. You may obtain a copy of
+    the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+    License for the specific language governing permissions and limitations under
+    the License.
